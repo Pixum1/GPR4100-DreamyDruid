@@ -3,36 +3,72 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour{
-    //THe Players movmenet-speed
+    
     [SerializeField]
-    private float moveSpeed = 3f;
-    //variable necessary for the jumping-method
-    private bool isInAir = false;
+    private float moveSpeed = 3f; //The Players movmenet-speed
+    [SerializeField]
+    private float jumpForce = 5f;
 
     [SerializeField]
-    private float jumpCD = 2f;
-    private float jumpTimer;
+    private float maxSpeed = 5f;
 
-    void Start(){
-        jumpTimer = jumpCD;
+    private bool isGrounded; //True if the player stands on an object with 'Ground' tag
+
+    private Rigidbody2D rb;
+
+    private float x;
+    private float y;
+
+    private void Awake() {
+        rb = GetComponent<Rigidbody2D>();
     }
+
 
     void Update(){
-        jumpTimer -= Time.deltaTime;
+        x = Input.GetAxisRaw("Horizontal"); //Horizontal Axis
+        y = Input.GetAxisRaw("Jump"); //Vertical 'Jump' Axis
 
-        #region Horizontal movement
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
-        transform.position += movement * Time.deltaTime * moveSpeed;
-        #endregion
+        //Horizontal movement
+        if(x != 0) {
+            Move();
+        }
+    }
 
-        #region Vertical movement. See method "Jump()"
-        if (Input.GetKeyDown(KeyCode.Space) & jumpTimer <= 0){
+    private void FixedUpdate() {
+
+        //Horizontal Movement
+        //if(x != 0) {
+        //    Move();
+        //}
+
+        //Vertical Movement
+        if (y != 0 && isGrounded) {
             Jump();
         }
-        #endregion
     }
-    void Jump(){
-        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 5f), ForceMode2D.Impulse);
-        jumpTimer = jumpCD;
+
+    private void Move() {
+        //Physics based movement <-- more 'realistic' no turn mid-air
+        //if (x != 0 && rb.velocity.magnitude < maxSpeed) {
+        //    rb.AddForce(transform.right * x * moveSpeed, ForceMode2D.Force);
+        //}
+
+        //Non physics based movment <-- mid-air turns, more direct, no acceleration
+        transform.position += (transform.right * x) * Time.deltaTime * moveSpeed;
+    }
+
+    private void Jump(){
+        rb.AddForce(transform.up * y * jumpForce, ForceMode2D.Impulse);
+    }
+
+    private void OnCollisionEnter2D(Collision2D _other) {
+        if (_other.collider.CompareTag("Ground")) {
+            isGrounded = true;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D _other) {
+        if (_other.collider.CompareTag("Ground")) {
+            isGrounded = false;
+        }
     }
 }
