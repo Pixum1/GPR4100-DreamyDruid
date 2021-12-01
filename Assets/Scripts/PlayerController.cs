@@ -1,14 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //THe Players movmenet-speed
     public float moveSpeed = 3f;
+    //variable necessary for the jumping-method
+    bool isInAir = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -19,15 +22,23 @@ public class PlayerController : MonoBehaviour
         transform.position += movement * Time.deltaTime * moveSpeed;
 
         //Vertical movement. See method "Jump()"
-        Jump();
+        if (Input.GetKeyDown(KeyCode.Space) & isInAir == false)
+        {
+            isInAir = true;
+            Jump();
+            isInAir = false;
+        }
     }
     void Jump()
     {
-        int isInAir = 0;
-        if(Input.GetKeyDown(KeyCode.Space) && isInAir == 0)
-        {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 5f), ForceMode2D.Impulse);
-            isInAir += 1;
-        }
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 5f), ForceMode2D.Impulse);
+        //Starts the jumping cooldown
+        StartCoroutine(JumpCooldown());
     }
+    //time the player has to wait between jumps
+    IEnumerator JumpCooldown()
+    {
+        yield return new WaitForSeconds(2);
+    }
+
 }
