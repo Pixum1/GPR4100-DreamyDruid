@@ -1,44 +1,38 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour{
     //THe Players movmenet-speed
-    public float moveSpeed = 3f;
+    [SerializeField]
+    private float moveSpeed = 3f;
     //variable necessary for the jumping-method
-    bool isInAir = false;
+    private bool isInAir = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField]
+    private float jumpCD = 2f;
+    private float jumpTimer;
 
+    void Start(){
+        jumpTimer = jumpCD;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Horizontal movement
+    void Update(){
+        jumpTimer -= Time.deltaTime;
+
+        #region Horizontal movement
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
         transform.position += movement * Time.deltaTime * moveSpeed;
+        #endregion
 
-        //Vertical movement. See method "Jump()"
-        if (Input.GetKeyDown(KeyCode.Space) & isInAir == false)
-        {
-            isInAir = true;
+        #region Vertical movement. See method "Jump()"
+        if (Input.GetKeyDown(KeyCode.Space) & jumpTimer <= 0){
             Jump();
-            isInAir = false;
         }
+        #endregion
     }
-    void Jump()
-    {
+    void Jump(){
         gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 5f), ForceMode2D.Impulse);
-        //Starts the jumping cooldown
-        StartCoroutine(JumpCooldown());
+        jumpTimer = jumpCD;
     }
-    //time the player has to wait between jumps
-    IEnumerator JumpCooldown()
-    {
-        yield return new WaitForSeconds(2);
-    }
-
 }
