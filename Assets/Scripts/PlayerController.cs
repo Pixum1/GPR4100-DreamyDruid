@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour{
     private float jumpForce = 5f;
 
     [SerializeField]
-    private float maxSpeed = 5f;
+    //private float maxSpeed = 5f;
 
     private bool isGrounded; //True if the player stands on an object with 'Ground' tag
 
