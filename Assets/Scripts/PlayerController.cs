@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool m_isGrounded { get { return isGrounded; } }
 
     [SerializeField]
     private float moveSpeed = 5f; //The Players movmenet-speed
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private bool isGrounded; //True if the player stands on an object with 'Ground' tag
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     private float x;
 
@@ -31,10 +32,15 @@ public class PlayerController : MonoBehaviour
 
     private bool isGliding;
 
+    [SerializeField]
+    private Animator anim;
+    private SpriteRenderer playerSprite;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         startPos = transform.position;
+        playerSprite = GetComponent<SpriteRenderer>();
     }
 
 
@@ -69,8 +75,31 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = startPos;
         }
+        HandleRotation();
+        HandleAnimations();
     }
 
+    private void HandleRotation() {
+        if(rb.velocity.x > 0) {
+            playerSprite.flipX = false;
+        }
+        else if(rb.velocity.x < 0){
+            playerSprite.flipX = true;
+        }
+    }
+
+    private void HandleAnimations() {
+        if (rb.velocity.y > 0) {
+            anim.SetBool("jump", true);
+        }
+        else if (rb.velocity.y < 0) {
+            anim.SetBool("falling", true);
+        }
+        else {
+            anim.SetBool("jump", false);
+            anim.SetBool("falling", false);
+        }
+    }
 
 
     private void Move()
@@ -80,13 +109,9 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(transform.right * x * moveSpeed);
         }
-
-        //Non physics based movment <-- mid-air turns, more direct, no acceleration
-        //transform.position += (transform.right * x) * Time.deltaTime * moveSpeed;
     }
 
-    private void Jump()
-    {
+    private void Jump() {
         jumpsLeft -= 1;
         rb.velocity -= new Vector2(0, rb.velocity.y);
         rb.AddForce(transform.up * jumpForce * 100);
@@ -106,7 +131,6 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(transform.up * Mathf.Abs(rb.velocity.x) * Time.deltaTime * 75);//upforce by horizontal speed
 
         rb.AddForce(-transform.right * x * fallSpeed * Time.deltaTime * 50);//horizontal speed by fallspeed * x input
-
     }
 
     private void OnCollisionEnter2D(Collision2D _other)
