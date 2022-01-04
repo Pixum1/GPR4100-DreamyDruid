@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private bool isGliding;
 
     [SerializeField]
-    private Animator anim;
+    //private Animator anim;
     private SpriteRenderer playerSprite;
 
     private void Awake()
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
             transform.position = startPos;
         }
         HandleRotation();
-        HandleAnimations();
+        //HandleAnimations();
     }
 
     private void HandleRotation() {
@@ -88,18 +88,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HandleAnimations() {
-        if (rb.velocity.y > 0) {
-            anim.SetBool("jump", true);
-        }
-        else if (rb.velocity.y < 0) {
-            anim.SetBool("falling", true);
-        }
-        else {
-            anim.SetBool("jump", false);
-            anim.SetBool("falling", false);
-        }
-    }
+    //private void HandleAnimations() {
+    //    if (rb.velocity.y > 0) {
+    //        anim.SetBool("jump", true);
+    //    }
+    //    else if (rb.velocity.y < 0) {
+    //        anim.SetBool("falling", true);
+    //    }
+    //    else {
+    //        anim.SetBool("jump", false);
+    //        anim.SetBool("falling", false);
+    //    }
+    //}
 
 
     private void Move()

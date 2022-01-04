@@ -27,8 +27,11 @@ public class CameraManager : MonoBehaviour
 
         GetCurrentZone();
 
-        if(currentZone != previousZone) {
+        if (currentZone != previousZone) {
             //set camera position if the current zone has been switched (saves performance)
+            SetCameraPosition();
+        }
+        else if (currentZone == zones[0]) {
             SetCameraPosition();
         }
     }
