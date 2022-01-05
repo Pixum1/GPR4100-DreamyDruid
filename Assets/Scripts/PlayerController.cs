@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask cornerCorrectLayer;
 
     [Header("Ground Collision")]
     [SerializeField] private float groundRayLength;
@@ -28,8 +29,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fallMultiplier;
     [SerializeField] private float lowJumpFallMultiplier;
     [SerializeField] private int extraJumps = 1;
+    [SerializeField] private float coyoteTime = .1f;
+    [SerializeField] private float jumpBufferLength = .1f;
     private int extraJumpsValue;
-    private bool canJump => Input.GetButtonDown("Jump") && (isGrounded || extraJumpsValue > 0);
+    private float coyoteTimeCounter;
+    private float jumpBufferCounter;
+    private bool canJump => jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || extraJumpsValue > 0);
+
+    [Header("Corner Correction")]
+    [SerializeField] private float topRayLength;
+    [SerializeField] private Vector3 edgeRayOffset;
+    [SerializeField] private Vector3 innerRayOffset;
+    private bool canCornerCorrect;
 
     private Vector2 startPos;
 
@@ -48,9 +59,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        CheckCollision();
-
         horizontalDir = GetInput().x;
+
+        if (Input.GetButtonDown("Jump")) {
+            jumpBufferCounter = jumpBufferLength;
+        }
+        else {
+            jumpBufferCounter -= Time.deltaTime;
+        }
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -75,21 +91,25 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-
+        CheckCollision();
         Move();
-        ApplyLinearDrag();
 
         if (canJump) {
             Jump();
         }
 
         if (isGrounded) {
+            ApplyGroundLinearDrag();
             extraJumpsValue = extraJumps;
-            ApplyLinearDrag();
+            coyoteTimeCounter = coyoteTime;
         }
         else {
             ApplyAirLinearDrag();
             ApplyFallGravity();
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+        if (canCornerCorrect) {
+            CornerCorrect(rb.velocity.y);
         }
     }
     #region Animations and Sprite Management
@@ -123,6 +143,11 @@ public class PlayerController : MonoBehaviour
     private void CheckCollision() {
         isGrounded = Physics2D.Raycast(transform.position +groundRayOffset, Vector2.down, groundRayLength, groundLayer) ||
                      Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
+
+        canCornerCorrect = Physics2D.Raycast(transform.position + edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
+                           !Physics2D.Raycast(transform.position + innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) ||
+                           Physics2D.Raycast(transform.position - edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
+                           !Physics2D.Raycast(transform.position - innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer);
     }
 
     private void Move() {
@@ -133,7 +158,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ApplyLinearDrag() {
+    private void ApplyGroundLinearDrag() {
         if(Mathf.Abs(horizontalDir) < .4f || changingDir) {
             rb.drag = groundLinDrag;
         }
@@ -151,6 +176,8 @@ public class PlayerController : MonoBehaviour
         }
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        coyoteTimeCounter = 0f;
+        jumpBufferCounter = 0f;
     }
     private void ApplyFallGravity() {
         if (rb.velocity.y < 0f) {
@@ -161,6 +188,31 @@ public class PlayerController : MonoBehaviour
         }
         else {
             rb.gravityScale = 1f;
+        }
+    }
+
+    private void CornerCorrect(float _yVelocity) {
+        //Push player to the right
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - innerRayOffset + Vector3.up * topRayLength, Vector3.left, topRayLength, cornerCorrectLayer);
+        if (hit.collider != null) {
+            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * topRayLength,
+                transform.position - innerRayOffset + Vector3.up * topRayLength);
+            transform.position = new Vector3(transform.position.x + newPos, transform.position.y, transform.position.z);
+            rb.velocity = new Vector2(rb.velocity.x, _yVelocity);
+
+            Debug.Log("Corner Correct: Right!");
+            return;
+        }
+
+        //Push player to the left
+        hit = Physics2D.Raycast(transform.position + innerRayOffset + Vector3.up * topRayLength, Vector3.right, topRayLength, cornerCorrectLayer);
+        if (hit.collider != null) {
+            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * topRayLength,
+                transform.position + edgeRayOffset + Vector3.up * topRayLength);
+            transform.position = new Vector3(transform.position.x - newPos, transform.position.y, transform.position.z);
+            rb.velocity = new Vector2(rb.velocity.x, _yVelocity);
+
+            Debug.Log("Corner Correct: Left!");
         }
     }
 
@@ -181,8 +233,23 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
+        //Ground Check
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position + groundRayOffset, transform.position + groundRayOffset + Vector3.down * groundRayLength);
         Gizmos.DrawLine(transform.position - groundRayOffset, transform.position - groundRayOffset + Vector3.down * groundRayLength);
+
+        //Corner Check
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position + edgeRayOffset, transform.position + edgeRayOffset + Vector3.up * topRayLength);
+        Gizmos.DrawLine(transform.position - edgeRayOffset, transform.position - edgeRayOffset + Vector3.up * topRayLength);
+        Gizmos.DrawLine(transform.position + innerRayOffset, transform.position + innerRayOffset + Vector3.up * topRayLength);
+        Gizmos.DrawLine(transform.position - innerRayOffset, transform.position - innerRayOffset + Vector3.up * topRayLength);
+
+        //Corner Distance Check
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position - innerRayOffset + Vector3.up * topRayLength,
+                        transform.position - innerRayOffset + Vector3.up * topRayLength + Vector3.left * topRayLength);
+        Gizmos.DrawLine(transform.position + innerRayOffset + Vector3.up * topRayLength,
+                        transform.position + innerRayOffset + Vector3.up * topRayLength + Vector3.right * topRayLength);
     }
 }
