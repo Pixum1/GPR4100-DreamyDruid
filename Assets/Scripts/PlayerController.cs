@@ -6,49 +6,46 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     private Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private Animator anim;
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask cornerCorrectLayer;
 
-    [Header("Ground Collision")]
-    [SerializeField] private float groundRayLength;
-    [SerializeField] private Vector3 groundRayOffset;
-    private bool isGrounded;
-
     [Header("Movement")]
-    [SerializeField] private float acceleration;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float groundLinDrag;
+    [SerializeField] private float acceleration = 70f; //movement speed acceleration of the player
+    [SerializeField] private float maxSpeed = 12f; //maximum speed of the player
+    [SerializeField] private float groundLinDrag = 7f; //linear drag when not moving <= decceleration
     private float horizontalDir;
     private bool changingDir => (rb.velocity.x > 0f && horizontalDir < 0f) || (rb.velocity.x < 0f && horizontalDir > 0f); //returns true when switching from left to right and vice versa
 
     [Header("Jump")]
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float airLinDrag;
-    [SerializeField] private float fallMultiplier;
-    [SerializeField] private float lowJumpFallMultiplier;
-    [SerializeField] private int extraJumps = 1;
-    [SerializeField] private float coyoteTime = .1f;
-    [SerializeField] private float jumpBufferLength = .1f;
+    [SerializeField] private float jumpForce = 20f; //jump force of the player
+    [SerializeField] private float airLinDrag = 2.5f; //linear drag when in air
+    [SerializeField] private float fallMultiplier = 8f; //gravity multiplier when in air
+    [SerializeField] private float lowJumpFallMultiplier = 5f; //gravity multiplier when jumping and not pressing the jump button <= short jump 
+    [SerializeField] private int extraJumps = 1; //number of extra jumps the player can make after his first
+    [SerializeField] private float coyoteTime = .1f; //time window in which the player can jump after walking over an edge
+    [SerializeField] private float jumpBufferLength = .1f; 
     private int extraJumpsValue;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
     private bool canJump => jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || extraJumpsValue > 0);
 
     [Header("Corner Correction")]
-    [SerializeField] private float topRayLength;
+    [SerializeField] private float topRayLength = 1f;
     [SerializeField] private Vector3 edgeRayOffset;
     [SerializeField] private Vector3 innerRayOffset;
     private bool canCornerCorrect;
 
-    private Vector2 startPos;
+    [Header("Ground Collision")]
+    [SerializeField] private float groundRayLength = 1f;
+    [SerializeField] private Vector3 groundRayOffset;
+    private bool isGrounded;
 
+    private Vector2 startPos;
     private bool isGliding;
-    
-    [Header("Visuals")]
-    [SerializeField] private SpriteRenderer playerSprite;
-    //[SerializeField] private Animator anim;
 
     private void Awake()
     {
@@ -87,7 +84,7 @@ public class PlayerController : MonoBehaviour
         }
 
         HandleRotation();
-        //HandleAnimations();
+        HandleAnimations();
     }
 
     private void FixedUpdate() {
@@ -122,18 +119,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //private void HandleAnimations() {
-    //    if (rb.velocity.y > 0) {
-    //        anim.SetBool("jump", true);
-    //    }
-    //    else if (rb.velocity.y < 0) {
-    //        anim.SetBool("falling", true);
-    //    }
-    //    else {
-    //        anim.SetBool("jump", false);
-    //        anim.SetBool("falling", false);
-    //    }
-    //}
+    private void HandleAnimations() {
+        if (rb.velocity.y > 0) {
+            anim.SetBool("jump", true);
+        }
+        else if (rb.velocity.y < 0) {
+            anim.SetBool("falling", true);
+        }
+        else {
+            anim.SetBool("jump", false);
+            anim.SetBool("falling", false);
+        }
+    }
     #endregion
 
     private Vector2 GetInput() {
