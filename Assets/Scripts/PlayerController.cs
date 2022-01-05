@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     [Header("Components")]
     private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer playerSprite;
@@ -27,7 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lowJumpFallMultiplier = 5f; //gravity multiplier when jumping and not pressing the jump button <= short jump 
     [SerializeField] private int extraJumps = 1; //number of extra jumps the player can make after his first
     [SerializeField] private float coyoteTime = .1f; //time window in which the player can jump after walking over an edge
-    [SerializeField] private float jumpBufferLength = .1f; 
+    [SerializeField] private float jumpBufferLength = .1f;
     private int extraJumpsValue;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
@@ -53,9 +52,11 @@ public class PlayerController : MonoBehaviour
         startPos = transform.position;
     }
 
+    private Vector2 GetInput() {
+        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    }
 
-    void Update()
-    {
+    void Update() {
         horizontalDir = GetInput().x;
 
         if (Input.GetButtonDown("Jump")) {
@@ -65,26 +66,21 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            if (!isGrounded)
-            {
+        if (Input.GetKey(KeyCode.LeftControl)) {
+            if (!isGrounded) {
                 Glide();
             }
         }
-        else if (isGliding)
-        {
+        else if (isGliding) {
             isGliding = false;
         }
 
-        //reset player position
-        if (Input.GetKey(KeyCode.R))
-        {
+        if (Input.GetKey(KeyCode.R)) {
             transform.position = startPos;
         }
 
         HandleRotation();
-        HandleAnimations();
+        //HandleAnimations();
     }
 
     private void FixedUpdate() {
@@ -97,8 +93,8 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded) {
             ApplyGroundLinearDrag();
-            extraJumpsValue = extraJumps;
-            coyoteTimeCounter = coyoteTime;
+            extraJumpsValue = extraJumps; //reset jumps counter
+            coyoteTimeCounter = coyoteTime; //reset coyote time counter
         }
         else {
             ApplyAirLinearDrag();
@@ -109,7 +105,8 @@ public class PlayerController : MonoBehaviour
             CornerCorrect(rb.velocity.y);
         }
     }
-    #region Animations and Sprite Management
+
+#region Animations and Sprite Management
     private void HandleRotation() {
         if(rb.velocity.x > 0) {
             playerSprite.flipX = false;
@@ -119,34 +116,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HandleAnimations() {
-        if (rb.velocity.y > 0) {
-            anim.SetBool("jump", true);
-        }
-        else if (rb.velocity.y < 0) {
-            anim.SetBool("falling", true);
-        }
-        else {
-            anim.SetBool("jump", false);
-            anim.SetBool("falling", false);
-        }
-    }
-    #endregion
+    //private void HandleAnimations() {
+    //    if (isJumping) {
+    //        anim.SetBool("jump", true);
+    //    }
+    //    else {
+    //        anim.SetBool("jump", false);
+    //    }
+    //    if (isRunning && isGrounded) {
+    //        anim.SetBool("running", true);
+    //    }
+    //    else {
+    //        anim.SetBool("running", false);
+    //    }
+    //    if (isFalling) {
+    //        anim.SetBool("falling", true);
+    //    }
+    //    else {
+    //        anim.SetBool("falling", false);
+    //    }
+    //}
+#endregion
 
-    private Vector2 GetInput() {
-        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    }
-
-    private void CheckCollision() {
-        isGrounded = Physics2D.Raycast(transform.position +groundRayOffset, Vector2.down, groundRayLength, groundLayer) ||
-                     Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
-
-        canCornerCorrect = Physics2D.Raycast(transform.position + edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
-                           !Physics2D.Raycast(transform.position + innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) ||
-                           Physics2D.Raycast(transform.position - edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
-                           !Physics2D.Raycast(transform.position - innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer);
-    }
-
+#region Input Movement
     private void Move() {
         rb.AddForce(new Vector2(horizontalDir, 0f) * acceleration);
 
@@ -154,7 +146,32 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //Clamp velocity when max speed is reached!
         }
     }
+    private void Jump() {
+        if (!isGrounded) {
+            extraJumpsValue--;
+        }
+        rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
+        coyoteTimeCounter = 0f;
+        jumpBufferCounter = 0f;
+    }
+    private void Glide() {
+        if (!isGliding) {
+            isGliding = true;
+        }
+
+        float fallSpeed = Mathf.Clamp(rb.velocity.y, Mathf.NegativeInfinity, 0);
+
+        rb.AddForce(-transform.up * fallSpeed * Time.deltaTime * 75);//upforce by fallspeed
+
+        rb.AddForce(transform.up * Mathf.Abs(rb.velocity.x) * Time.deltaTime * 75);//upforce by horizontal speed
+
+        rb.AddForce(-transform.right * horizontalDir * fallSpeed * Time.deltaTime * 50);//horizontal speed by fallspeed * x input
+    }
+#endregion
+
+#region LinearDrag & Gravity Management
     private void ApplyGroundLinearDrag() {
         if(Mathf.Abs(horizontalDir) < .4f || changingDir) {
             rb.drag = groundLinDrag;
@@ -166,16 +183,6 @@ public class PlayerController : MonoBehaviour
     private void ApplyAirLinearDrag() {
         rb.drag = airLinDrag;
     }
-
-    private void Jump() {
-        if (!isGrounded) {
-            extraJumpsValue--;
-        }
-        rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        coyoteTimeCounter = 0f;
-        jumpBufferCounter = 0f;
-    }
     private void ApplyFallGravity() {
         if (rb.velocity.y < 0f) {
             rb.gravityScale = fallMultiplier;
@@ -186,6 +193,18 @@ public class PlayerController : MonoBehaviour
         else {
             rb.gravityScale = 1f;
         }
+    }
+#endregion
+
+#region Collision Checks
+    private void CheckCollision() {
+        isGrounded = Physics2D.Raycast(transform.position + groundRayOffset, Vector2.down, groundRayLength, groundLayer) ||
+                     Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
+
+        canCornerCorrect = Physics2D.Raycast(transform.position + edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
+                           !Physics2D.Raycast(transform.position + innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) ||
+                           Physics2D.Raycast(transform.position - edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
+                           !Physics2D.Raycast(transform.position - innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer);
     }
 
     private void CornerCorrect(float _yVelocity) {
@@ -212,23 +231,9 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Corner Correct: Left!");
         }
     }
+#endregion
 
-    private void Glide()
-    {
-        if (!isGliding)
-        {
-            isGliding = true;
-        }
-
-        float fallSpeed = Mathf.Clamp(rb.velocity.y, Mathf.NegativeInfinity, 0);
-
-        rb.AddForce(-transform.up * fallSpeed * Time.deltaTime * 75);//upforce by fallspeed
-
-        rb.AddForce(transform.up * Mathf.Abs(rb.velocity.x) * Time.deltaTime * 75);//upforce by horizontal speed
-
-        rb.AddForce(-transform.right * horizontalDir * fallSpeed * Time.deltaTime * 50);//horizontal speed by fallspeed * x input
-    }
-
+#region Debugging
     private void OnDrawGizmos() {
         //Ground Check
         Gizmos.color = Color.red;
@@ -249,4 +254,5 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position + innerRayOffset + Vector3.up * topRayLength,
                         transform.position + innerRayOffset + Vector3.up * topRayLength + Vector3.right * topRayLength);
     }
+#endregion
 }
