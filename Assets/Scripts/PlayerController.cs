@@ -28,17 +28,18 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float airLinDrag = 2.5f; //linear drag when in air
     [SerializeField] private float fallMultiplier = 8f; //gravity multiplier when in air
     [SerializeField] private float lowJumpFallMultiplier = 5f; //gravity multiplier when jumping and not pressing the jump button <= short jump 
-    [SerializeField] private int extraJumps = 1; //number of extra jumps the player can make after his first
+    [SerializeField] private int additionalJumps = 1; //number of extra jumps the player can make after his first
     [SerializeField] private float coyoteTime = .1f; //time window in which the player can jump after walking over an edge
     [SerializeField] private float jumpBufferLength = .1f;
     [SerializeField] [Tooltip("The maximum jump height for one jump in normal tiles")] private float maxJumpHeight;
-    private int extraJumpsValue;
+    private int additionalJumpsCounted;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
     private Vector2 lastJumpPos;
+
     private bool canJump {
         get {
-            return jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || extraJumps > 0);
+            return jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || additionalJumpsCounted > 0);
         }
     }
 
@@ -56,8 +57,7 @@ public class PlayerController : MonoBehaviour {
     private Vector2 startPos;
     private bool isGliding;
 
-    private void Awake()
-    {
+    private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         startPos = transform.position;
     }
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour {
 
         if (isGrounded) {
             ApplyGroundLinearDrag();
-            extraJumpsValue = extraJumps; //reset jumps counter
+            additionalJumpsCounted = additionalJumps; //reset jumps counter
             coyoteTimeCounter = coyoteTime; //reset coyote time counter
         }
         else {
@@ -118,10 +118,10 @@ public class PlayerController : MonoBehaviour {
 
 #region Animations and Sprite Management
     private void HandleRotation() {
-        if(rb.velocity.x > 0) {
+        if (GetInput().x > 0) {
             playerSprite.flipX = false;
         }
-        else if(rb.velocity.x < 0){
+        else if (GetInput().x < 0) {
             playerSprite.flipX = true;
         }
     }
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour {
         lastJumpPos = transform.position;
 
         if (!isGrounded) {
-            extraJumpsValue--;
+            additionalJumpsCounted--;
         }
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);

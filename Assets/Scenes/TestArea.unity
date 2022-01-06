@@ -5229,15 +5229,15 @@ MonoBehaviour:
     m_Bits: 384
   acceleration: 70
   maxSpeed: 12
-  groundLinDrag: 7
+  groundLinDrag: 20
   jumpForce: 20
   airLinDrag: 2.5
   fallMultiplier: 8
-  lowJumpFallMultiplier: 8
-  extraJumps: 1
+  lowJumpFallMultiplier: 5
+  additionalJumps: 1
   coyoteTime: 0.1
   jumpBufferLength: 0.1
-  maxJumpHeight: 1
+  maxJumpHeight: 2
   CCRayLength: 1
   CCedgeRayOffset: {x: 0.55, y: 0, z: 0}
   CCinnerRayOffset: {x: 0.2, y: 0, z: 0}
