@@ -17,7 +17,11 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float maxSpeed = 12f; //maximum speed of the player
     [SerializeField] private float groundLinDrag = 7f; //linear drag when not moving <= decceleration
     private float horizontalDir;
-    private bool changingDir => (rb.velocity.x > 0f && horizontalDir < 0f) || (rb.velocity.x < 0f && horizontalDir > 0f); //returns true when switching from left to right and vice versa
+    private bool changingDir {
+        get {
+            return (rb.velocity.x > 0f && horizontalDir < 0f) || (rb.velocity.x < 0f && horizontalDir > 0f);
+        }
+    }
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 20f; //jump force of the player
@@ -30,7 +34,11 @@ public class PlayerController : MonoBehaviour {
     private int extraJumpsValue;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
-    private bool canJump => jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || extraJumpsValue > 0);
+    private bool canJump {
+        get {
+            return jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || extraJumps > 0);
+        }
+    }
 
     [Header("Corner Correction")]
     [SerializeField] private float topRayLength = 1f;
