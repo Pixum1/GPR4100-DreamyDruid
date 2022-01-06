@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Layer Masks")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask cornerCorrectLayer;
+    [SerializeField] private LayerMask CCLayer; //the corner correction layer
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 70f; //movement speed acceleration of the player
@@ -31,9 +31,11 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private int extraJumps = 1; //number of extra jumps the player can make after his first
     [SerializeField] private float coyoteTime = .1f; //time window in which the player can jump after walking over an edge
     [SerializeField] private float jumpBufferLength = .1f;
+    [SerializeField] [Tooltip("The maximum jump height for one jump in normal tiles")] private float maxJumpHeight;
     private int extraJumpsValue;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
+    private Vector2 lastJumpPos;
     private bool canJump {
         get {
             return jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || extraJumps > 0);
@@ -41,9 +43,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     [Header("Corner Correction")]
-    [SerializeField] private float topRayLength = 1f;
-    [SerializeField] private Vector3 edgeRayOffset;
-    [SerializeField] private Vector3 innerRayOffset;
+    [SerializeField] private float CCRayLength = 1f;
+    [SerializeField] private Vector3 CCedgeRayOffset;
+    [SerializeField] private Vector3 CCinnerRayOffset;
     private bool canCornerCorrect;
 
     [Header("Ground Collision")]
@@ -92,7 +94,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        CheckCollision();
+        CollisionCheck();
         Move();
 
         if (canJump) {
@@ -110,7 +112,7 @@ public class PlayerController : MonoBehaviour {
             coyoteTimeCounter -= Time.deltaTime;
         }
         if (canCornerCorrect) {
-            CornerCorrect(rb.velocity.y);
+            ApplyCornerCorrection(rb.velocity.y);
         }
     }
 
@@ -155,6 +157,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
     private void Jump() {
+        lastJumpPos = transform.position;
+
         if (!isGrounded) {
             extraJumpsValue--;
         }
@@ -192,7 +196,7 @@ public class PlayerController : MonoBehaviour {
         rb.drag = airLinDrag;
     }
     private void ApplyFallGravity() {
-        if (rb.velocity.y < 0f) {
+        if (rb.velocity.y < 0f || Vector3.Distance(lastJumpPos, transform.position) > maxJumpHeight) {
             rb.gravityScale = fallMultiplier;
         }
         else if (rb.velocity.y > 0f && !Input.GetButton("Jump")) {
@@ -205,62 +209,62 @@ public class PlayerController : MonoBehaviour {
 #endregion
 
 #region Collision Checks
-    private void CheckCollision() {
+    private void CollisionCheck() {
         isGrounded = Physics2D.Raycast(transform.position + groundRayOffset, Vector2.down, groundRayLength, groundLayer) ||
                      Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
 
-        canCornerCorrect = Physics2D.Raycast(transform.position + edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
-                           !Physics2D.Raycast(transform.position + innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) ||
-                           Physics2D.Raycast(transform.position - edgeRayOffset, Vector2.up, topRayLength, cornerCorrectLayer) &&
-                           !Physics2D.Raycast(transform.position - innerRayOffset, Vector2.up, topRayLength, cornerCorrectLayer);
+        canCornerCorrect = Physics2D.Raycast(transform.position + CCedgeRayOffset, Vector2.up, CCRayLength, CCLayer) &&
+                           !Physics2D.Raycast(transform.position + CCinnerRayOffset, Vector2.up, CCRayLength, CCLayer) ||
+                           Physics2D.Raycast(transform.position - CCedgeRayOffset, Vector2.up, CCRayLength, CCLayer) &&
+                           !Physics2D.Raycast(transform.position - CCinnerRayOffset, Vector2.up, CCRayLength, CCLayer);
     }
 
-    private void CornerCorrect(float _yVelocity) {
-        //Push player to the right
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - innerRayOffset + Vector3.up * topRayLength, Vector3.left, topRayLength, cornerCorrectLayer);
-        if (hit.collider != null) {
-            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * topRayLength,
-                transform.position - innerRayOffset + Vector3.up * topRayLength);
-            transform.position = new Vector3(transform.position.x + newPos, transform.position.y, transform.position.z);
-            rb.velocity = new Vector2(rb.velocity.x, _yVelocity);
+    private void ApplyCornerCorrection(float _yVelo) {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - CCinnerRayOffset + Vector3.up * CCRayLength, Vector3.left, CCRayLength, CCLayer);
 
-            Debug.Log("Corner Correct: Right!");
+        if (hit.collider != null) {
+            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * CCRayLength,
+                transform.position - CCinnerRayOffset + Vector3.up * CCRayLength);
+            transform.position = new Vector3(transform.position.x + newPos, transform.position.y, transform.position.z);
+            rb.velocity = new Vector2(rb.velocity.x, _yVelo);
             return;
         }
 
-        //Push player to the left
-        hit = Physics2D.Raycast(transform.position + innerRayOffset + Vector3.up * topRayLength, Vector3.right, topRayLength, cornerCorrectLayer);
+        hit = Physics2D.Raycast(transform.position + CCinnerRayOffset + Vector3.up * CCRayLength, Vector3.right, CCRayLength, CCLayer);
         if (hit.collider != null) {
-            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * topRayLength,
-                transform.position + edgeRayOffset + Vector3.up * topRayLength);
+            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * CCRayLength,
+                transform.position + CCedgeRayOffset + Vector3.up * CCRayLength);
             transform.position = new Vector3(transform.position.x - newPos, transform.position.y, transform.position.z);
-            rb.velocity = new Vector2(rb.velocity.x, _yVelocity);
-
-            Debug.Log("Corner Correct: Left!");
+            rb.velocity = new Vector2(rb.velocity.x, _yVelo);
         }
     }
 #endregion
 
 #region Debugging
     private void OnDrawGizmos() {
-        //Ground Check
+        DrawGroundRays();
+        DrawCornerCheckRays();
+        DrawCornerCheckRays();
+        
+    }
+    private void DrawGroundRays() {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position + groundRayOffset, transform.position + groundRayOffset + Vector3.down * groundRayLength);
         Gizmos.DrawLine(transform.position - groundRayOffset, transform.position - groundRayOffset + Vector3.down * groundRayLength);
-
-        //Corner Check
+    }
+    private void DrawCornerCheckRays() {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position + edgeRayOffset, transform.position + edgeRayOffset + Vector3.up * topRayLength);
-        Gizmos.DrawLine(transform.position - edgeRayOffset, transform.position - edgeRayOffset + Vector3.up * topRayLength);
-        Gizmos.DrawLine(transform.position + innerRayOffset, transform.position + innerRayOffset + Vector3.up * topRayLength);
-        Gizmos.DrawLine(transform.position - innerRayOffset, transform.position - innerRayOffset + Vector3.up * topRayLength);
-
-        //Corner Distance Check
+        Gizmos.DrawLine(transform.position + CCedgeRayOffset, transform.position + CCedgeRayOffset + Vector3.up * CCRayLength);
+        Gizmos.DrawLine(transform.position - CCedgeRayOffset, transform.position - CCedgeRayOffset + Vector3.up * CCRayLength);
+        Gizmos.DrawLine(transform.position + CCinnerRayOffset, transform.position + CCinnerRayOffset + Vector3.up * CCRayLength);
+        Gizmos.DrawLine(transform.position - CCinnerRayOffset, transform.position - CCinnerRayOffset + Vector3.up * CCRayLength);
+    }
+    private void DrawCornerDistanceRays() {
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position - innerRayOffset + Vector3.up * topRayLength,
-                        transform.position - innerRayOffset + Vector3.up * topRayLength + Vector3.left * topRayLength);
-        Gizmos.DrawLine(transform.position + innerRayOffset + Vector3.up * topRayLength,
-                        transform.position + innerRayOffset + Vector3.up * topRayLength + Vector3.right * topRayLength);
+        Gizmos.DrawLine(transform.position - CCinnerRayOffset + Vector3.up * CCRayLength,
+                        transform.position - CCinnerRayOffset + Vector3.up * CCRayLength + Vector3.left * CCRayLength);
+        Gizmos.DrawLine(transform.position + CCinnerRayOffset + Vector3.up * CCRayLength,
+                        transform.position + CCinnerRayOffset + Vector3.up * CCRayLength + Vector3.right * CCRayLength);
     }
 #endregion
 }
