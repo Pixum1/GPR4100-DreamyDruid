@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour {
     private float jumpBufferCounter;
     private Vector2 lastJumpPos;
 
+    public float jumpHeight;
+
     private bool canJump {
         get {
             return jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || additionalJumpsCounted > 0);
@@ -66,7 +68,8 @@ public class PlayerController : MonoBehaviour {
         return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
 
-    void Update() {
+    void Update() 
+    {
         horizontalDir = GetInput().x;
 
         if (Input.GetButtonDown("Jump")) {
@@ -157,14 +160,17 @@ public class PlayerController : MonoBehaviour {
     }
     private void Jump() {
         lastJumpPos = transform.position;
-
+        
         if (!isGrounded) {
             additionalJumpsCounted--;
         }
 
         ApplyAirLinearDrag();
+        rb.gravityScale = 1f;
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        jumpHeight = (rb.velocity.y * rb.velocity.y) / ((2 * -Physics.gravity.y + rb.drag * rb.velocity.y)* -Physics.gravity.y*0.1f);
 
         coyoteTimeCounter = 0f;
         jumpBufferCounter = 0f;
@@ -197,8 +203,9 @@ public class PlayerController : MonoBehaviour {
         rb.drag = airLinDrag;
     }
     private void ApplyFallGravity() {
-        if (rb.velocity.y < 0f || Vector3.Distance(lastJumpPos, transform.position) > maxJumpHeight) {
-            rb.gravityScale = fallMultiplier;
+        if (rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > maxJumpHeight)
+        {
+            rb.gravityScale = fallMultiplier;                   
         }
         else if (rb.velocity.y > 0f && !Input.GetButton("Jump")) {
             rb.gravityScale = lowJumpFallMultiplier;
