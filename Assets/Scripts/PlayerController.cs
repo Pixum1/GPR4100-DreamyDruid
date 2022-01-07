@@ -97,10 +97,6 @@ public class PlayerController : MonoBehaviour {
         CollisionCheck();
         Move();
 
-        if (canJump) {
-            Jump();
-        }
-
         if (isGrounded) {
             ApplyGroundLinearDrag();
             additionalJumpsCounted = additionalJumps; //reset jumps counter
@@ -109,7 +105,10 @@ public class PlayerController : MonoBehaviour {
         else {
             ApplyAirLinearDrag();
             ApplyFallGravity();
-            coyoteTimeCounter -= Time.deltaTime;
+            coyoteTimeCounter -= Time.fixedDeltaTime;
+        }
+        if (canJump) {
+            Jump();
         }
         if (canCornerCorrect) {
             ApplyCornerCorrection(rb.velocity.y);
@@ -162,6 +161,8 @@ public class PlayerController : MonoBehaviour {
         if (!isGrounded) {
             additionalJumpsCounted--;
         }
+
+        ApplyAirLinearDrag();
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
