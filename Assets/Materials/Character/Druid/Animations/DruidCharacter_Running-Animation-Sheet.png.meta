@@ -1,25 +1,34 @@
 fileFormatVersion: 2
-guid: c0582d7c3c7b29f429003582347c01b6
+guid: e92348aa874889440ade8d3cb79989c4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5372896113265019529
-    second: DruidCharacter-Jump_Animation_0
+      213: 6200674288103304419
+    second: DruidCharacter_Running-Animation-Sheet_0
   - first:
-      213: -4000257504542558864
-    second: DruidCharacter-Jump_Animation_1
+      213: 8196430911403801909
+    second: DruidCharacter_Running-Animation-Sheet_1
   - first:
-      213: -459859122660899979
-    second: DruidCharacter-Jump_Animation_2
+      213: 7794117150226686099
+    second: DruidCharacter_Running-Animation-Sheet_2
   - first:
-      213: -5545761573812856686
-    second: DruidCharacter-Jump_Animation_3
+      213: -4526353349696701995
+    second: DruidCharacter_Running-Animation-Sheet_3
   - first:
-      213: -3436767655525035258
-    second: DruidCharacter-Jump_Animation_4
+      213: -6334520781504048447
+    second: DruidCharacter_Running-Animation-Sheet_4
   - first:
-      213: -344143132743544308
-    second: DruidCharacter-Jump_Animation_5
+      213: 5561927261553416778
+    second: DruidCharacter_Running-Animation-Sheet_5
+  - first:
+      213: -3515627582058296588
+    second: DruidCharacter_Running-Animation-Sheet_6
+  - first:
+      213: 8555887984126184206
+    second: DruidCharacter_Running-Animation-Sheet_7
+  - first:
+      213: 8281180556465171192
+    second: DruidCharacter_Running-Animation-Sheet_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,12 +130,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DruidCharacter-Jump_Animation_0
+      name: DruidCharacter_Running-Animation-Sheet_0
       rect:
         serializedVersion: 2
-        x: 8
+        x: 2
         y: 0
-        width: 14
+        width: 20
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -135,62 +144,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98a0d365c8c509a40800000000000000
-      internalID: 5372896113265019529
+      spriteID: 3ecab4699683d0650800000000000000
+      internalID: 6200674288103304419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DruidCharacter-Jump_Animation_1
+      name: DruidCharacter_Running-Animation-Sheet_1
       rect:
         serializedVersion: 2
-        x: 40
-        y: 0
-        width: 14
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 07576af6efa3c78c0800000000000000
-      internalID: -4000257504542558864
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DruidCharacter-Jump_Animation_2
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 0
-        width: 18
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 573031b70904e99f0800000000000000
-      internalID: -459859122660899979
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DruidCharacter-Jump_Animation_3
-      rect:
-        serializedVersion: 2
-        x: 99
+        x: 35
         y: 0
         width: 19
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -198,20 +165,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2989fd73b3f7903b0800000000000000
-      internalID: -5545761573812856686
+      spriteID: 53d3144cc729fb170800000000000000
+      internalID: 8196430911403801909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DruidCharacter-Jump_Animation_4
+      name: DruidCharacter_Running-Animation-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 0
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 390aa0dc0444a2c60800000000000000
+      internalID: 7794117150226686099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DruidCharacter_Running-Animation-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d9bd6f2c992f21c0800000000000000
+      internalID: -4526353349696701995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DruidCharacter_Running-Animation-Sheet_4
       rect:
         serializedVersion: 2
         x: 131
         y: 0
         width: 19
-        height: 17
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,20 +228,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 603d0eca6062e40d0800000000000000
-      internalID: -3436767655525035258
+      spriteID: 1c21f1439e24718a0800000000000000
+      internalID: -6334520781504048447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DruidCharacter-Jump_Animation_5
+      name: DruidCharacter_Running-Animation-Sheet_5
       rect:
         serializedVersion: 2
-        x: 164
+        x: 162
         y: 0
-        width: 18
-        height: 17
+        width: 20
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,8 +249,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c025ee4e4ab593bf0800000000000000
-      internalID: -344143132743544308
+      spriteID: a4ad373406fef2d40800000000000000
+      internalID: 5561927261553416778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DruidCharacter_Running-Animation-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 0
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fa89d8375bf53fc0800000000000000
+      internalID: -3515627582058296588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DruidCharacter_Running-Animation-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 0
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0bcfdf5ace9cb670800000000000000
+      internalID: 8555887984126184206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DruidCharacter_Running-Animation-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 0
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fa6afc27d9ace270800000000000000
+      internalID: 8281180556465171192
       vertices: []
       indices: 
       edges: []

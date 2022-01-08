@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - CameraZone
-  - Ground
   layers:
   - Default
   - TransparentFX
@@ -14,8 +13,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
+  - Ground
+  - Walls
   - 
   - 
   - 
