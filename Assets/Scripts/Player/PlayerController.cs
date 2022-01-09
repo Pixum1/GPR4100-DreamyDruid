@@ -4,24 +4,19 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour {
-    #region Components
     [Header("Components")]
     private Rigidbody2D rb;
     [SerializeField] 
     private SpriteRenderer playerSprite;
     [SerializeField] 
     private Animator anim;
-    #endregion
 
-    #region Layer masks
     [Header("Layer Masks")]
     [SerializeField] [Tooltip("The layer that marks the player as 'grounded' when standing on")]
     private LayerMask groundLayer;
     [SerializeField] [Tooltip("The 'corner correction' layer")]
     private LayerMask CCLayer;
-    #endregion
 
-    #region Movement variables
     [Header("Movement")]
     [SerializeField] [Tooltip("The movement speed acceleration of the player")]
     private float acceleration = 70f;
@@ -29,16 +24,18 @@ public class PlayerController : MonoBehaviour {
     private float maxSpeed = 12f;
     [SerializeField] [Tooltip("The friction applied when not moving <= decceleration")]
     private float groundLinDrag = 7f;
-    private float horizontalDir;
-    private bool changingDir {
+    public float m_HorizontalDir {
         get {
-            //returns true if the player changes his direction from left to right and vice versa
-            return (rb.velocity.x > 0f && horizontalDir < 0f) || (rb.velocity.x < 0f && horizontalDir > 0f);
+            return AxisInput().x;
         }
     }
-    #endregion
+    private bool m_ChangingDir {
+        get {
+            //returns true if the player changes his direction from left to right and vice versa
+            return (rb.velocity.x > 0f && m_HorizontalDir < 0f) || (rb.velocity.x < 0f && m_HorizontalDir > 0f);
+        }
+    }
 
-    #region Jump variables
     [Header("Jump")]
     [SerializeField] [Tooltip("The jump height of the object in units(metres)")]
     private float jumpHeight;
@@ -58,15 +55,13 @@ public class PlayerController : MonoBehaviour {
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
     private Vector2 lastJumpPos;
-    private bool canJump {
+    public bool m_CanJump {
         get {
             //return true if the player performs an input in the given time window and has additional jumps left
             return jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || additionalJumpsCounted > 0);
         }
     }
-    #endregion
 
-    #region Corner correction Variables
     [Header("Corner Correction")]
     [SerializeField] [Tooltip("The distance at which the corner correction should be calculated (Higher numbers = faster detection of corners)")]
     private float CCRayLength = 1f;
@@ -74,7 +69,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 CCedgeRayOffset;
     [SerializeField] [Tooltip("The inner offset of the corner correction ray")]
     private Vector3 CCinnerRayOffset;
-    private bool canCornerCorrect {
+    private bool m_CanCornerCorrect {
         get {
             //returns true if a corner was detected
             return Physics2D.Raycast(transform.position + CCedgeRayOffset, Vector2.up, CCRayLength, CCLayer) &&
@@ -83,25 +78,21 @@ public class PlayerController : MonoBehaviour {
                    !Physics2D.Raycast(transform.position - CCinnerRayOffset, Vector2.up, CCRayLength, CCLayer);
         }
     }
-    #endregion
 
-    #region Ground Collision variables
     [Header("Ground Collision")]
     [SerializeField] 
     private float groundRayLength = 1f;
     [SerializeField] 
     private Vector3 groundRayOffset;
-    private bool isGrounded {
+    public bool m_IsGrounded {
         get {
             //returns true if the players feet touch the ground layer
             return Physics2D.Raycast(transform.position + groundRayOffset, Vector2.down, groundRayLength, groundLayer) ||
                    Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
         }
     }
-    #endregion
 
     private Vector2 startPos;
-    private bool isGliding;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -109,25 +100,12 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        horizontalDir = AxisInput().x;
-
         #region Jumping
         if (Input.GetButtonDown("Jump")) {
             jumpBufferCounter = jumpBufferLength; //reset the jump buffer
         }
         else {
             jumpBufferCounter -= Time.deltaTime; //decrease the jump buffer timer
-        }
-        #endregion
-
-        #region Gliding
-        if (Input.GetKey(KeyCode.LeftControl)) {
-            if (!isGrounded) {
-                Glide();
-            }
-        }
-        else if (isGliding) {
-            isGliding = false;
         }
         #endregion
 
@@ -143,7 +121,7 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate() {
         Move();
 
-        if (isGrounded) {
+        if (m_IsGrounded) {
             ApplyGroundLinearDrag();
             additionalJumpsCounted = additionalJumps; //reset jumps counter
             coyoteTimeCounter = coyoteTime; //reset coyote time counter
@@ -153,10 +131,10 @@ public class PlayerController : MonoBehaviour {
             ApplyFallGravity();
             coyoteTimeCounter -= Time.fixedDeltaTime; //decrease coyote timer
         }
-        if (canJump) {
+        if (m_CanJump) {
             Jump();
         }
-        if (canCornerCorrect) {
+        if (m_CanCornerCorrect) {
             CheckForCornerCorrection(rb.velocity.y);
         }
     }
@@ -206,7 +184,7 @@ public class PlayerController : MonoBehaviour {
     /// Makes the player move into the desired horinzontal direction and limits his speed
     /// </summary>
     private void Move() {
-        rb.AddForce(new Vector2(horizontalDir, 0f) * acceleration);
+        rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
 
         if (Mathf.Abs(rb.velocity.x) > maxSpeed) {
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //Clamp velocity when max speed is reached!
@@ -218,7 +196,7 @@ public class PlayerController : MonoBehaviour {
     private void Jump() {
         lastJumpPos = transform.position;
         
-        if (!isGrounded) {
+        if (!m_IsGrounded) {
             additionalJumpsCounted--;
         }
         ApplyAirLinearDrag();
@@ -231,19 +209,6 @@ public class PlayerController : MonoBehaviour {
         coyoteTimeCounter = 0f;
         jumpBufferCounter = 0f;
     }
-    private void Glide() {
-        if (!isGliding) {
-            isGliding = true;
-        }
-
-        float fallSpeed = Mathf.Clamp(rb.velocity.y, Mathf.NegativeInfinity, 0);
-
-        rb.AddForce(-transform.up * fallSpeed * Time.deltaTime * 75);//upforce by fallspeed
-
-        rb.AddForce(transform.up * Mathf.Abs(rb.velocity.x) * Time.deltaTime * 75);//upforce by horizontal speed
-
-        rb.AddForce(-transform.right * horizontalDir * fallSpeed * Time.deltaTime * 50);//horizontal speed by fallspeed * x input
-    }
 #endregion
     
     #region LinearDrag & Gravity Management
@@ -251,7 +216,7 @@ public class PlayerController : MonoBehaviour {
     /// Applies the ground friction based on wether the player is moving or giving no horizontal inputs
     /// </summary>
     private void ApplyGroundLinearDrag() {
-        if(Mathf.Abs(horizontalDir) < .4f || changingDir) {
+        if(Mathf.Abs(m_HorizontalDir) < .4f || m_ChangingDir) {
             rb.drag = groundLinDrag;
         }
         else {
