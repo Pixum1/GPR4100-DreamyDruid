@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grapple : MonoBehaviour
+public class Grappling : MonoBehaviour
 {
     private LineRenderer lr;
 
@@ -18,20 +18,20 @@ public class Grapple : MonoBehaviour
 
     private DistanceJoint2D joint;
 
-    GameObject grapplePointObj;
+    GameObject grapplingPoint;
+
+    public bool isGrappling;
 
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
-        grapplePointObj= GameObject.Find("GrapplePoint");
     }
     
     void Update()
     {
-        CaptureMousePosition();        
-
         if (Input.GetMouseButtonDown(0))
         {
+            CaptureMousePosition();
             StartGrapple();
         }
         else if (Input.GetMouseButtonUp(0))
@@ -40,19 +40,21 @@ public class Grapple : MonoBehaviour
         }        
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         DrawRope();
     }
 
     void StartGrapple()
     {
+        isGrappling = true;
+        grapplingPoint = new GameObject("GrapplingPoint");
         RaycastHit2D hit= Physics2D.Raycast(origin: transform.position, direction: mousePos- transform.position, maxDistance, grappable);
         if (hit)
         {
             
-            grapplePointObj.transform.position = hit.point;
-            grapplePointObj.transform.SetParent(hit.collider.gameObject.transform);
+            grapplingPoint.transform.position = hit.point;
+            grapplingPoint.transform.SetParent(hit.collider.gameObject.transform);
 
             joint = transform.gameObject.AddComponent<DistanceJoint2D>();
             joint.enableCollision = true;
@@ -61,15 +63,17 @@ public class Grapple : MonoBehaviour
             joint.autoConfigureDistance = false;
             joint.distance = hit.distance;
             joint.connectedBody = rb;
+            joint.connectedAnchor = grapplingPoint.transform.position;
 
-            joint.connectedAnchor = grapplePointObj.transform.position;
             lr.positionCount = 2;
         }        
     }
 
     void StopGrapple()
     {
+        isGrappling = false;
         lr.positionCount = 0;
+        Destroy(grapplingPoint);
         Destroy(joint);
     }
     void DrawRope()
@@ -77,7 +81,7 @@ public class Grapple : MonoBehaviour
         if (joint)
         {
             lr.SetPosition(index: 0, transform.position);
-            lr.SetPosition(index: 1, grapplePointObj.transform.position);
+            lr.SetPosition(index: 1, grapplingPoint.transform.position);
         }
     }
 
@@ -85,5 +89,10 @@ public class Grapple : MonoBehaviour
     {
         mousePos = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
                                         Camera.main.ScreenToWorldPoint(Input.mousePosition).y,0);
+    }
+
+    private void OnDisable()
+    {
+        StopGrapple();
     }
 }
