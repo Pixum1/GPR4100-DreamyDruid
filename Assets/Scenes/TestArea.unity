@@ -9981,13 +9981,16 @@ GameObject:
   m_Component:
   - component: {fileID: 992924941}
   - component: {fileID: 992924940}
+  - component: {fileID: 992924946}
   - component: {fileID: 992924939}
-  - component: {fileID: 992924938}
-  - component: {fileID: 992924936}
   - component: {fileID: 992924943}
+  - component: {fileID: 992924944}
+  - component: {fileID: 992924936}
+  - component: {fileID: 992924938}
   - component: {fileID: 992924935}
   - component: {fileID: 992924937}
   - component: {fileID: 992924942}
+  - component: {fileID: 992924945}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -10100,15 +10103,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992924934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a519c1f22828ace4bbd4de9455aeb14e, type: 3}
+  m_Script: {fileID: 11500000, guid: 89c7b268253dee449b0882e452ebb076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   grappable:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 384
   maxDistance: 50
+  isGrappling: 0
 --- !u!61 &992924937
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10282,11 +10286,55 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992924934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be96996c6ebeaf148b79fd18a661b373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &992924944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992924934}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6fea9515b8307468eca0a917f18a75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  maxAngularVel: 300
+--- !u!58 &992924945
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992924934}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 9f158a2947c3f534584c19bc442de070, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &992924946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992924934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248a4aa6f6889414eb85ae88df69c5c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourScripts: []
+  i: 0
 --- !u!1 &1577012917
 GameObject:
   m_ObjectHideFlags: 0
