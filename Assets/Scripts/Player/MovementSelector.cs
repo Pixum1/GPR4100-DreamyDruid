@@ -13,7 +13,7 @@ public class MovementSelector : MonoBehaviour
 
     void Awake()
     {
-        behaviourScripts.Add(GetComponent<PlayerController>());
+        //behaviourScripts.Add(GetComponent<PlayerController>());
         behaviourScripts.Add(GetComponent<Grappling>());
         behaviourScripts.Add(GetComponent<Gliding>());
         behaviourScripts.Add(GetComponent<Rolling>());        

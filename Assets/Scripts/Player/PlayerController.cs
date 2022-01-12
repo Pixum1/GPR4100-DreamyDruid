@@ -4,12 +4,21 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour {
+    #region Variables
     [Header("Components")]
     private Rigidbody2D rb;
     [SerializeField] 
     private SpriteRenderer playerSprite;
     [SerializeField] 
     private Animator anim;
+    [SerializeField]
+
+    [Header("Movement Scripts")]
+    private Rolling rollingScript;
+    [SerializeField]
+    private Grappling grapplingScript;
+    [SerializeField]
+    private Gliding glidingScript;
 
     [Header("Layer Masks")]
     [SerializeField] [Tooltip("The layer that marks the player as 'grounded' when standing on")]
@@ -32,7 +41,14 @@ public class PlayerController : MonoBehaviour {
     private bool m_ChangingDir {
         get {
             //returns true if the player changes his direction from left to right and vice versa
-            return (rb.velocity.x > 0f && m_HorizontalDir < 0f) || (rb.velocity.x < 0f && m_HorizontalDir > 0f);
+            return (rb.velocity.x > 0f && m_HorizontalDir < 0f) 
+                   || (rb.velocity.x < 0f && m_HorizontalDir > 0f);
+        }
+    }
+    public bool m_CanMove {
+        get {
+            return m_HorizontalDir != 0f
+                   && !grapplingScript.m_IsGrappling;
         }
     }
 
@@ -58,7 +74,9 @@ public class PlayerController : MonoBehaviour {
     public bool m_CanJump {
         get {
             //return true if the player performs an input in the given time window and has additional jumps left
-            return jumpBufferCounter > 0f && (coyoteTimeCounter > 0f || additionalJumpsCounted > 0);
+            return jumpBufferCounter > 0f
+                   && (coyoteTimeCounter > 0f || additionalJumpsCounted > 0)
+                   && !rollingScript.m_IsRolling;
         }
     }
 
@@ -93,6 +111,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private Vector2 startPos;
+    #endregion
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -119,7 +138,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Move();
+        if(m_CanMove)
+            Move();
 
         if (m_IsGrounded) {
             ApplyGroundLinearDrag();
@@ -131,12 +151,12 @@ public class PlayerController : MonoBehaviour {
             ApplyFallGravity();
             coyoteTimeCounter -= Time.fixedDeltaTime; //decrease coyote timer
         }
-        if (m_CanJump) {
+
+        if (m_CanJump)
             Jump();
-        }
-        if (m_CanCornerCorrect) {
+
+        if (m_CanCornerCorrect)
             CheckForCornerCorrection(rb.velocity.y);
-        }
     }
 
     #region Animations and Sprite Management
@@ -186,9 +206,8 @@ public class PlayerController : MonoBehaviour {
     private void Move() {
         rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
 
-        if (Mathf.Abs(rb.velocity.x) > maxSpeed) {
+        if (Mathf.Abs(rb.velocity.x) > maxSpeed)
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //Clamp velocity when max speed is reached!
-        }
     }
     /// <summary>
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
@@ -196,9 +215,9 @@ public class PlayerController : MonoBehaviour {
     private void Jump() {
         lastJumpPos = transform.position;
         
-        if (!m_IsGrounded) {
+        if (!m_IsGrounded)
             additionalJumpsCounted--;
-        }
+
         ApplyAirLinearDrag();
 
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0

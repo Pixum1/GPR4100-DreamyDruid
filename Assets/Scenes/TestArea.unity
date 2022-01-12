@@ -10112,7 +10112,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   maxDistance: 50
-  isGrappling: 0
 --- !u!61 &992924937
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10174,6 +10173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSprite: {fileID: 992924940}
   anim: {fileID: 992924942}
+  rollingScript: {fileID: 992924944}
+  grapplingScript: {fileID: 992924936}
+  glidingScript: {fileID: 992924943}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -10312,7 +10314,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992924934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 9f158a2947c3f534584c19bc442de070, type: 2}
   m_IsTrigger: 0

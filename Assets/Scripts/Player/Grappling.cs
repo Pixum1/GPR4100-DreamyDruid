@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grappling : MonoBehaviour
-{
+public class Grappling : MonoBehaviour {
     private LineRenderer lr;
 
     private Vector3 mousePos;
@@ -20,7 +19,11 @@ public class Grappling : MonoBehaviour
 
     GameObject grapplingPoint;
 
-    public bool isGrappling;
+    public bool m_IsGrappling {
+        get {
+            return this.isActiveAndEnabled && grapplingPoint != null;
+        }
+    }
 
     void Awake()
     {
@@ -47,12 +50,10 @@ public class Grappling : MonoBehaviour
 
     void StartGrapple()
     {
-        isGrappling = true;
         grapplingPoint = new GameObject("GrapplingPoint");
         RaycastHit2D hit= Physics2D.Raycast(origin: transform.position, direction: mousePos- transform.position, maxDistance, grappable);
         if (hit)
         {
-            
             grapplingPoint.transform.position = hit.point;
             grapplingPoint.transform.SetParent(hit.collider.gameObject.transform);
 
@@ -71,7 +72,6 @@ public class Grappling : MonoBehaviour
 
     void StopGrapple()
     {
-        isGrappling = false;
         lr.positionCount = 0;
         Destroy(grapplingPoint);
         Destroy(joint);

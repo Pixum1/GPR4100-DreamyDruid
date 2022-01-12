@@ -10,6 +10,12 @@ public class Gliding : MonoBehaviour
             return Input.GetKey(KeyCode.LeftControl) && !player.m_IsGrounded;
         }
     }
+    public bool m_IsGliding { 
+        get {
+            return this.isActiveAndEnabled && m_CanGlide;
+        } 
+    }
+
     private Rigidbody2D rb;
 
     private void Awake() {

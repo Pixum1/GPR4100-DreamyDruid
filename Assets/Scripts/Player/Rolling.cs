@@ -14,6 +14,16 @@ public class Rolling : MonoBehaviour
 
     [SerializeField]
     float maxAngularVel = 300;
+    private bool canRoll {
+        get {
+            return Input.GetAxis("Horizontal") != 0;
+        }
+    }
+    public bool m_IsRolling {
+        get {
+            return this.isActiveAndEnabled && canRoll;
+        }
+    }
 
     void Awake()
     {
@@ -24,7 +34,7 @@ public class Rolling : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0)
+        if (canRoll)
         {
             Roll();
         }
