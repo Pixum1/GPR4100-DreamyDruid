@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grappling : MonoBehaviour
-{
+public class Grappling : MonoBehaviour {
     [SerializeField]
     private LayerMask grappable;
+    
+    private LineRenderer lr;
+
+    private Vector3 mousePos;
 
     [SerializeField]
     private Material ropeMaterial;
@@ -24,6 +27,12 @@ public class Grappling : MonoBehaviour
 
     [SerializeField]
     private float ropeWidth = 0.2f;
+
+    public bool m_IsGrappling {
+        get {
+            return this.isActiveAndEnabled && grapplingPoint != null;
+        }
+    }
 
     private List<RopeSegment> ropeSegments = new List<RopeSegment>();   
 
@@ -79,6 +88,24 @@ public class Grappling : MonoBehaviour
     private void OnDisable()
     {
         StopGrapple();
+        grapplingPoint = new GameObject("GrapplingPoint");
+        RaycastHit2D hit= Physics2D.Raycast(origin: transform.position, direction: mousePos- transform.position, maxDistance, grappable);
+        if (hit)
+        {
+            grapplingPoint.transform.position = hit.point;
+            grapplingPoint.transform.SetParent(hit.collider.gameObject.transform);
+
+            joint = transform.gameObject.AddComponent<DistanceJoint2D>();
+            joint.enableCollision = true;
+            joint.maxDistanceOnly = true;
+            joint.autoConfigureConnectedAnchor = false;
+            joint.autoConfigureDistance = false;
+            joint.distance = hit.distance;
+            joint.connectedBody = rb;
+            joint.connectedAnchor = grapplingPoint.transform.position;
+
+            lr.positionCount = 2;
+        }        
     }
     public struct RopeSegment
     {

@@ -2,47 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovementSelector : MonoBehaviour
 {
+    Behaviour currentScript;
     [SerializeField]
-    List<Behaviour> behaviourScripts;
+    Image[] scriptIcons; //0 = Owl, 1 = Frog, 2 = Armadillo, 3 = Human
+    Image currentScriptIcon;
 
-    [SerializeField]
-    int i;
-
-    void Awake()
-    {
-        behaviourScripts.Add(GetComponent<PlayerController>());
-        behaviourScripts.Add(GetComponent<Grappling>());
-        behaviourScripts.Add(GetComponent<Gliding>());
-        behaviourScripts.Add(GetComponent<Rolling>());        
+    private void Awake() {
+        currentScriptIcon = scriptIcons[3]; //Human
     }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            SwitchScript();
+        foreach(Image icon in scriptIcons) {
+            if (icon != currentScriptIcon) { 
+                icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, .5f);
+            }
+            else {
+                icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 1f);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            SwitchScript(GetComponent<Gliding>());
+            currentScriptIcon = scriptIcons[0]; //Owl
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            SwitchScript(GetComponent<Grappling>());
+            currentScriptIcon = scriptIcons[1]; //Frog
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            SwitchScript(GetComponent<Rolling>());
+            currentScriptIcon = scriptIcons[2]; //Armadillo
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            SwitchToHuman();
+            currentScriptIcon = scriptIcons[3]; //Human
         }
     }
 
-    void SwitchScript()
+    void SwitchScript(Behaviour _script)
     {
-        if (i < behaviourScripts.Count-1)
-        {
-            i++;
-        }
-        else
-        {
-            i = 0;
-        }
+        if(currentScript != null)
+            currentScript.enabled = false;
 
-        foreach (Behaviour behaviour in behaviourScripts)
-        {
-            behaviour.enabled = false;
-        }
-        
-        behaviourScripts[i].enabled = true;
+        _script.enabled = true;
+        currentScript = _script;
     }    
+    private void SwitchToHuman() {
+        currentScript.enabled = false;
+    }
 }
