@@ -79,6 +79,11 @@ public class PlayerController : MonoBehaviour {
                    && !rollingScript.m_IsRolling;
         }
     }
+    public bool m_CanExtraJump {
+        get {
+            return !m_IsGrounded || grapplingScript.isActiveAndEnabled;
+        }
+    }
 
     [Header("Corner Correction")]
     [SerializeField] [Tooltip("The distance at which the corner correction should be calculated (Higher numbers = faster detection of corners)")]
@@ -215,7 +220,7 @@ public class PlayerController : MonoBehaviour {
     private void Jump() {
         lastJumpPos = transform.position;
         
-        if (!m_IsGrounded)
+        if (m_CanExtraJump)
             additionalJumpsCounted--;
 
         ApplyAirLinearDrag();

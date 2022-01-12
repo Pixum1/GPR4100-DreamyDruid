@@ -5,6 +5,10 @@ using UnityEngine;
 public class Gliding : MonoBehaviour
 {
     private PlayerController player;
+    private Rigidbody2D rb;
+    [SerializeField]
+    private float gravityScale;
+
     private bool m_CanGlide {
         get {
             return Input.GetKey(KeyCode.LeftControl) && !player.m_IsGrounded;
@@ -16,7 +20,6 @@ public class Gliding : MonoBehaviour
         } 
     }
 
-    private Rigidbody2D rb;
 
     private void Awake() {
         player = FindObjectOfType<PlayerController>();
@@ -34,6 +37,8 @@ public class Gliding : MonoBehaviour
         /// Adjust Gravity???
         /// Because player gravity is changed based on jump/fall speed
         ///
+        rb.gravityScale = gravityScale;
+
         float fallSpeed = Mathf.Clamp(rb.velocity.y, Mathf.NegativeInfinity, 0);
 
         rb.AddForce(-transform.up * fallSpeed * Time.deltaTime * 75);//upforce by fallspeed
