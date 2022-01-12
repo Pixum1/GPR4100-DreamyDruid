@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class Rolling : MonoBehaviour
 {
-    Rigidbody2D rb;
-
-    Collider2D boxCol;
-    Collider2D circleCol;
+    [SerializeField]
+    PhysicsMaterial2D physicsMaterial;
 
     [SerializeField]
-    float speed;
+    float speed;    
 
     [SerializeField]
     float maxAngularVel = 300;
+
+    Rigidbody2D rb;
+
+    Collider2D boxCol;
+    CircleCollider2D circleCol;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         boxCol = GetComponent<BoxCollider2D>();
-        circleCol = GetComponent<CircleCollider2D>();
     }
 
     void Update()
@@ -37,6 +39,7 @@ public class Rolling : MonoBehaviour
 
     private void OnDisable()
     {
+        Destroy(circleCol);
         transform.rotation = Quaternion.Euler(0, 0, 0);
         boxCol.enabled = true;
         circleCol.enabled = false;
@@ -45,6 +48,9 @@ public class Rolling : MonoBehaviour
 
     private void OnEnable()
     {
+        circleCol= gameObject.AddComponent<CircleCollider2D>();
+        circleCol.radius = 0.9f;
+        circleCol.sharedMaterial = physicsMaterial;
         boxCol.enabled = false;
         circleCol.enabled = true;
         rb.freezeRotation = false;
