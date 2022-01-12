@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour {
     [Header("Jump")]
     [SerializeField] [Tooltip("The jump height of the object in units(metres)")]
     private float jumpHeight;
+    [SerializeField]
+    private float frogJumpHeight;
     [SerializeField] [Tooltip("The air resistance while jumping")]
     private float airLinDrag = 2.5f;
     [SerializeField] [Tooltip("Gravity applied when doing a full jump")]
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour {
             //return true if the player performs an input in the given time window and has additional jumps left
             return jumpBufferCounter > 0f
                    && (coyoteTimeCounter > 0f || additionalJumpsCounted > 0)
-                   && !rollingScript.m_IsRolling;
+                   && !rollingScript.isActiveAndEnabled;
         }
     }
     public bool m_CanExtraJump {
@@ -227,8 +229,14 @@ public class PlayerController : MonoBehaviour {
 
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
 
-        float jumpForce = Mathf.Sqrt((jumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        if (grapplingScript.isActiveAndEnabled) {
+            float jumpForce = Mathf.Sqrt(((frogJumpHeight) + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+        else {
+            float jumpForce = Mathf.Sqrt(((jumpHeight) + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
 
         coyoteTimeCounter = 0f;
         jumpBufferCounter = 0f;
@@ -257,14 +265,27 @@ public class PlayerController : MonoBehaviour {
     /// Applies the fall gravity based on the players jump height and input
     /// </summary>
     private void ApplyFallGravity() {
-        if (rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
-            rb.gravityScale = fullJumpFallMultiplier;                   
-        }
-        else if (rb.velocity.y > 0f && !Input.GetButton("Jump")) {
-            rb.gravityScale = halfJumpFallMultiplier;
+        if(!grapplingScript.isActiveAndEnabled) {
+            if (rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
+                rb.gravityScale = fullJumpFallMultiplier;                   
+            }
+            else if (rb.velocity.y > 0f && !Input.GetButton("Jump")) {
+                rb.gravityScale = halfJumpFallMultiplier;
+            }
+            else {
+                rb.gravityScale = 1f;
+            }
         }
         else {
-            rb.gravityScale = 1f;
+            if (rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > (frogJumpHeight)) {
+                rb.gravityScale = fullJumpFallMultiplier;
+            }
+            else if (rb.velocity.y > 0f && !Input.GetButton("Jump")) {
+                rb.gravityScale = halfJumpFallMultiplier;
+            }
+            else {
+                rb.gravityScale = 1f;
+            }
         }
     }
     #endregion

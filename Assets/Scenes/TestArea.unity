@@ -10328,6 +10328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c7b268253dee449b0882e452ebb076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragValue: 0
   grappable:
     serializedVersion: 2
     m_Bits: 384
@@ -10411,6 +10412,7 @@ MonoBehaviour:
   maxSpeed: 12
   groundLinDrag: 20
   jumpHeight: 2
+  frogJumpHeight: 6
   airLinDrag: 2.5
   fullJumpFallMultiplier: 8
   halfJumpFallMultiplier: 5

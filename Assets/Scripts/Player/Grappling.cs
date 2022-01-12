@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Grappling : MonoBehaviour {
+
+    private Rigidbody2D rb;
+    [SerializeField]
+    private float dragValue;
+
     [SerializeField]
     private LayerMask grappable;
     
@@ -47,7 +52,11 @@ public class Grappling : MonoBehaviour {
     private bool isGrappling;
 
     private float drawDelay;
-    
+
+    private void Awake() {
+        drawDelay = initialDrawDelay;
+        rb = GetComponent<Rigidbody2D>();
+    }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -108,8 +117,11 @@ public class Grappling : MonoBehaviour {
             StopGrapple();
         }
         RaycastHit2D hit = Physics2D.Raycast(origin: transform.position, direction: mousePos - transform.position, maxDistance, grappable);
-        if (hit)
+        if (hit) 
         {
+            rb.drag = dragValue; //adjust drag
+            //rb.AddForce(Vector2.right * Mathf.Clamp(rb.velocity.x, -1 * 10f, 1 * 10f) * 5, ForceMode2D.Impulse); <- Kümmer sich lars drum
+
             lr = gameObject.AddComponent<LineRenderer>();
             segmentAmount = Mathf.RoundToInt(hit.distance / (ropeSegmentLength+ropeSegmentLength*0.15f));
             grapplingAnchor = new GameObject("GrapplingAnchor");
