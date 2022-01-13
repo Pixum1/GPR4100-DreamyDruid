@@ -10,6 +10,8 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField][Tooltip("The speed at which the camera moves over to the new zone")]
     private float camSwitchSpeed;
+    [SerializeField]
+    private float camFollowSpeed;
 
     private Camera cam; //the main camera
 
@@ -26,14 +28,19 @@ public class CameraManager : MonoBehaviour
     private void Update() {
 
         GetCurrentZone();
+        float cameraWidth = cam.orthographicSize * Screen.width / Screen.height;
 
         if (currentZone != previousZone) {
             //set camera position if the current zone has been switched (saves performance)
             SetCameraPosition();
         }
         else if (currentZone == zones[0]) {
-            SetCameraPosition();
+
+            if (Vector3.Distance(cam.transform.position, currentZone.followBorderPosition) > 3) {
+                cam.transform.position = Vector3.Lerp(cam.transform.position, new Vector3(currentZone.followBorderPosition.x, currentZone.followBorderPosition.y, cam.transform.position.z), camFollowSpeed * Time.deltaTime);
+            }
         }
+
     }
 
     /// <summary>
