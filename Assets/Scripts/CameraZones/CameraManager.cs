@@ -34,11 +34,9 @@ public class CameraManager : MonoBehaviour
             //set camera position if the current zone has been switched (saves performance)
             SetCameraPosition();
         }
-        else if (currentZone == zones[0]) {
 
-            if (Vector3.Distance(cam.transform.position, currentZone.followBorderPosition) > 3) {
-                cam.transform.position = Vector3.Lerp(cam.transform.position, new Vector3(currentZone.followBorderPosition.x, currentZone.followBorderPosition.y, cam.transform.position.z), camFollowSpeed * Time.deltaTime);
-            }
+        if (Vector3.Distance(cam.transform.position, currentZone.followBorderPosition) > 3) {
+            cam.transform.position = Vector3.Lerp(cam.transform.position, new Vector3(currentZone.followBorderPosition.x, currentZone.followBorderPosition.y, cam.transform.position.z), camFollowSpeed * Time.deltaTime);
         }
 
     }
