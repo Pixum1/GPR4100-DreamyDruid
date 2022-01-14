@@ -7,8 +7,10 @@ public class CameraZone : MonoBehaviour {
 
     private bool isAsctive;
     public LayerMask playerLayer;
-
+    [HideInInspector]
     public Collider col;
+    [SerializeField]
+    public float cameraOrthographicSize;
 
     private void Awake() {
         col = GetComponent<Collider>();
@@ -34,5 +36,8 @@ public class CameraZone : MonoBehaviour {
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(transform.position, transform.localScale); //visualize zone bounds
+
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(transform.position, new Vector2(cameraOrthographicSize * 2 * Screen.width / Screen.height, cameraOrthographicSize * 2));
     }
 }

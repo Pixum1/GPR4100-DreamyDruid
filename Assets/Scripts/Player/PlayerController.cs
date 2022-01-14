@@ -138,6 +138,7 @@ public class PlayerController : MonoBehaviour {
         #region Restarting
         if (Input.GetKey(KeyCode.R)) {
             transform.position = startPos;
+            Object.FindObjectOfType<CameraManager>().ResetCameraPos();
         }
         #endregion
         ApplyRotation();
