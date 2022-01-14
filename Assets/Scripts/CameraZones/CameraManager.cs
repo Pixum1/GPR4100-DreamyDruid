@@ -25,18 +25,24 @@ public class CameraManager : MonoBehaviour
     private void Start() {
         currentZone = zones[0];
         previousZone = currentZone;
+
+        cam.orthographicSize = currentZone.transform.localScale.y / 2f; //adjust cam size
     }
 
     private void Update() {
+        Debug.Log(cam.orthographicSize * 2f * cam.aspect + "== " + currentZone.col.bounds.size.x);
+        
         GetCurrentZone();
 
         if (currentZone != previousZone) {
             SetCameraPosition(); //set camera position if the current zone has been switched (saves performance)
         }
 
-        if (CheckCameraBounds(currentZone) && Time.timeScale > 0) {
-            cam.transform.position = new Vector3(player.transform.position.x, currentZone.transform.position.y, cam.transform.position.z);
-            AdjustCamEdge(currentZone);
+        if(cam.orthographicSize * 2f * cam.aspect < currentZone.col.bounds.size.x) {
+            if (CheckCameraBounds(currentZone)) {
+                cam.transform.position = new Vector3(player.transform.position.x, currentZone.transform.position.y, cam.transform.position.z);
+                AdjustCamEdge(currentZone);
+            }
         }
     }
 
@@ -67,31 +73,18 @@ public class CameraManager : MonoBehaviour
         return camCorners;
     }
 
-    private void AdjustCameraToZoneEdge(CameraZone _zone, string _side) {
-        if (_side == "left") {
-            Vector3 newPos = _zone.col.bounds.min + new Vector3(((2f * cam.orthographicSize) * cam.aspect)/2, 0, 0); //center of the box on the left most edge + half the camera's width
-            cam.transform.position = new Vector3(newPos.x, cam.transform.position.y, cam.transform.position.z);
-        }
-        if (_side == "right") {
-            Vector3 newPos =  _zone.col.bounds.max - new Vector3(((2f*cam.orthographicSize) * cam.aspect)/2, 0, 0); //center of the box on the right most edge - half of the camera's width
-            cam.transform.position = new Vector3(newPos.x, cam.transform.position.y, cam.transform.position.z);
-        }
-        else {
-            Debug.LogWarning("WRONG SIDE NAME!!!");
-        }
-    }
     private void AdjustCamEdge(CameraZone _zone) {
-
+        Debug.Log("AdjustingCam");
         //Left Check
         if(!_zone.col.bounds.Contains(GetCameraBounds(_zone)[0]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[1])) {
-            //move to the right
-            AdjustCameraToZoneEdge(_zone, "left");
+            Vector3 newPos = _zone.col.bounds.min + new Vector3(((2f * cam.orthographicSize) * cam.aspect) / 2, 0, 0); //center of the box on the left most edge + half the camera's width
+            cam.transform.position = new Vector3(newPos.x, cam.transform.position.y, cam.transform.position.z);
             return;
         }
         //right Check
         else if(!_zone.col.bounds.Contains(GetCameraBounds(_zone)[2]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[3])) {
-            //move to the left
-            AdjustCameraToZoneEdge(_zone, "right");
+            Vector3 newPos = _zone.col.bounds.max - new Vector3(((2f * cam.orthographicSize) * cam.aspect) / 2, 0, 0); //center of the box on the right most edge - half of the camera's width
+            cam.transform.position = new Vector3(newPos.x, cam.transform.position.y, cam.transform.position.z);
             return;
         }
     }
@@ -100,20 +93,42 @@ public class CameraManager : MonoBehaviour
     /// Smoothly transition the cameras position to the current zone and adjust its size accordingly.
     /// </summary>
     private void SetCameraPosition() {
-        Debug.Log("Setting Camera Position");
+
         Time.timeScale = 0f;
 
-        Vector3 zonePos = new Vector3(currentZone.transform.position.x, currentZone.transform.position.y, cam.transform.position.z);
-        
+        Vector3 newPos;
+
         cam.orthographicSize = currentZone.transform.localScale.y / 2f; //adjust cam size
-        cam.transform.position = Vector3.Lerp(cam.transform.position, zonePos, camSwitchSpeed * 0.02f); //lerp camera to new position
 
-        if(Vector3.Distance(cam.transform.position, zonePos) < .05f) {
-            previousZone = currentZone;
-            Time.timeScale = 1f;
+        if (cam.orthographicSize * 2f * cam.aspect < currentZone.col.bounds.size.x) {
+            if(player.transform.position.x >= currentZone.col.bounds.max.x) {
+                Vector3 side = currentZone.col.bounds.min + new Vector3(((2f * cam.orthographicSize) * cam.aspect) / 2, 0, 0);
+                newPos = new Vector3(side.x, cam.transform.position.y, cam.transform.position.z);
+            }
+            else {
+                Vector3 side = currentZone.col.bounds.max - new Vector3(((2f * cam.orthographicSize) * cam.aspect) / 2, 0, 0);
+                newPos = new Vector3(side.x, cam.transform.position.y, cam.transform.position.z);
+            }
+            cam.transform.position = Vector3.Lerp(cam.transform.position, newPos, camSwitchSpeed * 0.02f);
+
+            if(Vector3.Distance(cam.transform.position, newPos) < .05f){
+                previousZone = currentZone;
+                Time.timeScale = 1f;
+                AdjustCamEdge(currentZone);
+            }
         }
+        else {
 
-        cameraWidth = cam.orthographicSize * Screen.width / Screen.height;
+            newPos = new Vector3(currentZone.transform.position.x, currentZone.transform.position.y, cam.transform.position.z);
+
+            cam.transform.position = Vector3.Lerp(cam.transform.position, newPos, camSwitchSpeed * 0.02f); //lerp camera to new position
+
+            if (Vector3.Distance(cam.transform.position, newPos) < .05f) {
+                previousZone = currentZone;
+                Time.timeScale = 1f;
+            }
+            cameraWidth = cam.orthographicSize * Screen.width / Screen.height;
+        }
     }
 
     /// <summary>
