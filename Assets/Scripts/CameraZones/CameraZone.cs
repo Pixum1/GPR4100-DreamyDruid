@@ -8,6 +8,12 @@ public class CameraZone : MonoBehaviour {
     private bool isAsctive;
     public LayerMask playerLayer;
 
+    public Collider col;
+
+    private void Awake() {
+        col = GetComponent<Collider>();
+    }
+
     private void Update() {
         CheckForPlayer();
     }
