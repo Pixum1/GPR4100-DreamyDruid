@@ -25,6 +25,22 @@ public class CameraManager : MonoBehaviour
             return (cameraHeight * cam.aspect);
         }
     }
+    public float size;
+
+
+    private Rect rect;
+    [SerializeField]
+    private float rectWidth = 5f;
+    [SerializeField]
+    private float rectHeight = 5f; 
+    private float distRight;
+    private float distLeft;
+    private float distTop;
+    private float distBot;
+    private Vector2 botLeftPoint;
+    private Vector2 botRightPoint;
+    private Vector2 topLeftPoint;
+    private Vector2 topRightPoint;
 
     private void Awake() {
         zones = FindObjectsOfType<CameraZone>(); //get all zones
@@ -34,6 +50,8 @@ public class CameraManager : MonoBehaviour
 
     private void Start() {
         GetCurrentZone();
+        
+        rect = new Rect(0, 0, rectWidth, rectHeight);
     }
     private void Update() {
         GetCurrentZone();
@@ -42,12 +60,73 @@ public class CameraManager : MonoBehaviour
             SetCameraPosition(); //set camera position if the current zone has been switched (saves performance)
         }
 
-        if(cameraWidth < currentZone.col.bounds.size.x) {
+        if (cameraWidth < currentZone.col.bounds.size.x) {
             if (CheckCameraBounds(currentZone)) {
-                cam.transform.position = new Vector3(player.transform.position.x, currentZone.transform.position.y, cam.transform.position.z);
-                AdjustCamEdge(currentZone);
+                ///INSERT IF STATEMENT --> if player is outside of deadzone
+                if (!rect.Contains(player.transform.position)) {
+                    //cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, cam.transform.position.z);
+                    CameraMoveByRect();
+                    AdjustCamEdge(currentZone);
+                }
             }
         }
+        RecalculateBounds();
+    }
+    void CameraMoveByRect() {
+        RecalculateBounds();
+
+        rect.size = new Vector2(rectWidth, rectHeight);
+
+        //Move cam left
+        if (GetCameraBounds(currentZone)[0].x > currentZone.transform.position.x - currentZone.col.bounds.extents.x)// left CAM bound within left ZONE bound
+        {
+            if (player.transform.position.x < rect.xMin)// PLAYER left of RECT
+            {
+                cam.transform.position -= new Vector3(distLeft, 0, 0);
+            }
+        }
+
+        //Move cam right
+        if (GetCameraBounds(currentZone)[2].x < currentZone.transform.position.x + currentZone.col.bounds.extents.x)// right CAM bound within right ZONE bound
+        {
+            if (player.transform.position.x > rect.xMax)// PLAYER right of RECT
+            {
+                cam.transform.position -= new Vector3(distRight, 0, 0);
+            }
+        }
+
+        // Move cam down
+        if (GetCameraBounds(currentZone)[3].y > currentZone.transform.position.y - currentZone.col.bounds.extents.y)// bottom CAM bound within bottom ZONE bound
+        {
+            if (player.transform.position.y < rect.yMin)// PLAYER below RECT
+            {
+                cam.transform.position -= new Vector3(0, distBot, 0);
+            }
+        }
+
+        // Move cam up
+        if (GetCameraBounds(currentZone)[0].y < currentZone.transform.position.y + currentZone.col.bounds.extents.y)// top CAM bound within top ZONE bound
+    {
+            if (player.transform.position.y > rect.yMax)// PLAYER over RECT
+            {
+                cam.transform.position -= new Vector3(0, distTop, 0);
+            }
+        }
+    }
+
+    private void RecalculateBounds() {
+        botLeftPoint = new Vector2(rect.xMin, rect.yMin);
+        botRightPoint = new Vector2(rect.xMax, rect.yMin);
+        topLeftPoint = new Vector2(rect.xMin, rect.yMax);
+        topRightPoint = new Vector2(rect.xMax, rect.yMax);
+
+        rect.center = cam.transform.position;
+
+        distRight = rect.xMax - player.transform.position.x;//-
+        distLeft = rect.xMin - player.transform.position.x;//+
+
+        distTop = rect.yMax - player.transform.position.y;//-
+        distBot = rect.yMin - player.transform.position.y;//+
     }
 
     /// <summary>
@@ -93,23 +172,23 @@ public class CameraManager : MonoBehaviour
         if(!_zone.col.bounds.Contains(GetCameraBounds(_zone)[0]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[1])) {
             Vector3 newPos = _zone.col.bounds.min + new Vector3(cameraWidth / 2, 0, 0); //center of the box on the left most edge + half the camera's width
             cam.transform.position = new Vector3(newPos.x, cam.transform.position.y, cam.transform.position.z);
-            return;
+            //return;
         }//right edge Check
-        else if (!_zone.col.bounds.Contains(GetCameraBounds(_zone)[2]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[3])) {
+        if (!_zone.col.bounds.Contains(GetCameraBounds(_zone)[2]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[3])) {
             Vector3 newPos = _zone.col.bounds.max - new Vector3(cameraWidth / 2, 0, 0); //center of the box on the right most edge - half of the camera's width
             cam.transform.position = new Vector3(newPos.x, cam.transform.position.y, cam.transform.position.z);
-            return;
+            //return;
         }
-        ////Bottom check
-        //else if(!_zone.col.bounds.Contains(GetCameraBounds(_zone)[1]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[3])) {
-        //    Vector3 newPos = (new Vector3(_zone.col.bounds.center.x, _zone.col.bounds.center.y - _zone.col.bounds.extents.y, 0)) - new Vector3(cameraWidth / 2, 0, 0);
-        //    cam.transform.position = new Vector3(cam.transform.position.x, newPos.y, cam.transform.position.z);
-        //}
-        ////Top Check
-        //else if(!_zone.col.bounds.Contains(GetCameraBounds(_zone)[0]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[2])) {
-        //    Vector3 newPos = (new Vector3(_zone.col.bounds.center.x, _zone.col.bounds.center.y + _zone.col.bounds.extents.y, 0)) - new Vector3(cameraWidth / 2, 0, 0);
-        //    cam.transform.position = new Vector3(cam.transform.position.x, newPos.y, cam.transform.position.z);
-        //}
+        //Bottom check
+        if (!_zone.col.bounds.Contains(GetCameraBounds(_zone)[1]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[3])) {
+            Vector3 newPos = _zone.col.bounds.min + new Vector3(0, cameraHeight / 2, 0);
+            cam.transform.position = new Vector3(cam.transform.position.x, newPos.y, cam.transform.position.z);
+        }
+        //Top Check
+        if (!_zone.col.bounds.Contains(GetCameraBounds(_zone)[0]) && !_zone.col.bounds.Contains(GetCameraBounds(_zone)[2])) {
+            Vector3 newPos = _zone.col.bounds.max - new Vector3(0, cameraHeight / 2, 0);
+            cam.transform.position = new Vector3(cam.transform.position.x, newPos.y, cam.transform.position.z);
+        }
     }
 
     /// <summary>
@@ -121,7 +200,8 @@ public class CameraManager : MonoBehaviour
 
         Vector3 newPos;
 
-        cam.orthographicSize = currentZone.transform.localScale.y / 2f; //adjust cam size
+        //cam.orthographicSize = currentZone.transform.localScale.y / 2f; //adjust cam size
+        cam.orthographicSize = size; //adjust cam size
 
         //if camera is smaller than the CameraZone
         if (cameraWidth < currentZone.col.bounds.size.x) {
@@ -138,9 +218,9 @@ public class CameraManager : MonoBehaviour
 
                 newPos = new Vector3(side.x, currentZone.transform.position.y, cam.transform.position.z);
             }
-            cam.transform.position = Vector3.Lerp(cam.transform.position, newPos, camSwitchSpeed * 0.02f);
+            cam.transform.position = Vector3.MoveTowards(cam.transform.position, newPos, camSwitchSpeed * 0.02f);
 
-            if(Vector3.Distance(cam.transform.position, newPos) < .05f){
+            if(CheckCameraBounds(currentZone)) {
                 previousZone = currentZone;
                 Time.timeScale = 1f;
                 AdjustCamEdge(currentZone);
@@ -150,9 +230,9 @@ public class CameraManager : MonoBehaviour
 
             newPos = new Vector3(currentZone.transform.position.x, currentZone.transform.position.y, cam.transform.position.z);
 
-            cam.transform.position = Vector3.Lerp(cam.transform.position, newPos, camSwitchSpeed * 0.02f); //lerp camera to new position
+            cam.transform.position = Vector3.MoveTowards(cam.transform.position, newPos, camSwitchSpeed * 0.02f); //lerp camera to new position
 
-            if (Vector3.Distance(cam.transform.position, newPos) < .05f) {
+            if (CheckCameraBounds(currentZone)) {
                 previousZone = currentZone;
                 Time.timeScale = 1f;
             }
@@ -168,5 +248,10 @@ public class CameraManager : MonoBehaviour
                 currentZone = zone;
             }
         }
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(cam.transform.position, new Vector2(rectWidth, rectHeight));
     }
 }
