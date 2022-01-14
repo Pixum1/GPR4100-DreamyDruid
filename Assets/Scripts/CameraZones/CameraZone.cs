@@ -7,24 +7,11 @@ public class CameraZone : MonoBehaviour {
 
     private bool isAsctive;
     public LayerMask playerLayer;
-    [SerializeField]
-    private PlayerController player;
 
-    [SerializeField]
-    private float followBorderSize;
-    public Vector3 followBorderDimension {
-        get {
-            return new Vector3(transform.localScale.x - followBorderSize, transform.localScale.y, transform.localScale.z);
-        }
-    }
-    public Vector3 followBorderPosition {
-        get {
-            return new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
-        }
-    }
+    public Collider col;
 
     private void Awake() {
-        player = FindObjectOfType<PlayerController>();
+        col = GetComponent<Collider>();
     }
 
     private void Update() {
@@ -47,8 +34,5 @@ public class CameraZone : MonoBehaviour {
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(transform.position, transform.localScale); //visualize zone bounds
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(followBorderPosition, followBorderDimension);
     }
 }
