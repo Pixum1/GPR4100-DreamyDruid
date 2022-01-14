@@ -38,6 +38,6 @@ public class CameraZone : MonoBehaviour {
         Gizmos.DrawWireCube(transform.position, transform.localScale); //visualize zone bounds
 
         Gizmos.color = Color.white;
-        Gizmos.DrawWireCube(transform.position, new Vector2(cameraOrthographicSize * 2 * Screen.width / Screen.height, cameraOrthographicSize * 2));
+        Gizmos.DrawWireCube(transform.position, new Vector2(cameraOrthographicSize * 2 * Camera.main.aspect, cameraOrthographicSize * 2));
     }
 }
