@@ -243,41 +243,30 @@ public class CameraManager : MonoBehaviour
         Vector3 newPos;
         Vector3 sideX, sideY;
 
-        float distanceToTop = Vector3.Distance(new Vector3(0, objectToFollow.position.y + cameraHeight / 2, 0), new Vector3(0, currentZone.col.bounds.max.y, 0));
-        float distanceToBottom = Vector3.Distance(new Vector3(0, objectToFollow.position.y - cameraHeight / 2, 0), new Vector3(0, currentZone.col.bounds.min.y, 0));
+        float distanceToBottom = objectToFollow.position.y - cameraHeight / 2;
+        float distanceToTop = objectToFollow.position.y + cameraHeight / 2;
 
         sideX = Vector3.zero;
         sideY = new Vector3(0, objectToFollow.position.y, 0);
 
         //if the player moves into the zone from its RIGHT side
-        if (objectToFollow.position.x > currentZone.col.bounds.center.x) {
+        if (objectToFollow.position.x > currentZone.col.bounds.max.x) {
             sideX = currentZone.col.bounds.max - new Vector3(cameraWidth / 2, 0, 0);
         }
 
         //if the player moves into the zone from its LEFT side
-        else if (objectToFollow.position.x < currentZone.col.bounds.center.x){
+        else if (objectToFollow.position.x < currentZone.col.bounds.max.x){
             sideX = currentZone.col.bounds.min + new Vector3(cameraWidth / 2, 0, 0);
         }
 
         //if the player moves into the LOWER PART OF THE ZONE
-        if (distanceToBottom < cam.orthographicSize / 2) {
+        if (distanceToBottom < currentZone.col.bounds.min.y) {
             sideY = currentZone.col.bounds.min + new Vector3(0, cameraHeight / 2, 0);
         }
 
         //if the player moves into the UPPER PART OF THE ZONE
-        else if (distanceToTop < cam.orthographicSize / 2) {
+        else if (distanceToTop > currentZone.col.bounds.max.y) {
             sideY = currentZone.col.bounds.max - new Vector3(0, cameraHeight / 2, 0);
-        }
-
-        //if the player moves into the zone from ON TOP OF the zone
-        if(Vector2.Distance(new Vector2(0, objectToFollow.position.y), new Vector2(0, currentZone.col.bounds.max.y)) <= 1) {
-
-            sideY = currentZone.col.bounds.max - new Vector3(0, cameraHeight / 2, 0);
-        }
-        //if the player moves into the zone from UNDERNEATH the zone
-        else if (Vector2.Distance(new Vector2(0, objectToFollow.position.y), new Vector2(0, currentZone.col.bounds.min.y)) <= 1) {
-
-            sideY = currentZone.col.bounds.min + new Vector3(0, cameraHeight / 2, 0);
         }
 
         newPos = new Vector3(sideX.x, sideY.y, cam.transform.position.z);
