@@ -10,7 +10,7 @@ public class CameraZone : MonoBehaviour {
     [HideInInspector]
     public Collider col;
     [SerializeField]
-    public float cameraOrthographicSize;
+    public float cameraOrthographicSize = 11.25f;
 
     private void Awake() {
         col = GetComponent<Collider>();
