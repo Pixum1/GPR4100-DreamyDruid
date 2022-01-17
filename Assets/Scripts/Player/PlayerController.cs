@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
     private LayerMask groundLayer;
     [SerializeField] [Tooltip("The 'corner correction' layer")]
     private LayerMask CCLayer;
+    [SerializeField]
+    private LayerMask wallHangLayer;
 
     [Header("Movement")]
     [SerializeField] [Tooltip("The movement speed acceleration of the player")]
@@ -35,7 +37,7 @@ public class PlayerController : MonoBehaviour {
     private float groundLinDrag = 7f;
     public float m_HorizontalDir {
         get {
-            return AxisInput().x;
+            return Input.GetAxisRaw("Horizontal");
         }
     }
     private bool m_ChangingDir {
@@ -57,6 +59,8 @@ public class PlayerController : MonoBehaviour {
     private float jumpHeight;
     [SerializeField]
     private float frogJumpHeight;
+    [SerializeField]
+    private float owlJumpHeight;
     [SerializeField] [Tooltip("The air resistance while jumping")]
     private float airLinDrag = 2.5f;
     [SerializeField] [Tooltip("Gravity applied when doing a full jump")]
@@ -64,26 +68,43 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] [Tooltip("Gravity applied when doing half jump")]
     private float halfJumpFallMultiplier = 5f;
     [SerializeField] [Tooltip("The amount of additional jumps the player can make")]
-    private int additionalJumps = 1;
-    [SerializeField] [Tooltip("The time window in which the player can jump after walking over an edge")]
-    private float coyoteTime = .1f;
-    [SerializeField] [Tooltip("The time window that allows the player to perform an action before it is allowed")]
-    private float jumpBufferLength = .1f;
-    private int additionalJumpsCounted;
-    private float coyoteTimeCounter;
-    private float jumpBufferCounter;
+    private int amountOfJumps = 1;
+    private int jumpsCounted;
     private Vector2 lastJumpPos;
     public bool m_CanJump {
         get {
             //return true if the player performs an input in the given time window and has additional jumps left
-            return jumpBufferCounter > 0f
-                   && (coyoteTimeCounter > 0f || additionalJumpsCounted > 0)
+            return jumpBufferTimer < jumpBufferFrames
+                   && (coyoteTimeTimer < coyoteTimeFrames || jumpsCounted < amountOfJumps)
                    && !rollingScript.isActiveAndEnabled;
         }
     }
-    public bool m_CanExtraJump {
+    public bool m_CanWallJump {
         get {
-            return !m_IsGrounded || grapplingScript.isActiveAndEnabled;
+            return wallJumpTimer < wallJumpFrames;
+        }
+    }
+
+    [Header("Jump Buffer & Coyote Time")]
+    [SerializeField, Range(2, 30)] [Tooltip("The time window (in frames) that allows the player to perform an action before it is allowed")]
+    private float jumpBufferFrames = 5; //WARNING: if the player can not jump this number is probably = 0
+    private float jumpBufferTimer = 1000f;
+
+    [SerializeField, Range(2, 30)] [Tooltip("The time window (in frames) in which the player can jump after walking over an edge")]
+    private float coyoteTimeFrames = 5; //WARNING: if the player can not jump this number is probably = 0
+    private float coyoteTimeTimer = 1000f;
+
+    [Header("Wall Hanging")]
+    [SerializeField]
+    private float wallHangGravityMultiplier;
+    [SerializeField]
+    private float wallJumpFrames = 5;
+    private float wallJumpTimer = 1000f;
+    public bool m_CanWallHang {
+        get {
+            return ((m_IsOnLeftWall && m_HorizontalDir < 0)
+                   || (m_IsOnRightWall && m_HorizontalDir > 0))
+                   && !m_IsGrounded;
         }
     }
 
@@ -97,14 +118,14 @@ public class PlayerController : MonoBehaviour {
     private bool m_CanCornerCorrect {
         get {
             //returns true if a corner was detected
-            return Physics2D.Raycast(transform.position + CCedgeRayOffset, Vector2.up, CCRayLength, CCLayer) &&
-                   !Physics2D.Raycast(transform.position + CCinnerRayOffset, Vector2.up, CCRayLength, CCLayer) ||
-                   Physics2D.Raycast(transform.position - CCedgeRayOffset, Vector2.up, CCRayLength, CCLayer) &&
-                   !Physics2D.Raycast(transform.position - CCinnerRayOffset, Vector2.up, CCRayLength, CCLayer);
+            return Physics2D.Raycast(transform.position + CCedgeRayOffset, Vector2.up, CCRayLength, CCLayer) 
+                   && !Physics2D.Raycast(transform.position + CCinnerRayOffset, Vector2.up, CCRayLength, CCLayer) 
+                   || Physics2D.Raycast(transform.position - CCedgeRayOffset, Vector2.up, CCRayLength, CCLayer) 
+                   && !Physics2D.Raycast(transform.position - CCinnerRayOffset, Vector2.up, CCRayLength, CCLayer);
         }
     }
 
-    [Header("Ground Collision")]
+    [Header("Collision Check")]
     [SerializeField] 
     private float groundRayLength = 1f;
     [SerializeField] 
@@ -112,8 +133,24 @@ public class PlayerController : MonoBehaviour {
     public bool m_IsGrounded {
         get {
             //returns true if the players feet touch the ground layer
-            return Physics2D.Raycast(transform.position + groundRayOffset, Vector2.down, groundRayLength, groundLayer) ||
-                   Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
+            return Physics2D.Raycast(transform.position + groundRayOffset, Vector2.down, groundRayLength, groundLayer) 
+                   || Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
+        }
+    }
+    [SerializeField]
+    private float wallRayLength = 1f;
+    [SerializeField]
+    private Vector3 wallRayOffset;
+    public bool m_IsOnLeftWall {
+        get {
+            return Physics2D.Raycast(transform.position + wallRayOffset, -Vector3.right, wallRayLength, wallHangLayer)
+                   || Physics2D.Raycast(transform.position - wallRayOffset, -Vector3.right, wallRayLength, wallHangLayer);
+        }
+    }
+    public bool m_IsOnRightWall { 
+        get {
+            return Physics2D.Raycast(transform.position + wallRayOffset, Vector3.right, wallRayLength, wallHangLayer)
+                   || Physics2D.Raycast(transform.position - wallRayOffset, Vector3.right, wallRayLength, wallHangLayer);
         }
     }
 
@@ -126,21 +163,27 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        #region Jumping
         if (Input.GetButtonDown("Jump")) {
-            jumpBufferCounter = jumpBufferLength; //reset the jump buffer
+            jumpBufferTimer = 0; //reset the jump buffer
         }
-        else {
-            jumpBufferCounter -= Time.deltaTime; //decrease the jump buffer timer
-        }
-        #endregion
 
-        #region Restarting
+        if (m_IsGrounded) {
+            jumpsCounted = 0; //reset jumps counter
+            coyoteTimeTimer = 0; //reset coyote time counter
+        }
+
+        if (((m_IsOnLeftWall && Input.GetKeyDown(KeyCode.D)) || (m_IsOnRightWall && Input.GetKeyDown(KeyCode.A))) && !m_IsGrounded) {
+            wallJumpTimer = 0;
+        }
+
+        coyoteTimeTimer++;
+        jumpBufferTimer++;
+        wallJumpTimer++;
+
         if (Input.GetKey(KeyCode.R)) {
             transform.position = startPos;
             Object.FindObjectOfType<CameraManager>().ResetCameraPos();
         }
-        #endregion
         ApplyRotation();
         //HandleAnimations();
     }
@@ -151,28 +194,33 @@ public class PlayerController : MonoBehaviour {
 
         if (m_IsGrounded) {
             ApplyGroundLinearDrag();
-            additionalJumpsCounted = additionalJumps; //reset jumps counter
-            coyoteTimeCounter = coyoteTime; //reset coyote time counter
         }
         else {
             ApplyAirLinearDrag();
-            ApplyFallGravity();
-            coyoteTimeCounter -= Time.fixedDeltaTime; //decrease coyote timer
+
+            if (m_CanWallHang) {
+                ApplyWallHangGravity();
+            }
+            else {
+                ApplyFallGravity();
+            }
         }
 
-        if (m_CanJump)
+        if (m_CanJump) {
             Jump();
+        }
 
-        if (m_CanCornerCorrect)
+        if (m_CanCornerCorrect) {
             CheckForCornerCorrection(rb.velocity.y);
+        }
     }
 
     #region Animations and Sprite Management
     private void ApplyRotation() {
-        if (AxisInput().x > 0) {
+        if (m_HorizontalDir > 0) {
             playerSprite.flipX = false;
         }
-        else if (AxisInput().x < 0) {
+        else if (m_HorizontalDir < 0) {
             playerSprite.flipX = true;
         }
     }
@@ -200,13 +248,6 @@ public class PlayerController : MonoBehaviour {
     #endregion
     
     #region Input & Movement
-    /// <summary>
-    /// The player's horizontal and vertical movement Input
-    /// </summary>
-    /// <returns>Coordinates of the players horizontal and vertical input with a magnitude of 1</returns>
-    private Vector2 AxisInput() {
-        return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    }
 
     /// <summary>
     /// Makes the player move into the desired horinzontal direction and limits his speed
@@ -217,32 +258,50 @@ public class PlayerController : MonoBehaviour {
         if (Mathf.Abs(rb.velocity.x) > maxSpeed)
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //Clamp velocity when max speed is reached!
     }
+
     /// <summary>
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
     /// </summary>
     private void Jump() {
         lastJumpPos = transform.position;
-        
-        if (m_CanExtraJump)
-            additionalJumpsCounted--;
+        coyoteTimeTimer = coyoteTimeFrames;
+        jumpBufferTimer = jumpBufferFrames;
+        jumpsCounted++;
 
         ApplyAirLinearDrag();
 
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
+        float jumpForce;
 
         if (grapplingScript.isActiveAndEnabled) {
-            float jumpForce = Mathf.Sqrt(((frogJumpHeight) + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+            jumpForce = Mathf.Sqrt((frogJumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpsCounted = amountOfJumps;
+            return;
         }
-        else {
-            float jumpForce = Mathf.Sqrt(((jumpHeight) + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+        if (glidingScript.isActiveAndEnabled) {
+            jumpForce = Mathf.Sqrt((owlJumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpsCounted = amountOfJumps;
+            return;
+        }
+        if (m_CanWallJump) {
+            jumpForce = Mathf.Sqrt((jumpHeight/.5f + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+            rb.AddForce(new Vector2(m_HorizontalDir, 1f) * jumpForce, ForceMode2D.Impulse);
+            return;
+        }
+        if (m_CanWallHang) {
+            jumpsCounted = 0;
+            rb.gravityScale = wallHangGravityMultiplier;
+            jumpForce = Mathf.Sqrt((jumpHeight/.5f+ .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+            rb.AddForce(new Vector2(-m_HorizontalDir, 1f) * jumpForce, ForceMode2D.Impulse);
+            return;
         }
 
-        coyoteTimeCounter = 0f;
-        jumpBufferCounter = 0f;
+        jumpForce = Mathf.Sqrt((jumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
-#endregion
+    #endregion
     
     #region LinearDrag & Gravity Management
     /// <summary>
@@ -287,6 +346,16 @@ public class PlayerController : MonoBehaviour {
             else {
                 rb.gravityScale = 1f;
             }
+        }
+    }
+    private void ApplyWallHangGravity() {
+
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            rb.gravityScale = 0f;
+            rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
+        }
+        else {
+            rb.gravityScale = wallHangGravityMultiplier;
         }
     }
     #endregion
@@ -335,7 +404,7 @@ public class PlayerController : MonoBehaviour {
         DrawGroundRays();
         DrawCornerCheckRays();
         DrawCornerDistanceRays();
-        
+        DrawWallDistanceRays();
     }
     private void DrawGroundRays() {
         Gizmos.color = Color.red;
@@ -355,6 +424,13 @@ public class PlayerController : MonoBehaviour {
                         transform.position - CCinnerRayOffset + Vector3.up * CCRayLength + Vector3.left * CCRayLength);
         Gizmos.DrawLine(transform.position + CCinnerRayOffset + Vector3.up * CCRayLength,
                         transform.position + CCinnerRayOffset + Vector3.up * CCRayLength + Vector3.right * CCRayLength);
+    }
+    private void DrawWallDistanceRays() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position + wallRayOffset, transform.position + wallRayOffset + Vector3.right * wallRayLength);
+        Gizmos.DrawLine(transform.position - wallRayOffset, transform.position - wallRayOffset + Vector3.right * wallRayLength);
+        Gizmos.DrawLine(transform.position + wallRayOffset, transform.position + wallRayOffset - Vector3.right * wallRayLength);
+        Gizmos.DrawLine(transform.position - wallRayOffset, transform.position - wallRayOffset - Vector3.right * wallRayLength);
     }
 #endregion
 }

@@ -102,7 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248a4aa6f6889414eb85ae88df69c5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptIcons: []
+  scriptIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &9041703462974372383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,22 +130,30 @@ MonoBehaviour:
   CCLayer:
     serializedVersion: 2
     m_Bits: 384
+  wallHangLayer:
+    serializedVersion: 2
+    m_Bits: 384
   acceleration: 70
   maxSpeed: 12
   groundLinDrag: 20
   jumpHeight: 2
   frogJumpHeight: 6
+  owlJumpHeight: 1
   airLinDrag: 2.5
   fullJumpFallMultiplier: 8
   halfJumpFallMultiplier: 5
-  additionalJumps: 1
-  coyoteTime: 0.1
-  jumpBufferLength: 0.1
+  amountOfJumps: 2
+  jumpBufferFrames: 6
+  coyoteTimeFrames: 4
+  wallHangGravityMultiplier: 3
+  wallJumpFrames: 10
   CCRayLength: 0.8
   CCedgeRayOffset: {x: 0.55, y: 0, z: 0}
   CCinnerRayOffset: {x: 0.2, y: 0, z: 0}
   groundRayLength: 1.1
   groundRayOffset: {x: 0.39, y: 0, z: 0}
+  wallRayLength: 0.62
+  wallRayOffset: {x: 0, y: 0.23, z: 0}
 --- !u!114 &9041703462974372379
 MonoBehaviour:
   m_ObjectHideFlags: 0

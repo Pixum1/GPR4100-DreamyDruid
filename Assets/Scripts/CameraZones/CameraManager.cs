@@ -43,7 +43,8 @@ public class CameraManager : MonoBehaviour
         zones = FindObjectsOfType<CameraZone>(); //get all zones
         cam = Camera.main;
 
-        currentZone = zones[0];
+        GetCurrentZone();
+        //currentZone = zones[0];
     }
 
     private void Start() {

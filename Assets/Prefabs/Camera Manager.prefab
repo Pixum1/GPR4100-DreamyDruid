@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea1bcd0908740943b084533317d31b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camSwitchSpeed: 15
+  camSwitchSpeed: 80
+  objectToFollow: {fileID: 0}
+  rectWidth: 5
+  rectHeight: 5
 --- !u!114 &6450547054204513145
 MonoBehaviour:
   m_ObjectHideFlags: 0
