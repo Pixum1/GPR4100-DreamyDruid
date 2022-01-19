@@ -102,9 +102,11 @@ public class PlayerController : MonoBehaviour {
     private float wallJumpTimer = 1000f;
     public bool m_CanWallHang {
         get {
-            return ((m_IsOnLeftWall && m_HorizontalDir < 0)
-                   || (m_IsOnRightWall && m_HorizontalDir > 0))
-                   && !m_IsGrounded;
+            return Input.GetKey(KeyCode.LeftShift)
+                   && (m_IsOnLeftWall || m_IsOnRightWall)
+                   && !rollingScript.isActiveAndEnabled
+                   && !glidingScript.isActiveAndEnabled
+                   && !grapplingScript.isActiveAndEnabled;
         }
     }
 
@@ -172,8 +174,12 @@ public class PlayerController : MonoBehaviour {
             coyoteTimeTimer = 0; //reset coyote time counter
         }
 
-        if (((m_IsOnLeftWall && Input.GetKeyDown(KeyCode.D)) || (m_IsOnRightWall && Input.GetKeyDown(KeyCode.A))) && !m_IsGrounded) {
+        if (m_CanWallHang && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A))) {
             wallJumpTimer = 0;
+        }
+
+        if (m_CanWallHang || m_CanWallJump) {
+            jumpsCounted = amountOfJumps - 1;
         }
 
         coyoteTimeTimer++;
@@ -184,6 +190,7 @@ public class PlayerController : MonoBehaviour {
             transform.position = startPos;
             Object.FindObjectOfType<CameraManager>().ResetCameraPos();
         }
+
         ApplyRotation();
         //HandleAnimations();
     }
@@ -207,7 +214,22 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (m_CanJump) {
-            Jump();
+            if (grapplingScript.isActiveAndEnabled) {
+                Jump(frogJumpHeight, Vector2.up);
+            }
+            if (glidingScript.isActiveAndEnabled) {
+                Jump(owlJumpHeight, Vector2.up);
+            }
+            if (m_CanWallHang) {
+                rb.gravityScale = wallHangGravityMultiplier;
+                Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir, 1f));
+            }
+            if (m_CanWallJump) {
+                Jump(jumpHeight / .5f, new Vector2(m_HorizontalDir, 1f));
+            }
+            else {
+                Jump(jumpHeight, Vector2.up);
+            }
         }
 
         if (m_CanCornerCorrect) {
@@ -262,7 +284,7 @@ public class PlayerController : MonoBehaviour {
     /// <summary>
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
     /// </summary>
-    private void Jump() {
+    private void Jump(float _jumpHeight, Vector2 _dir) {
         lastJumpPos = transform.position;
         coyoteTimeTimer = coyoteTimeFrames;
         jumpBufferTimer = jumpBufferFrames;
@@ -273,33 +295,8 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         float jumpForce;
 
-        if (grapplingScript.isActiveAndEnabled) {
-            jumpForce = Mathf.Sqrt((frogJumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            jumpsCounted = amountOfJumps;
-            return;
-        }
-        if (glidingScript.isActiveAndEnabled) {
-            jumpForce = Mathf.Sqrt((owlJumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            jumpsCounted = amountOfJumps;
-            return;
-        }
-        if (m_CanWallJump) {
-            jumpForce = Mathf.Sqrt((jumpHeight/.5f + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
-            rb.AddForce(new Vector2(m_HorizontalDir, 1f) * jumpForce, ForceMode2D.Impulse);
-            return;
-        }
-        if (m_CanWallHang) {
-            jumpsCounted = 0;
-            rb.gravityScale = wallHangGravityMultiplier;
-            jumpForce = Mathf.Sqrt((jumpHeight/.5f+ .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
-            rb.AddForce(new Vector2(-m_HorizontalDir, 1f) * jumpForce, ForceMode2D.Impulse);
-            return;
-        }
-
-        jumpForce = Mathf.Sqrt((jumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        jumpForce = Mathf.Sqrt((_jumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
+        rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
     }
     #endregion
     
@@ -349,14 +346,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
     private void ApplyWallHangGravity() {
-
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            rb.gravityScale = 0f;
-            rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
-        }
-        else {
-            rb.gravityScale = wallHangGravityMultiplier;
-        }
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
     }
     #endregion
     

@@ -8264,7 +8264,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
   m_Origin: {x: -49, y: -6, z: 0}
   m_Size: {x: 84, y: 23, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -9054,6 +9054,10 @@ PrefabInstance:
     - target: {fileID: 9041703462974372377, guid: 38817182acadfc346947f48ba6504083, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041703462974372383, guid: 38817182acadfc346947f48ba6504083, type: 3}
+      propertyPath: wallRayLength
+      value: 0.53
       objectReference: {fileID: 0}
     - target: {fileID: 9041703462974372383, guid: 38817182acadfc346947f48ba6504083, type: 3}
       propertyPath: additionalJumps
