@@ -74,31 +74,31 @@ public class PlayerController : MonoBehaviour {
     public bool m_CanJump {
         get {
             //return true if the player performs an input in the given time window and has additional jumps left
-            return jumpBufferTimer < jumpBufferFrames
-                   && (coyoteTimeTimer < coyoteTimeFrames || jumpsCounted < amountOfJumps)
+            return jumpBufferTimer < jumpBufferTime
+                   && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
                    && !rollingScript.isActiveAndEnabled;
         }
     }
     public bool m_CanWallJump {
         get {
-            return wallJumpTimer < wallJumpFrames;
+            return wallJumpTimer < wallJumpTime;
         }
     }
 
     [Header("Jump Buffer & Coyote Time")]
-    [SerializeField, Range(2, 30)] [Tooltip("The time window (in frames) that allows the player to perform an action before it is allowed")]
-    private float jumpBufferFrames = 5; //WARNING: if the player can not jump this number is probably = 0
+    [SerializeField] [Tooltip("The time window (in frames) that allows the player to perform an action before it is allowed")]
+    private float jumpBufferTime = .1f; //WARNING: if the player can not jump this number is probably = 0
     private float jumpBufferTimer = 1000f;
 
-    [SerializeField, Range(2, 30)] [Tooltip("The time window (in frames) in which the player can jump after walking over an edge")]
-    private float coyoteTimeFrames = 5; //WARNING: if the player can not jump this number is probably = 0
+    [SerializeField] [Tooltip("The time window (in frames) in which the player can jump after walking over an edge")]
+    private float coyoteTimeTime = .1f; //WARNING: if the player can not jump this number is probably = 0
     private float coyoteTimeTimer = 1000f;
 
     [Header("Wall Hanging")]
     [SerializeField]
     private float wallHangGravityMultiplier;
     [SerializeField]
-    private float wallJumpFrames = 5;
+    private float wallJumpTime = .1f;
     private float wallJumpTimer = 1000f;
     public bool m_CanWallHang {
         get {
@@ -182,9 +182,9 @@ public class PlayerController : MonoBehaviour {
             jumpsCounted = amountOfJumps - 1;
         }
 
-        coyoteTimeTimer++;
-        jumpBufferTimer++;
-        wallJumpTimer++;
+        coyoteTimeTimer += Time.deltaTime;
+        jumpBufferTimer += Time.deltaTime;
+        wallJumpTimer += Time.deltaTime;
 
         if (Input.GetKey(KeyCode.R)) {
             transform.position = startPos;
@@ -214,18 +214,18 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (m_CanJump) {
-            if (grapplingScript.isActiveAndEnabled) {
-                Jump(frogJumpHeight, Vector2.up);
-            }
-            if (glidingScript.isActiveAndEnabled) {
-                Jump(owlJumpHeight, Vector2.up);
-            }
             if (m_CanWallHang) {
                 rb.gravityScale = wallHangGravityMultiplier;
                 Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir, 1f));
             }
             if (m_CanWallJump) {
                 Jump(jumpHeight / .5f, new Vector2(m_HorizontalDir, 1f));
+            }
+            if (grapplingScript.isActiveAndEnabled) {
+                Jump(frogJumpHeight, Vector2.up);
+            }
+            if (glidingScript.isActiveAndEnabled) {
+                Jump(owlJumpHeight, Vector2.up);
             }
             else {
                 Jump(jumpHeight, Vector2.up);
@@ -285,9 +285,14 @@ public class PlayerController : MonoBehaviour {
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
     /// </summary>
     private void Jump(float _jumpHeight, Vector2 _dir) {
+
+        if (coyoteTimeTimer > coyoteTimeTime) {
+            jumpsCounted = amountOfJumps;
+        }
+
         lastJumpPos = transform.position;
-        coyoteTimeTimer = coyoteTimeFrames;
-        jumpBufferTimer = jumpBufferFrames;
+        coyoteTimeTimer = coyoteTimeTime;
+        jumpBufferTimer = jumpBufferTime;
         jumpsCounted++;
 
         ApplyAirLinearDrag();

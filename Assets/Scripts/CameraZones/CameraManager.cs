@@ -251,12 +251,12 @@ public class CameraManager : MonoBehaviour
         sideY = new Vector3(0, objectToFollow.position.y, 0);
 
         //if the player moves into the zone from its RIGHT side
-        if (objectToFollow.position.x > currentZone.col.bounds.max.x) {
+        if (objectToFollow.position.x > currentZone.col.bounds.center.x) {
             sideX = currentZone.col.bounds.max - new Vector3(cameraWidth / 2, 0, 0);
         }
 
         //if the player moves into the zone from its LEFT side
-        else if (objectToFollow.position.x < currentZone.col.bounds.max.x){
+        else if (objectToFollow.position.x < currentZone.col.bounds.center.x){
             sideX = currentZone.col.bounds.min + new Vector3(cameraWidth / 2, 0, 0);
         }
 
