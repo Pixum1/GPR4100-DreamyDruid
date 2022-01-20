@@ -151,11 +151,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     private Vector2 startPos;
+    float temp = 0;
     #endregion
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         startPos = transform.position;
+        Time.timeScale = .5f;
     }
 
     void Update() {
@@ -164,8 +166,19 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (m_IsGrounded) {
+            ApplyGroundLinearDrag();
             jumpsCounted = 0; //reset jumps counter
             coyoteTimeTimer = 0; //reset coyote time counter
+        }
+        else {
+            ApplyAirLinearDrag();
+
+            if (m_CanWallHang) {
+                ApplyWallHangGravity();
+            }
+            else {
+                ApplyFallGravity();
+            }
         }
 
         if (m_CanWallHang) {
@@ -180,6 +193,9 @@ public class PlayerController : MonoBehaviour {
             Object.FindObjectOfType<CameraManager>().ResetCameraPos();
         }
 
+        temp = Mathf.Max(transform.position.y - lastJumpPos.y, temp);
+        Debug.Log(temp);
+
         ApplyRotation();
         //HandleAnimations();
     }
@@ -188,29 +204,17 @@ public class PlayerController : MonoBehaviour {
         if(m_CanMove)
             Move();
 
-        if (m_IsGrounded) {
-            ApplyGroundLinearDrag();
-        }
-        else {
-            ApplyAirLinearDrag();
-
-            if (m_CanWallHang) {
-                ApplyWallHangGravity();
-            }
-            else {
-                ApplyFallGravity();
-            }
-        }
-
         if (m_CanJump) {
             if (m_CanWallHang) {
                 rb.gravityScale = wallJumpGravityMultiplier;
                 Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir, 1f));
             }
             if (grapplingScript.isActiveAndEnabled) {
+                jumpsCounted = amountOfJumps;
                 Jump(frogJumpHeight, Vector2.up);
             }
             if (glidingScript.isActiveAndEnabled) {
+                jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
             }
             else {
@@ -272,6 +276,8 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void Jump(float _jumpHeight, Vector2 _dir) {
 
+        temp = 0;
+
         if (coyoteTimeTimer > coyoteTimeTime && jumpsCounted < 1) {
             jumpsCounted = amountOfJumps;
         }
@@ -282,6 +288,8 @@ public class PlayerController : MonoBehaviour {
         jumpsCounted++;
 
         ApplyAirLinearDrag();
+
+        rb.gravityScale = fullJumpFallMultiplier;
 
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         float jumpForce;
@@ -315,7 +323,7 @@ public class PlayerController : MonoBehaviour {
     private void ApplyFallGravity() {
         if(!grapplingScript.isActiveAndEnabled) {
             if (rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
-                rb.gravityScale = fullJumpFallMultiplier;                   
+                rb.gravityScale = fullJumpFallMultiplier;
             }
             else if (rb.velocity.y > 0f && !Input.GetButton("Jump")) {
                 rb.gravityScale = halfJumpFallMultiplier;
