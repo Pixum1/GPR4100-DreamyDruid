@@ -337,10 +337,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 9041703462974372358, guid: 38817182acadfc346947f48ba6504083, type: 3}
-      propertyPath: scriptIcons.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041703462974372358, guid: 38817182acadfc346947f48ba6504083, type: 3}
       propertyPath: scriptIcons.Array.data[0]
       value: 
       objectReference: {fileID: 813990059}
@@ -403,18 +399,6 @@ PrefabInstance:
     - target: {fileID: 9041703462974372377, guid: 38817182acadfc346947f48ba6504083, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041703462974372383, guid: 38817182acadfc346947f48ba6504083, type: 3}
-      propertyPath: wallJumpTime
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041703462974372383, guid: 38817182acadfc346947f48ba6504083, type: 3}
-      propertyPath: coyoteTimeTime
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041703462974372383, guid: 38817182acadfc346947f48ba6504083, type: 3}
-      propertyPath: jumpBufferTime
-      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38817182acadfc346947f48ba6504083, type: 3}

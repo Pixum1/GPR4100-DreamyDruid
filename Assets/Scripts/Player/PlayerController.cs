@@ -79,11 +79,6 @@ public class PlayerController : MonoBehaviour {
                    && !rollingScript.isActiveAndEnabled;
         }
     }
-    public bool m_CanWallJump {
-        get {
-            return wallJumpTimer < wallJumpTime;
-        }
-    }
 
     [Header("Jump Buffer & Coyote Time")]
     [SerializeField] [Tooltip("The time window (in frames) that allows the player to perform an action before it is allowed")]
@@ -96,10 +91,9 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Wall Hanging")]
     [SerializeField]
-    private float wallHangGravityMultiplier;
+    private float wallJumpGravityMultiplier;
     [SerializeField]
-    private float wallJumpTime = .1f;
-    private float wallJumpTimer = 1000f;
+    private float onWallGravityMultiplier;
     public bool m_CanWallHang {
         get {
             return Input.GetKey(KeyCode.LeftShift)
@@ -174,17 +168,12 @@ public class PlayerController : MonoBehaviour {
             coyoteTimeTimer = 0; //reset coyote time counter
         }
 
-        if (m_CanWallHang && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A))) {
-            wallJumpTimer = 0;
-        }
-
-        if (m_CanWallHang || m_CanWallJump) {
+        if (m_CanWallHang) {
             jumpsCounted = amountOfJumps - 1;
         }
 
         coyoteTimeTimer += Time.deltaTime;
         jumpBufferTimer += Time.deltaTime;
-        wallJumpTimer += Time.deltaTime;
 
         if (Input.GetKey(KeyCode.R)) {
             transform.position = startPos;
@@ -215,11 +204,8 @@ public class PlayerController : MonoBehaviour {
 
         if (m_CanJump) {
             if (m_CanWallHang) {
-                rb.gravityScale = wallHangGravityMultiplier;
+                rb.gravityScale = wallJumpGravityMultiplier;
                 Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir, 1f));
-            }
-            if (m_CanWallJump) {
-                Jump(jumpHeight / .5f, new Vector2(m_HorizontalDir, 1f));
             }
             if (grapplingScript.isActiveAndEnabled) {
                 Jump(frogJumpHeight, Vector2.up);
@@ -286,7 +272,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void Jump(float _jumpHeight, Vector2 _dir) {
 
-        if (coyoteTimeTimer > coyoteTimeTime) {
+        if (coyoteTimeTimer > coyoteTimeTime && jumpsCounted < 1) {
             jumpsCounted = amountOfJumps;
         }
 
@@ -339,7 +325,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
         else {
-            if (rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > (frogJumpHeight)) {
+            if (rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > frogJumpHeight) {
                 rb.gravityScale = fullJumpFallMultiplier;
             }
             else if (rb.velocity.y > 0f && !Input.GetButton("Jump")) {
@@ -351,7 +337,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
     private void ApplyWallHangGravity() {
-        rb.gravityScale = 0f;
+        rb.gravityScale = onWallGravityMultiplier;
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
     }
     #endregion

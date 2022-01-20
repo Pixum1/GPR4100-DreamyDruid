@@ -14,6 +14,7 @@ public class CameraZone : MonoBehaviour {
 
     private void Awake() {
         col = GetComponent<Collider>();
+        CheckForPlayer();
     }
 
     private void Update() {
