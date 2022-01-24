@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour {
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         startPos = transform.position;
-        Time.timeScale = .5f;
+        //Time.timeScale = .5f;
     }
 
     void Update() {
