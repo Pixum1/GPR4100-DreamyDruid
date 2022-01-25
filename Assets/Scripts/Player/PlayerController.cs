@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -150,14 +151,12 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private Vector2 startPos;
-    float temp = 0;
+    public Action e_PlayerDied;
+
     #endregion
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
-        startPos = transform.position;
-        //Time.timeScale = .5f;
     }
 
     void Update() {
@@ -189,12 +188,9 @@ public class PlayerController : MonoBehaviour {
         jumpBufferTimer += Time.deltaTime;
 
         if (Input.GetKey(KeyCode.R)) {
-            transform.position = startPos;
-            Object.FindObjectOfType<CameraManager>().ResetCameraPos();
+            e_PlayerDied?.Invoke();
         }
 
-        temp = Mathf.Max(transform.position.y - lastJumpPos.y, temp);
-        Debug.Log(temp);
 
         ApplyRotation();
         //HandleAnimations();
@@ -275,9 +271,6 @@ public class PlayerController : MonoBehaviour {
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
     /// </summary>
     private void Jump(float _jumpHeight, Vector2 _dir) {
-
-        temp = 0;
-
         if (coyoteTimeTimer > coyoteTimeTime && jumpsCounted < 1) {
             jumpsCounted = amountOfJumps;
         }
@@ -387,8 +380,8 @@ public class PlayerController : MonoBehaviour {
 
         rb.velocity = new Vector2(rb.velocity.x, _verticalVelocity);
     }
-#endregion
-    
+    #endregion
+
     #region Debugging
     private void OnDrawGizmos() {
         DrawGroundRays();

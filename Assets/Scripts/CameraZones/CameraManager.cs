@@ -279,6 +279,7 @@ public class CameraManager : MonoBehaviour
         cam.transform.position = new Vector3(objectToFollow.position.x, objectToFollow.position.y, cam.transform.position.z);
         AdjustCamSize();
         AdjustCamEdge(currentZone);
+        Time.timeScale = 1f;
     }
 
     /// <summary>
