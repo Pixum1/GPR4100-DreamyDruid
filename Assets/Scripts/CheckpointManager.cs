@@ -27,11 +27,16 @@ public class CheckpointManager : MonoBehaviour
     }
 
     private void Respawn() {
-        if (currentCP == null)
+        if (currentCP == null) {
+            Debug.Log("No checkpoint collected");
             return;
+        }
 
         Vector2 newPlayerPos = new Vector2(currentCP.transform.position.x, currentCP.GetComponent<Collider2D>().bounds.min.y + player.transform.localScale.y);
         player.transform.position = newPlayerPos;
         FindObjectOfType<CameraManager>().ResetCameraPos();
+    }
+    private void OnDisable() {
+        player.e_PlayerDied -= Respawn;
     }
 }

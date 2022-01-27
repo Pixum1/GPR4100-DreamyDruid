@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour {
         get {
             return Input.GetKey(KeyCode.LeftShift)
                    && (m_IsOnLeftWall || m_IsOnRightWall)
-                   && !m_IsGrounded
+                   /*&& !m_IsGrounded*/
                    && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
                    && !rollingScript.isActiveAndEnabled
                    && !glidingScript.isActiveAndEnabled

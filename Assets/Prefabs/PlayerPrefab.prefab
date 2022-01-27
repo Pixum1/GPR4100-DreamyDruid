@@ -153,7 +153,7 @@ MonoBehaviour:
   groundRayLength: 1.1
   groundRayOffset: {x: 0.39, y: 0, z: 0}
   wallRayLength: 0.65
-  wallRayOffset: {x: 0, y: 0.23, z: 0}
+  wallRayOffset: {x: 0, y: 0.44, z: 0}
 --- !u!114 &9041703462974372379
 MonoBehaviour:
   m_ObjectHideFlags: 0
