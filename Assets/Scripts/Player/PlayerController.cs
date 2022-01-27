@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour {
         get {
             return Input.GetKey(KeyCode.LeftShift)
                    && (m_IsOnLeftWall || m_IsOnRightWall)
+                   && !m_IsGrounded
                    && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
                    && !rollingScript.isActiveAndEnabled
                    && !glidingScript.isActiveAndEnabled
@@ -172,7 +173,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-
         if (Input.GetButtonDown("Jump")) {
             jumpBufferTimer = 0; //reset the jump buffer
         }
@@ -205,6 +205,9 @@ public class PlayerController : MonoBehaviour {
         wallJumpBufferTimer += Time.deltaTime;
 
         if (Input.GetKey(KeyCode.R)) {
+            if (e_PlayerDied == null)
+                Debug.LogWarning("Null Reference");
+
             e_PlayerDied?.Invoke();
         }
 
