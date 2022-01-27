@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour {
     public bool m_CanMove {
         get {
             return m_HorizontalDir != 0f
-                   && !grapplingScript.m_IsGrappling;
+                   && !grapplingScript.m_IsGrappling
+                   && !m_CanWallHang;
         }
     }
 
@@ -80,25 +81,34 @@ public class PlayerController : MonoBehaviour {
                    && !rollingScript.isActiveAndEnabled;
         }
     }
+    public bool m_CanWallJump {
+        get {
+            return wallJumpBufferTimer < wallJumpBufferTime;
+        }
+    }
 
     [Header("Jump Buffer & Coyote Time")]
-    [SerializeField] [Tooltip("The time window (in frames) that allows the player to perform an action before it is allowed")]
+    [SerializeField] [Tooltip("The time window that allows the player to perform an action before it is allowed")]
     private float jumpBufferTime = .1f; //WARNING: if the player can not jump this number is probably = 0
     private float jumpBufferTimer = 1000f;
 
-    [SerializeField] [Tooltip("The time window (in frames) in which the player can jump after walking over an edge")]
+    [SerializeField] [Tooltip("The time window in which the player can jump after walking over an edge")]
     private float coyoteTimeTime = .1f; //WARNING: if the player can not jump this number is probably = 0
     private float coyoteTimeTimer = 1000f;
 
-    [Header("Wall Hanging")]
     [SerializeField]
-    private float wallJumpGravityMultiplier;
+    [Tooltip("The time window that allows the player to perform a wall jump after leaving the wall")]
+    private float wallJumpBufferTime = .1f;
+    private float wallJumpBufferTimer = 1000f;
+
+    [Header("Wall Hanging")]
     [SerializeField]
     private float onWallGravityMultiplier;
     public bool m_CanWallHang {
         get {
             return Input.GetKey(KeyCode.LeftShift)
                    && (m_IsOnLeftWall || m_IsOnRightWall)
+                   && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
                    && !rollingScript.isActiveAndEnabled
                    && !glidingScript.isActiveAndEnabled
                    && !grapplingScript.isActiveAndEnabled;
@@ -136,6 +146,7 @@ public class PlayerController : MonoBehaviour {
     }
     [SerializeField]
     private float wallRayLength = 1f;
+    private float wallRaySave;
     [SerializeField]
     private Vector3 wallRayOffset;
     public bool m_IsOnLeftWall {
@@ -157,9 +168,11 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        wallRaySave = wallRayLength;
     }
 
     void Update() {
+
         if (Input.GetButtonDown("Jump")) {
             jumpBufferTimer = 0; //reset the jump buffer
         }
@@ -182,10 +195,14 @@ public class PlayerController : MonoBehaviour {
 
         if (m_CanWallHang) {
             jumpsCounted = amountOfJumps - 1;
+
+            if((m_IsOnLeftWall && m_HorizontalDir > 0f) || (m_IsOnRightWall && m_HorizontalDir < 0f))
+                wallJumpBufferTimer = 0;
         }
 
         coyoteTimeTimer += Time.deltaTime;
         jumpBufferTimer += Time.deltaTime;
+        wallJumpBufferTimer += Time.deltaTime;
 
         if (Input.GetKey(KeyCode.R)) {
             e_PlayerDied?.Invoke();
@@ -193,7 +210,6 @@ public class PlayerController : MonoBehaviour {
 
 
         ApplyRotation();
-        //HandleAnimations();
     }
 
     private void FixedUpdate() {
@@ -201,8 +217,10 @@ public class PlayerController : MonoBehaviour {
             Move();
 
         if (m_CanJump) {
+            if (m_CanWallJump) {
+                Jump(jumpHeight, new Vector2(m_HorizontalDir * 1.5f, 1f));
+            }
             if (m_CanWallHang) {
-                rb.gravityScale = wallJumpGravityMultiplier;
                 Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir, 1f));
             }
             if (grapplingScript.isActiveAndEnabled) {
@@ -232,27 +250,6 @@ public class PlayerController : MonoBehaviour {
             playerSprite.flipX = true;
         }
     }
-
-    //private void HandleAnimations() {
-    //    if (isJumping) {
-    //        anim.SetBool("jump", true);
-    //    }
-    //    else {
-    //        anim.SetBool("jump", false);
-    //    }
-    //    if (isRunning && isGrounded) {
-    //        anim.SetBool("running", true);
-    //    }
-    //    else {
-    //        anim.SetBool("running", false);
-    //    }
-    //    if (isFalling) {
-    //        anim.SetBool("falling", true);
-    //    }
-    //    else {
-    //        anim.SetBool("falling", false);
-    //    }
-    //}
     #endregion
     
     #region Input & Movement
@@ -278,6 +275,7 @@ public class PlayerController : MonoBehaviour {
         lastJumpPos = transform.position;
         coyoteTimeTimer = coyoteTimeTime;
         jumpBufferTimer = jumpBufferTime;
+        wallJumpBufferTimer = wallJumpBufferTime;
         jumpsCounted++;
 
         ApplyAirLinearDrag();
@@ -287,9 +285,18 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         float jumpForce;
 
+        StartCoroutine(DisableWallRay());
+
         jumpForce = Mathf.Sqrt((_jumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
         rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
     }
+
+    private IEnumerator DisableWallRay() {
+        wallRayLength = 0f;
+        yield return new WaitForEndOfFrame();
+        wallRayLength = wallRaySave;
+    }
+
     #endregion
     
     #region LinearDrag & Gravity Management
@@ -339,7 +346,7 @@ public class PlayerController : MonoBehaviour {
     }
     private void ApplyWallHangGravity() {
         rb.gravityScale = onWallGravityMultiplier;
-        rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
+        rb.velocity = new Vector2(0, 0f); //set y velocity to 0
     }
     #endregion
     

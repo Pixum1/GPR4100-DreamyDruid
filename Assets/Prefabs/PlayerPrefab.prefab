@@ -145,14 +145,14 @@ MonoBehaviour:
   amountOfJumps: 2
   jumpBufferTime: 0.2
   coyoteTimeTime: 0.2
-  wallJumpGravityMultiplier: 5
+  wallJumpBufferTime: 0.3
   onWallGravityMultiplier: 10
   CCRayLength: 0.8
   CCedgeRayOffset: {x: 0.55, y: 0, z: 0}
   CCinnerRayOffset: {x: 0.2, y: 0, z: 0}
   groundRayLength: 1.1
   groundRayOffset: {x: 0.39, y: 0, z: 0}
-  wallRayLength: 0.53
+  wallRayLength: 0.65
   wallRayOffset: {x: 0, y: 0.23, z: 0}
 --- !u!114 &9041703462974372379
 MonoBehaviour:

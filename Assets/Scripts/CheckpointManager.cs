@@ -15,7 +15,7 @@ public class CheckpointManager : MonoBehaviour
     }
     private void Start() {
         checkpoints = FindObjectsOfType<Checkpoint>();
-        player.e_PlayerDied = new Action(Respawn);
+        player.e_PlayerDied += new Action(Respawn);
     }
 
     private void Update() {
