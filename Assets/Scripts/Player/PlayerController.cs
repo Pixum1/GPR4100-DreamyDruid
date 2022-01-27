@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour {
     }
     [SerializeField]
     private float wallRayLength = 1f;
+    private float wallRaySave;
     [SerializeField]
     private Vector3 wallRayOffset;
     public bool m_IsOnLeftWall {
@@ -167,6 +168,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        wallRaySave = wallRayLength;
     }
 
     void Update() {
@@ -208,7 +210,6 @@ public class PlayerController : MonoBehaviour {
 
 
         ApplyRotation();
-        //HandleAnimations();
     }
 
     private void FixedUpdate() {
@@ -284,9 +285,18 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = new Vector2(rb.velocity.x, 0f); //set y velocity to 0
         float jumpForce;
 
+        StartCoroutine(DisableWallRay());
+
         jumpForce = Mathf.Sqrt((_jumpHeight + .5f) * -2f * (Physics.gravity.y * rb.gravityScale));
         rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
     }
+
+    private IEnumerator DisableWallRay() {
+        wallRayLength = 0f;
+        yield return new WaitForEndOfFrame();
+        wallRayLength = wallRaySave;
+    }
+
     #endregion
     
     #region LinearDrag & Gravity Management
