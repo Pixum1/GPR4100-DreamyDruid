@@ -58,6 +58,7 @@ public class Grappling : MonoBehaviour
 
     private float drawDelay;
 
+    bool isAddingMomentum;
     private void Awake()
     {
         drawDelay = initialDrawDelay;
@@ -65,6 +66,11 @@ public class Grappling : MonoBehaviour
     }
     private void Update()
     {
+        if (isAddingMomentum)
+        {
+            AddMomentum();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             CaptureMousePosition();
@@ -154,18 +160,25 @@ public class Grappling : MonoBehaviour
             springJoint.distance = 0f;
             springJoint.frequency = 5f;
             springJoint.dampingRatio = 1f;
-            AddMomentum();
+            StartCoroutine("AddMomentumIE");
         }
     }
-
+    IEnumerator AddMomentumIE()
+    {
+        isAddingMomentum = true;
+        yield return new WaitForSeconds(0.5f);
+        isAddingMomentum = false;
+    }
     void AddMomentum()
     {
-        float playerAnchorDistX = grapplingAnchor.transform.position.x- transform.position.x;
-        float playerAnchorDistY = grapplingAnchor.transform.position.y - transform.position.y;
-        float f = 2.5f;
-        rb.AddForce(new Vector2(Mathf.Clamp(f * playerAnchorDistX, -20, 20), -Mathf.Clamp(f * playerAnchorDistX, 0, 10)), ForceMode2D.Impulse);
+        if (grapplingAnchor != null)
+        {
+            float playerAnchorDistX = grapplingAnchor.transform.position.x - transform.position.x;
+            float playerAnchorDistY = grapplingAnchor.transform.position.y - transform.position.y;
+            float f = .1f;
+            rb.AddForce(new Vector2(Mathf.Clamp(f * playerAnchorDistX, -maxDistance, maxDistance), -Mathf.Clamp(f * playerAnchorDistY, -maxDistance * .25f, maxDistance * .25f)), ForceMode2D.Impulse);
+        }
     }
-
     private void CreateRope()
     {
         Vector3 ropeStartPoint = grapplingAnchor.transform.position;
@@ -178,7 +191,7 @@ public class Grappling : MonoBehaviour
     }
     private void SimulateRope()
     {
-        Vector2 forceGravity = new Vector2(0f, -1f);
+        Vector2 forceGravity = new Vector2(0f, -0.5f);
 
         RopeSegment lastSegment = ropeSegments[segmentAmount - 1];
 
@@ -223,9 +236,9 @@ public class Grappling : MonoBehaviour
 
             if (i != 0)
             {
-                firstSeg.posNow -= changeAmount * 0.5f;
+                firstSeg.posNow -= changeAmount * 0.75f;
                 ropeSegments[i] = firstSeg;
-                secondSeg.posNow += changeAmount * 0.5f;
+                secondSeg.posNow += changeAmount * 0.75f;
                 ropeSegments[i + 1] = secondSeg;
             }
             else
