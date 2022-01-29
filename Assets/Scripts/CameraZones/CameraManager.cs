@@ -62,15 +62,10 @@ public class CameraManager : MonoBehaviour
             SetCameraPosition(); //set camera position if the current zone has been switched (saves performance)
         }
 
-        if (cameraWidth < currentZone.col.bounds.size.x) {
-            if (CheckCameraBounds(currentZone)) {
-                ///INSERT IF STATEMENT --> if player is outside of deadzone
-                if (!rect.Contains(objectToFollow.position)) {
-                    //cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, cam.transform.position.z);
-                    CameraMoveByRect();
-                    AdjustCamEdge(currentZone);
-                }
-            }
+        if (!rect.Contains(objectToFollow.position) && Time.timeScale > 0f) {
+            //cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, cam.transform.position.z);
+            CameraMoveByRect();
+            AdjustCamEdge(currentZone);
         }
         RecalculateBounds();
     }
