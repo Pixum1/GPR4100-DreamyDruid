@@ -11,7 +11,7 @@ public class Gliding : MonoBehaviour
 
     private bool m_CanGlide {
         get {
-            return Input.GetKey(KeyCode.LeftControl) && !player.m_IsGrounded;
+            return Input.GetKey(KeyCode.LeftControl) && !player.pCollision.m_IsGrounded;
         }
     }
     public bool m_IsGliding { 
@@ -45,6 +45,6 @@ public class Gliding : MonoBehaviour
 
         rb.AddForce(transform.up * Mathf.Abs(rb.velocity.x) * Time.deltaTime * 75);//upforce by horizontal speed
 
-        rb.AddForce(-transform.right * player.m_HorizontalDir * fallSpeed * Time.deltaTime * 50);//horizontal speed by fallspeed * x input
+        rb.AddForce(-transform.right * player.pMovement.m_HorizontalDir * fallSpeed * Time.deltaTime * 50);//horizontal speed by fallspeed * x input
     }
 }
