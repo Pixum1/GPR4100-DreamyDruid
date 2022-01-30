@@ -8,34 +8,24 @@ public class Grappling : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField]
     private float dragValue;
-
     [SerializeField]
     private LayerMask grappable;
-
     private LineRenderer lr;
-
     private Vector3 mousePos;
     [SerializeField]
     SpriteRenderer playerSprite;
-
     [SerializeField]
     private Material ropeMaterial;
-
     [SerializeField]
     private Color ropeColor;
-
     [SerializeField]
     private float maxDistance = 50f;
-
     [SerializeField]
     private float ropeSegmentLength = 0.25f;
-
     [SerializeField]
     private float initialDrawDelay = 0.2f;
-
     [SerializeField]
     private float ropeWidth = 0.2f;
-
     public bool m_IsGrappling
     {
         get
@@ -45,19 +35,13 @@ public class Grappling : MonoBehaviour
     }
 
     private List<RopeSegment> ropeSegments = new List<RopeSegment>();
-
     private DistanceJoint2D distJoint;
     private SpringJoint2D springJoint;
-
     private GameObject grapplingAnchor;
     private GameObject playerAnchor;
-
     private int segmentAmount;
-
     private bool isGrappling;
-
     private float drawDelay;
-
     bool isAddingMomentum;
     private void Awake()
     {

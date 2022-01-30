@@ -6,10 +6,8 @@ public class Rolling : MonoBehaviour
 {
     [SerializeField]
     PhysicsMaterial2D physicsMaterial;
-
     [SerializeField]
-    float speed;    
-
+    float speed;
     [SerializeField]
     float maxAngularVel = 300;
     private bool canRoll {

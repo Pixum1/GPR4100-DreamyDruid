@@ -26,7 +26,6 @@ public class Nightmare : MonoBehaviour
     [SerializeField]
     Vector3Int resetPos;
 
-    [SerializeField]
     int i;
 
     [SerializeField]
