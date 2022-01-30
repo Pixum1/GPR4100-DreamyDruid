@@ -259,11 +259,11 @@ public class PlayerController : MonoBehaviour {
 
     #region Obstacles
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.CompareTag("Obstacle"))
         {
-            e_PlayerDied();
+            e_PlayerDied?.Invoke();
         }
     }
 
