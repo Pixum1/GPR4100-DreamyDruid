@@ -6,6 +6,7 @@ public class CameraZone : MonoBehaviour {
     public bool m_isActive { get { return isAsctive; } }
 
     private bool isAsctive;
+    [SerializeField]
     public LayerMask playerLayer;
     [HideInInspector]
     public Collider col;
