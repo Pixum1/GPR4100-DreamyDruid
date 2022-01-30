@@ -257,6 +257,18 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    #region Obstacles
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Obstacle"))
+        {
+            e_PlayerDied();
+        }
+    }
+
+    #endregion
+
     #region Animations and Sprite Management
     private void ApplyRotation() {
         if (m_HorizontalDir > 0) {
