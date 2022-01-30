@@ -17,4 +17,10 @@ public class PlayerHealth : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
             e_PlayerDied?.Invoke();
     }
+
+    private void OnTriggerStay2D(Collider2D _other) {
+        if (_other.CompareTag("Obstacle")) {
+            e_PlayerDied?.Invoke();
+        }
+    }
 }

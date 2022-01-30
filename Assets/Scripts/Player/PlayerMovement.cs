@@ -26,6 +26,12 @@ public class PlayerMovement : MonoBehaviour {
     private float jumpHeight;
     [SerializeField]
     private float frogJumpHeight;
+    private float frogJumpHeightMultiplier;
+    [SerializeField]
+    private float frogJumpMaxMulti = 15f;
+    [SerializeField]
+    private float frogJumpTimeToMaxForce = 2;
+    private bool frogJump;
     [SerializeField]
     private float owlJumpHeight;
     [SerializeField]
@@ -111,7 +117,11 @@ public class PlayerMovement : MonoBehaviour {
     private void Update() {
 
         if (Input.GetButtonDown("Jump")) {
+            frogJump = false;
             jumpBufferTimer = 0; //reset the jump buffer
+        }
+        if (frogJump) {
+            FrogJump();
         }
 
         if (player.pCollision.m_IsGrounded) {
@@ -156,13 +166,13 @@ public class PlayerMovement : MonoBehaviour {
             }
             if (player.grapplingScript.isActiveAndEnabled) {
                 jumpsCounted = amountOfJumps;
-                Jump(frogJumpHeight, Vector2.up);
+                frogJump = true;
             }
             if (player.glidingScript.isActiveAndEnabled) {
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
             }
-            else {
+            else if (!player.grapplingScript.isActiveAndEnabled) {
                 Jump(jumpHeight, Vector2.up);
             }
         }
@@ -200,6 +210,18 @@ public class PlayerMovement : MonoBehaviour {
 
         jumpForce = Mathf.Sqrt((_jumpHeight + .5f) * -2f * (Physics.gravity.y * player.rb.gravityScale));
         player.rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
+    }
+    void FrogJump() {
+        if (Input.GetKey(KeyCode.Space)) {
+            if (frogJumpHeightMultiplier < frogJumpMaxMulti) {
+                frogJumpHeightMultiplier += Time.fixedDeltaTime * frogJumpMaxMulti / frogJumpTimeToMaxForce;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Space)) {
+            frogJump = false;
+            Jump(jumpHeight * frogJumpHeightMultiplier, Vector2.up);
+            frogJumpHeightMultiplier = 0;
+        }
     }
 
     /// <summary>
