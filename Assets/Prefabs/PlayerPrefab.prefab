@@ -149,6 +149,8 @@ MonoBehaviour:
   groundLinDrag: 20
   jumpHeight: 2
   frogJumpHeight: 6
+  frogJumpMaxMulti: 15
+  frogJumpTimeToMaxForce: 2
   owlJumpHeight: 1
   airLinDrag: 2.5
   fullJumpFallMultiplier: 8
@@ -262,6 +264,7 @@ MonoBehaviour:
   grappable:
     serializedVersion: 2
     m_Bits: 384
+  playerSprite: {fileID: 0}
   ropeMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   ropeColor: {r: 0.16372499, g: 0.4811321, b: 0.097588114, a: 1}
   maxDistance: 50
