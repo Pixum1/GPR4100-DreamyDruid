@@ -15,7 +15,7 @@ public class CheckpointManager : MonoBehaviour
     }
     private void Start() {
         checkpoints = FindObjectsOfType<Checkpoint>();
-        player.e_PlayerDied += new Action(Respawn);
+        player.pHealth.e_PlayerDied += new Action(Respawn);
     }
 
     private void Update() {
@@ -43,6 +43,6 @@ public class CheckpointManager : MonoBehaviour
         FindObjectOfType<CameraManager>().ResetCameraPos();
     }
     private void OnDisable() {
-        player.e_PlayerDied -= Respawn;
+        player.pHealth.e_PlayerDied -= Respawn;
     }
 }

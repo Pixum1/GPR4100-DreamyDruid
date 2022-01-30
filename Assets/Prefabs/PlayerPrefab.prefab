@@ -12,6 +12,10 @@ GameObject:
   - component: {fileID: 9041703462974372376}
   - component: {fileID: 9041703462974372358}
   - component: {fileID: 9041703462974372383}
+  - component: {fileID: 2044989468733699194}
+  - component: {fileID: 850183184172662531}
+  - component: {fileID: 6393904274851554534}
+  - component: {fileID: 1671751616852207037}
   - component: {fileID: 9041703462974372379}
   - component: {fileID: 9041703462974372356}
   - component: {fileID: 9041703462974372380}
@@ -119,20 +123,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e27420d479f2bb4d9edb40691b3f7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 9041703462974372376}
-  anim: {fileID: 9041703462974372378}
+  rb: {fileID: 9041703462974372382}
+  pCollision: {fileID: 850183184172662531}
+  pMovement: {fileID: 2044989468733699194}
+  pHealth: {fileID: 6393904274851554534}
+  pAnimation: {fileID: 1671751616852207037}
   rollingScript: {fileID: 9041703462974372356}
   grapplingScript: {fileID: 9041703462974372380}
   glidingScript: {fileID: 9041703462974372379}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  CCLayer:
-    serializedVersion: 2
-    m_Bits: 384
-  wallHangLayer:
-    serializedVersion: 2
-    m_Bits: 384
+--- !u!114 &2044989468733699194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041703462974372370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1c51a16fd55724499aa9dea9fe7a871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 9041703462974372383}
   acceleration: 70
   maxSpeed: 12
   groundLinDrag: 20
@@ -147,13 +158,66 @@ MonoBehaviour:
   coyoteTimeTime: 0.2
   wallJumpBufferTime: 0.3
   onWallGravityMultiplier: 10
-  CCRayLength: 0.8
-  CCedgeRayOffset: {x: 0.55, y: 0, z: 0}
-  CCinnerRayOffset: {x: 0.2, y: 0, z: 0}
+--- !u!114 &850183184172662531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041703462974372370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415ec53f6c5690e4dab14d2c14fcc8d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 9041703462974372383}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  CCLayer:
+    serializedVersion: 2
+    m_Bits: 384
+  wallHangLayer:
+    serializedVersion: 2
+    m_Bits: 384
   groundRayLength: 1.1
   groundRayOffset: {x: 0.39, y: 0, z: 0}
   wallRayLength: 0.65
   wallRayOffset: {x: 0, y: 0.44, z: 0}
+  CCRayLength: 0.8
+  CCedgeRayOffset: {x: 0.55, y: 0, z: 0}
+  CCinnerRayOffset: {x: 0.2, y: 0, z: 0}
+  m_IsGrounded: 0
+  m_IsOnLeftWall: 0
+  m_IsOnRightWall: 0
+  m_CanCornerCorrect: 0
+--- !u!114 &6393904274851554534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041703462974372370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f56640940a0b11439e0c29cefbdf8e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 9041703462974372383}
+--- !u!114 &1671751616852207037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041703462974372370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d8dd29eba5c514ab12c3a36d5ca3d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 9041703462974372383}
+  playerSprite: {fileID: 9041703462974372376}
 --- !u!114 &9041703462974372379
 MonoBehaviour:
   m_ObjectHideFlags: 0
