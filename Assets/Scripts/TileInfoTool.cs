@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor;
-
+[System.Serializable]
 public class TileInfoTool : MonoBehaviour
 {
     private Tilemap[] tM;
 
     private List<Vector3Int> usedTiles = new List<Vector3Int>();
-    private List<Vector3Int> surroundingTiles = new List<Vector3Int>();
+    public List<Vector3Int> surroundingTiles = new List<Vector3Int>();
     private List<Vector3Int> emptyTiles = new List<Vector3Int>();
 
     private Color usedColor = new Color(1, 0, 0, 0.5f);
@@ -24,6 +24,8 @@ public class TileInfoTool : MonoBehaviour
     private int index;
 
     private bool hasRun = false;
+
+    public string json;
 
     [CustomEditor(typeof(TileInfoTool))]
     private class TileInfoToolEditor : Editor
@@ -66,8 +68,9 @@ public class TileInfoTool : MonoBehaviour
             }
         }
     }
-    private void Run()
+    public void Run()
     {
+        TileData tileData = new TileData();
         hasRun = true;
         index = 0;
         tM = Tilemap.FindObjectsOfType<Tilemap>();
@@ -81,6 +84,19 @@ public class TileInfoTool : MonoBehaviour
             GetTiles();
             index++;
         }
+        tileData.surroundingTilesData = surroundingTiles;
+        json = JsonUtility.ToJson(tileData);
+    }
+
+    public TileData LoadTileData()
+    {
+        TileData loadedTileData = JsonUtility.FromJson<TileData>(json);
+        return loadedTileData;
+    }
+
+    public class TileData
+    {
+        public List<Vector3Int> surroundingTilesData;
     }
 
     private void GetTiles()
