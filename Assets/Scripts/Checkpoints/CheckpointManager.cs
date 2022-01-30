@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
-    private Checkpoint currentCP;
+    public Checkpoint currentCP;
     private Checkpoint[] checkpoints;
 
     [SerializeField]

@@ -6,7 +6,7 @@ using UnityEditor;
 [System.Serializable]
 public class TileInfoTool : MonoBehaviour
 {
-    private Tilemap[] tM;
+    private Tilemap[] allTM;
 
     private List<Vector3Int> usedTiles = new List<Vector3Int>();
     public List<Vector3Int> surroundingTiles = new List<Vector3Int>();
@@ -73,12 +73,12 @@ public class TileInfoTool : MonoBehaviour
         TileData tileData = new TileData();
         hasRun = true;
         index = 0;
-        tM = Tilemap.FindObjectsOfType<Tilemap>();
+        allTM = FindObjectsOfType<Tilemap>();
 
-        for (int i = 0; i < tM.Length; i++)
+        for (int i = 0; i < allTM.Length; i++)
         {
-            tMSize = tM[i].size;
-            tMOrigin = tM[i].origin;
+            tMSize = allTM[i].size;
+            tMOrigin = allTM[i].origin;
             tMWidth = tMSize.x;
             tMHeight = tMSize.y;
             GetTiles();
@@ -106,7 +106,7 @@ public class TileInfoTool : MonoBehaviour
             for (int y = 0; y < tMHeight; y++)
             {
                 Vector3Int pos = new Vector3Int(tMOrigin.x + x, tMOrigin.y + y, 0);
-                if (tM[index].HasTile(pos))
+                if (allTM[index].HasTile(pos))
                 {
                     if (!usedTiles.Contains(pos))
                     {
@@ -136,7 +136,7 @@ public class TileInfoTool : MonoBehaviour
                 Vector3Int offset = new Vector3Int(x, y, 0);
                 Vector3Int pos = _tile + offset;
 
-                if (!tM[index].HasTile(pos))
+                if (!allTM[index].HasTile(pos))
                 {
                     if (!usedTiles.Contains(pos) && !surroundingTiles.Contains(pos))
                     {

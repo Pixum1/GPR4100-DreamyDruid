@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,20 +7,15 @@ using UnityEngine.Tilemaps;
 
 public class Nightmare : MonoBehaviour
 {
-    //[SerializeField]
-    //LineRenderer lr;
-
-    //[SerializeField]
-    //Tilemap tilemap;
+    private PlayerController playerController;
 
     Transform player;
 
     [SerializeField]
     float maxTime;
-    //[SerializeField]
-    //float step;
 
-    //Vector3 endPos;
+    Checkpoint currentCheckpoint;
+    CheckpointManager cPManager;
 
     [SerializeField]
     List<Vector3Int> emptyNightmareTiles = new List<Vector3Int>();
@@ -27,6 +23,8 @@ public class Nightmare : MonoBehaviour
     List<Vector3Int> usedNightmareTiles = new List<Vector3Int>();
     [SerializeField]
     Vector3Int startPos;
+    [SerializeField]
+    Vector3Int resetPos;
 
     [SerializeField]
     int i;
@@ -35,54 +33,23 @@ public class Nightmare : MonoBehaviour
     Tilemap nightmareTilemap;
 
     [SerializeField]
-    TileBase[] nmTile;
+    TileBase nmTile;
 
     TileInfoTool tIT;
 
     private void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
         tIT = GetComponent<TileInfoTool>();
+        cPManager = GameObject.Find("CheckPointManager").GetComponent<CheckpointManager>();
+        playerController.pHealth.e_PlayerDied += new Action(ResetNightmare);
         emptyNightmareTiles = tIT.LoadTileData().surroundingTilesData;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         usedNightmareTiles.Add(startPos);
         emptyNightmareTiles.Remove(startPos);
         GetNextTile();
-
-        //StartCoroutine("Spawn");        
+        
     }
-
-    //public Vector3 GetEndPosition(Transform _target)
-    //{
-    //    Vector3 targetPos = _target.position;
-
-    //    float dist = Vector3.Distance(endPos, targetPos);
-
-    //    endPos = Vector3.MoveTowards(endPos, targetPos, step * dist);
-
-    //    return endPos;
-    //}
-
-    //public Vector3Int GetStartPosition()
-    //{
-    //    int posY = 0;
-
-    //    int posX = 0;
-
-    //    Vector3Int pos = new Vector3Int(posX, posY, 0);
-
-    //    return pos;
-    //}
-
-    //private IEnumerator Spawn()
-    //{
-    //    if (!tilemap.HasTile(GetStartPosition()))
-    //    {
-    //        lr.SetPosition(0, GetStartPosition());
-    //        lr.SetPosition(1, GetEndPosition(player));
-    //    }
-    //    yield return new WaitForSeconds(seconds);
-    //    StartCoroutine("Spawn");
-    //}
 
     void GetNextTile()
     {
@@ -104,7 +71,7 @@ public class Nightmare : MonoBehaviour
                 Vector3Int offset = new Vector3Int(x, y, 0);
                 Vector3Int pos = _tile + offset;
 
-                if (emptyNightmareTiles.Contains(pos))
+                if (emptyNightmareTiles.Contains(pos)&&dist<50)
                 {
                     bufferTiles.Add(pos);
                     emptyNightmareTiles.Remove(pos);
@@ -116,17 +83,27 @@ public class Nightmare : MonoBehaviour
         yield return new WaitForSeconds(timeToNext);
         usedNightmareTiles.AddRange(bufferTiles);
         
-        nightmareTilemap.SetTiles(bufferTiles.ToArray(),nmTile);
+        nightmareTilemap.SetTile(_tile,nmTile);
         GetNextTile();
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Vector3 offset = new Vector3(0.5f, 0.5f);
-    //    Gizmos.color = Color.red;
-    //    foreach (Vector3Int usedNightmareTile in usedNightmareTiles)
-    //    {
-    //        Gizmos.DrawCube(usedNightmareTile + offset, new Vector3(0.5f, 0.5f));
-    //    }
-    //}
+    private void ResetNightmare()
+    {
+        StopAllCoroutines();
+        nightmareTilemap.ClearAllTiles();
+        usedNightmareTiles.Clear();
+        emptyNightmareTiles.Clear();
+        emptyNightmareTiles = tIT.LoadTileData().surroundingTilesData;
+        currentCheckpoint = cPManager.currentCP;
+        resetPos = currentCheckpoint.nightmarePosWhenCollected;
+        usedNightmareTiles.Add(resetPos);
+        emptyNightmareTiles.Remove(resetPos);
+        i = 0;
+        GetNextTile();
+    }
+
+    private void OnDisable()
+    {
+        playerController.pHealth.e_PlayerDied -= ResetNightmare;
+    }
 }
