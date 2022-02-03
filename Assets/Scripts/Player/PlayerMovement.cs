@@ -91,9 +91,19 @@ public class PlayerMovement : MonoBehaviour {
     }
     public bool m_CanJump {
         get {
-            return jumpBufferTimer < jumpBufferTime
-                   && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
-                   && !player.rollingScript.isActiveAndEnabled;
+            if(amountOfJumps > 1) {
+                return jumpBufferTimer < jumpBufferTime
+                    && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
+                    && !player.rollingScript.isActiveAndEnabled;
+            }
+            else if (m_CanWallHang) {
+                return jumpBufferTimer < jumpBufferTime;
+            }
+            else {
+                return jumpBufferTimer < jumpBufferTime
+                    && coyoteTimeTimer < coyoteTimeTime
+                    && !player.rollingScript.isActiveAndEnabled;
+            }
         }
     }
     public bool m_CanWallJump {
@@ -112,6 +122,8 @@ public class PlayerMovement : MonoBehaviour {
                    && !player.grapplingScript.isActiveAndEnabled;
         }
     }
+
+    public bool PlayerJumped;
     #endregion
 
     private void Update() {
