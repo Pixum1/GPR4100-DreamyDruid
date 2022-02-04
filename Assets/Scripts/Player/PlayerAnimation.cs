@@ -17,12 +17,12 @@ public class PlayerAnimation : MonoBehaviour {
     private Animator animator;
     private string currentAnimation;
 
-    const string idleAnim = "PlayerIdle_anim";
-    const string runAnim = "PlayerRun_anim";
-    const string jumpAnim = "PlayerJump_anim";
-    const string fallAnim = "PlayerFalling_anim";
-    const string wallAnim = "PlayerOnWall_anim";
-    const string wallLookAnim = "PlayerOnWallLookAway_anim";
+    private string idleAnim = "Idle_anim";
+    private string runAnim = "Run_anim";
+    private string jumpAnim = "Jump_anim";
+    private string fallAnim = "Falling_anim";
+    private string wallAnim = "OnWall_anim";
+    private string wallLookAnim = "OnWallLookAway_anim";
 
     private bool jumping { get { return !player.pCollision.m_IsGrounded && player.rb.velocity.y > 0f; } }
     private bool falling { get { return !player.pCollision.m_IsGrounded && !jumping; } }
@@ -35,6 +35,20 @@ public class PlayerAnimation : MonoBehaviour {
     }
 
     void Update() {
+        if (player.grapplingScript.isActiveAndEnabled) {
+            ChangeAnimationSprites("Frog");
+        }
+        else if (player.glidingScript.isActiveAndEnabled) {
+            ChangeAnimationSprites("Hawk");
+        }
+        else if (player.rollingScript.isActiveAndEnabled) {
+            ChangeAnimationSprites("Armadillo");
+        }
+        else {
+            ChangeAnimationSprites("Bear");
+        }
+
+
         if (!wallHang) {
             ApplyRotation();
 
@@ -57,6 +71,15 @@ public class PlayerAnimation : MonoBehaviour {
             else
                 ChangeAnimationState(wallAnim);
         }
+    }
+
+    private void ChangeAnimationSprites(string _animalName) {
+        idleAnim = _animalName + "Idle_anim";
+        runAnim = _animalName + "Run_anim";
+        jumpAnim = _animalName + "Jump_anim";
+        fallAnim = _animalName + "Falling_anim";
+        wallAnim = _animalName + "OnWall_anim";
+        wallLookAnim = _animalName + "OnWallLookAway_anim";
     }
 
     private void ApplyRotation() {
