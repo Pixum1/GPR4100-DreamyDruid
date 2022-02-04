@@ -15,6 +15,8 @@ public class PlayerAnimation : MonoBehaviour {
 
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private ParticleSystem particles;
     private string currentAnimation;
 
     private string idleAnim = "Idle_anim";
@@ -52,8 +54,12 @@ public class PlayerAnimation : MonoBehaviour {
         if (!wallHang) {
             ApplyRotation();
 
-            if (jumping)
+            if (Input.GetButtonDown("Jump") && player.pCollision.m_IsGrounded)
+                particles.Play();
+
+            if (jumping) {
                 ChangeAnimationState(jumpAnim);
+            }
 
             if (falling)
                 ChangeAnimationState(fallAnim);
