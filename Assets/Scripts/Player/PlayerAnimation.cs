@@ -16,7 +16,9 @@ public class PlayerAnimation : MonoBehaviour {
     [SerializeField]
     private Animator animator;
     [SerializeField]
-    private ParticleSystem particles;
+    private ParticleSystem jumpParticles;
+    [SerializeField]
+    private ParticleSystem evolveParticles;
     private string currentAnimation;
 
     private string idleAnim = "Idle_anim";
@@ -55,7 +57,7 @@ public class PlayerAnimation : MonoBehaviour {
             ApplyRotation();
 
             if (Input.GetButtonDown("Jump") && player.pCollision.m_IsGrounded)
-                particles.Play();
+                jumpParticles.Play();
 
             if (jumping) {
                 ChangeAnimationState(jumpAnim);
@@ -77,6 +79,10 @@ public class PlayerAnimation : MonoBehaviour {
             else
                 ChangeAnimationState(wallAnim);
         }
+    }
+
+    public void PlayEvolveAnimation() {
+        evolveParticles.Play();
     }
 
     private void ChangeAnimationSprites(string _animalName) {

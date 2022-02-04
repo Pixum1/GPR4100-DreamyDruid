@@ -11,8 +11,11 @@ public class MovementSelector : MonoBehaviour
     Image[] scriptIcons; //0 = Owl, 1 = Frog, 2 = Armadillo, 3 = Human
     Image currentScriptIcon;
 
+    private PlayerAnimation animation;
+
     private void Awake() {
         currentScriptIcon = scriptIcons[3]; //Human
+        animation = GetComponent<PlayerAnimation>();
     }
     private void Update()
     {
@@ -43,15 +46,20 @@ public class MovementSelector : MonoBehaviour
         }
     }
 
-    void SwitchScript(Behaviour _script)
-    {
-        if(currentScript != null)
+    void SwitchScript(Behaviour _script) {
+        if (currentScript != _script)
+            animation.PlayEvolveAnimation();
+
+        if (currentScript != null)
             currentScript.enabled = false;
 
         _script.enabled = true;
         currentScript = _script;
     }    
     private void SwitchToHuman() {
+        if (currentScript.enabled)
+            animation.PlayEvolveAnimation();
         currentScript.enabled = false;
+        currentScript = null;
     }
 }
