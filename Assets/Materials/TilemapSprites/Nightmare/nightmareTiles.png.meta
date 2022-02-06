@@ -41,75 +41,6 @@ TextureImporter:
   - first:
       213: 2161431697826537730
     second: nightmareTiles_12
-  - first:
-      213: 4333113031407170313
-    second: nightmareTiles_13
-  - first:
-      213: 8485396779231035419
-    second: nightmareTiles_14
-  - first:
-      213: 4459855407408257912
-    second: nightmareTiles_15
-  - first:
-      213: -946268686808108164
-    second: nightmareTiles_16
-  - first:
-      213: -1248593042711826531
-    second: nightmareTiles_17
-  - first:
-      213: -1254574353138597549
-    second: nightmareTiles_18
-  - first:
-      213: -6354611019425281344
-    second: nightmareTiles_19
-  - first:
-      213: 8749207456987192608
-    second: nightmareTiles_20
-  - first:
-      213: 6365426256589436685
-    second: nightmareTiles_21
-  - first:
-      213: 7236622465971646113
-    second: nightmareTiles_22
-  - first:
-      213: -6216368932453354235
-    second: nightmareTiles_23
-  - first:
-      213: 6241786742501987127
-    second: nightmareTiles_24
-  - first:
-      213: 7018817401805868554
-    second: nightmareTiles_25
-  - first:
-      213: 6721937060185866998
-    second: nightmareTiles_26
-  - first:
-      213: 6281869372683417434
-    second: nightmareTiles_27
-  - first:
-      213: 3970563062178327238
-    second: nightmareTiles_28
-  - first:
-      213: 8698944782808079290
-    second: nightmareTiles_29
-  - first:
-      213: 2669555117569459400
-    second: nightmareTiles_30
-  - first:
-      213: -2787194549723388475
-    second: nightmareTiles_31
-  - first:
-      213: -6630976234181737586
-    second: nightmareTiles_32
-  - first:
-      213: 1820160439938621314
-    second: nightmareTiles_33
-  - first:
-      213: -554352723277780966
-    second: nightmareTiles_34
-  - first:
-      213: 386213884872984306
-    second: nightmareTiles_35
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -215,7 +146,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 56
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -236,7 +167,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 56
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -257,7 +188,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 56
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -277,8 +208,8 @@ TextureImporter:
       name: nightmareTiles_3
       rect:
         serializedVersion: 2
-        x: 24
-        y: 56
+        x: 0
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -298,8 +229,8 @@ TextureImporter:
       name: nightmareTiles_4
       rect:
         serializedVersion: 2
-        x: 32
-        y: 56
+        x: 8
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -319,8 +250,8 @@ TextureImporter:
       name: nightmareTiles_5
       rect:
         serializedVersion: 2
-        x: 40
-        y: 56
+        x: 16
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -341,7 +272,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -362,7 +293,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 48
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -383,7 +314,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 48
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -403,8 +334,8 @@ TextureImporter:
       name: nightmareTiles_9
       rect:
         serializedVersion: 2
-        x: 24
-        y: 48
+        x: 0
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -424,8 +355,8 @@ TextureImporter:
       name: nightmareTiles_10
       rect:
         serializedVersion: 2
-        x: 32
-        y: 48
+        x: 8
+        y: 8
         width: 8
         height: 8
       alignment: 0
@@ -445,8 +376,8 @@ TextureImporter:
       name: nightmareTiles_11
       rect:
         serializedVersion: 2
-        x: 40
-        y: 48
+        x: 0
+        y: 0
         width: 8
         height: 8
       alignment: 0
@@ -466,8 +397,8 @@ TextureImporter:
       name: nightmareTiles_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 40
+        x: 8
+        y: 0
         width: 8
         height: 8
       alignment: 0
@@ -479,489 +410,6 @@ TextureImporter:
       bones: []
       spriteID: 201683b6da2fefd10800000000000000
       internalID: 2161431697826537730
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_13
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 40
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 903f3a0285f422c30800000000000000
-      internalID: 4333113031407170313
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_14
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 40
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b104f44c96f22c570800000000000000
-      internalID: 8485396779231035419
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_15
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 40
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87b9c2c1dd694ed30800000000000000
-      internalID: 4459855407408257912
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_16
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 40
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c733ab494ad2ed2f0800000000000000
-      internalID: -946268686808108164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_17
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 40
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9f23243e3b1caee0800000000000000
-      internalID: -1248593042711826531
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_18
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 351cbd8d54bd69ee0800000000000000
-      internalID: -1254574353138597549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_19
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 32
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ca8f5d22f2efc7a0800000000000000
-      internalID: -6354611019425281344
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_20
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 32
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02d9beba3dd6b6970800000000000000
-      internalID: 8749207456987192608
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_21
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 32
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d0735f37479865850800000000000000
-      internalID: 6365426256589436685
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_22
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1aee9d1aac5ad6460800000000000000
-      internalID: 7236622465971646113
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_23
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 32
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 505f75444650bb9a0800000000000000
-      internalID: -6216368932453354235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_24
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 733d29ec8f74f9650800000000000000
-      internalID: 6241786742501987127
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_25
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a0e08f95d39d76160800000000000000
-      internalID: 7018817401805868554
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_26
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6f289e2542e194d50800000000000000
-      internalID: 6721937060185866998
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_27
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a57733469eead2750800000000000000
-      internalID: 6281869372683417434
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_28
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ca2d6f61164a1730800000000000000
-      internalID: 3970563062178327238
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_29
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 24
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: abb5304e03cd8b870800000000000000
-      internalID: 8698944782808079290
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_30
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8c4cd0b4c3a2c0520800000000000000
-      internalID: 2669555117569459400
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_31
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 16
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c525dff255e159d0800000000000000
-      internalID: -2787194549723388475
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_32
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e834a875f3a0af3a0800000000000000
-      internalID: -6630976234181737586
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_33
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 16
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 28f92c8c642824910800000000000000
-      internalID: 1820160439938621314
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_34
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 16
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a18e1c0a22b8e48f0800000000000000
-      internalID: -554352723277780966
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nightmareTiles_35
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 16
-        width: 8
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f68d276b7b1c5500800000000000000
-      internalID: 386213884872984306
       vertices: []
       indices: 
       edges: []
