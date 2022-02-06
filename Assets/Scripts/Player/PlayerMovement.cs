@@ -113,10 +113,10 @@ public class PlayerMovement : MonoBehaviour {
     }
     public bool m_CanWallHang {
         get {
-            return Input.GetKey(KeyCode.LeftShift)
+            return (Input.GetKey(KeyCode.LeftShift) || Input.GetAxisRaw("WallHang") == 1f)
                    && (player.pCollision.m_IsOnLeftWall || player.pCollision.m_IsOnRightWall)
                    /*&& !m_IsGrounded*/
-                   && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+                   && m_HorizontalDir != 0f
                    && !player.rollingScript.isActiveAndEnabled
                    && !player.glidingScript.isActiveAndEnabled
                    && !player.grapplingScript.isActiveAndEnabled;
@@ -224,12 +224,12 @@ public class PlayerMovement : MonoBehaviour {
         player.rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
     }
     void FrogJump() {
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetButton("Jump")) {
             if (frogJumpHeightMultiplier < frogJumpMaxMulti) {
                 frogJumpHeightMultiplier += Time.fixedDeltaTime * frogJumpMaxMulti / frogJumpTimeToMaxForce;
             }
         }
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        if (Input.GetButtonUp("Jump")) {
             frogJump = false;
             Jump(jumpHeight * frogJumpHeightMultiplier, Vector2.up);
             frogJumpHeightMultiplier = 0;
