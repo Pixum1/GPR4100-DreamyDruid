@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 9041703462974372382}
   - component: {fileID: 9041703462974372381}
   - component: {fileID: 9041703462974372378}
-  - component: {fileID: 1138910334620327957}
-  - component: {fileID: 1618262639062623354}
+  - component: {fileID: 163630874}
+  - component: {fileID: 163630873}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -157,7 +157,7 @@ MonoBehaviour:
   airLinDrag: 2.5
   fullJumpFallMultiplier: 8
   halfJumpFallMultiplier: 5
-  amountOfJumps: 1
+  amountOfJumps: 2
   jumpBufferTime: 0.2
   coyoteTimeTime: 0.2
   wallJumpBufferTime: 0.3
@@ -226,7 +226,7 @@ MonoBehaviour:
   wallHangSprite: {fileID: 0}
   wallHangLookAwaySprite: {fileID: 0}
   animator: {fileID: 0}
-  particles: {fileID: 1138910334620327957}
+  particles: {fileID: 163630874}
 --- !u!114 &9041703462974372379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +344,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!198 &1138910334620327957
+--- !u!198 &163630874
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5108,7 +5108,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &1618262639062623354
+--- !u!199 &163630873
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0

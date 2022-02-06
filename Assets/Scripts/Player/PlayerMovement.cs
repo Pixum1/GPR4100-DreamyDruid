@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour {
     private float onWallGravityMultiplier;
 
     #region bool / movement conditions
+
+    public Action e_PlayerJumped;
     public float m_HorizontalDir {
         get {
             return Input.GetAxisRaw("Horizontal");
@@ -201,6 +203,8 @@ public class PlayerMovement : MonoBehaviour {
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
     /// </summary>
     public void Jump(float _jumpHeight, Vector2 _dir) {
+        e_PlayerJumped?.Invoke();
+
         if (coyoteTimeTimer > coyoteTimeTime && jumpsCounted < 1) {
             jumpsCounted = amountOfJumps;
         }
@@ -220,7 +224,7 @@ public class PlayerMovement : MonoBehaviour {
 
         player.pCollision.StartCoroutine(player.pCollision.DisableWallRay());
 
-        jumpForce = Mathf.Sqrt((_jumpHeight + .5f) * -2f * (Physics.gravity.y * player.rb.gravityScale));
+        jumpForce = Mathf.Sqrt(_jumpHeight * -2f * (Physics.gravity.y * player.rb.gravityScale));
         player.rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
     }
     void FrogJump() {
@@ -257,8 +261,19 @@ public class PlayerMovement : MonoBehaviour {
     /// Applies the fall gravity based on the players jump height and input
     /// </summary>
     private void ApplyFallGravity() {
-        if (!player.grapplingScript.isActiveAndEnabled) {
-            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
+        if (player.glidingScript.isActiveAndEnabled) {
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > owlJumpHeight) {
+                player.rb.gravityScale = fullJumpFallMultiplier;
+            }
+            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
+                player.rb.gravityScale = halfJumpFallMultiplier;
+            }
+            else {
+                player.rb.gravityScale = 1f;
+            }
+        }
+        else if (player.grapplingScript.isActiveAndEnabled){
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > frogJumpHeight) {
                 player.rb.gravityScale = fullJumpFallMultiplier;
             }
             else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
@@ -269,7 +284,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
         else {
-            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > frogJumpHeight) {
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
                 player.rb.gravityScale = fullJumpFallMultiplier;
             }
             else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {

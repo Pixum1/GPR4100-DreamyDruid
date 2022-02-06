@@ -35,6 +35,9 @@ public class PlayerAnimation : MonoBehaviour {
     private void Awake() {
         animator = GetComponent<Animator>();
     }
+    private void Start() {
+        player.pMovement.e_PlayerJumped += PlayJumpParticles;
+    }
 
     void Update() {
         if (player.grapplingScript.isActiveAndEnabled) {
@@ -53,9 +56,6 @@ public class PlayerAnimation : MonoBehaviour {
 
         if (!wallHang) {
             ApplyRotation();
-
-            if (Input.GetButtonDown("Jump") && player.pCollision.m_IsGrounded)
-                particles.Play();
 
             if (jumping) {
                 ChangeAnimationState(jumpAnim);
@@ -77,6 +77,10 @@ public class PlayerAnimation : MonoBehaviour {
             else
                 ChangeAnimationState(wallAnim);
         }
+    }
+
+    private void PlayJumpParticles() {
+        particles.Play();
     }
 
     private void ChangeAnimationSprites(string _animalName) {
