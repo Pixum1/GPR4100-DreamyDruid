@@ -153,7 +153,7 @@ MonoBehaviour:
   frogJumpHeight: 6
   frogJumpMaxMulti: 15
   frogJumpTimeToMaxForce: 2
-  owlJumpHeight: 1
+  owlJumpHeight: 2
   airLinDrag: 2.5
   fullJumpFallMultiplier: 8
   halfJumpFallMultiplier: 5

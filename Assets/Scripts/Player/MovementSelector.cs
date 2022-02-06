@@ -52,6 +52,7 @@ public class MovementSelector : MonoBehaviour
         currentScript = _script;
     }    
     private void SwitchToHuman() {
-        currentScript.enabled = false;
+        if(currentScript != null)
+            currentScript.enabled = false;
     }
 }
