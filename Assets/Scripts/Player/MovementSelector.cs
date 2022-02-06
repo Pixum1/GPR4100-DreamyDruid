@@ -11,11 +11,8 @@ public class MovementSelector : MonoBehaviour
     Image[] scriptIcons; //0 = Owl, 1 = Frog, 2 = Armadillo, 3 = Human
     Image currentScriptIcon;
 
-    private PlayerAnimation animation;
-
     private void Awake() {
         currentScriptIcon = scriptIcons[3]; //Human
-        animation = GetComponent<PlayerAnimation>();
     }
     private void Update()
     {
@@ -28,38 +25,34 @@ public class MovementSelector : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetAxisRaw("Evolve Horizontal") == 1f) {
             SwitchScript(GetComponent<Gliding>());
             currentScriptIcon = scriptIcons[0]; //Owl
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxisRaw("Evolve Vertical") == -1f) {
             SwitchScript(GetComponent<Grappling>());
             currentScriptIcon = scriptIcons[1]; //Frog
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetAxisRaw("Evolve Horizontal") == -1f) {
             SwitchScript(GetComponent<Rolling>());
             currentScriptIcon = scriptIcons[2]; //Armadillo
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetAxisRaw("Evolve Vertical") == 1f) {
             SwitchToHuman();
             currentScriptIcon = scriptIcons[3]; //Human
         }
     }
 
-    void SwitchScript(Behaviour _script) {
-        if (currentScript != _script)
-            animation.PlayEvolveAnimation();
-
-        if (currentScript != null)
+    void SwitchScript(Behaviour _script)
+    {
+        if(currentScript != null)
             currentScript.enabled = false;
 
         _script.enabled = true;
         currentScript = _script;
     }    
     private void SwitchToHuman() {
-        if (currentScript.enabled)
-            animation.PlayEvolveAnimation();
-        currentScript.enabled = false;
-        currentScript = null;
+        if(currentScript != null)
+            currentScript.enabled = false;
     }
 }

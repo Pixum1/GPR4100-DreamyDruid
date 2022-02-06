@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour {
     private float onWallGravityMultiplier;
 
     #region bool / movement conditions
+
+    public Action e_PlayerJumped;
     public float m_HorizontalDir {
         get {
             return Input.GetAxisRaw("Horizontal");
@@ -113,10 +115,10 @@ public class PlayerMovement : MonoBehaviour {
     }
     public bool m_CanWallHang {
         get {
-            return Input.GetKey(KeyCode.LeftShift)
+            return (Input.GetKey(KeyCode.LeftShift) || Input.GetAxisRaw("WallHang") == 1f)
                    && (player.pCollision.m_IsOnLeftWall || player.pCollision.m_IsOnRightWall)
                    /*&& !m_IsGrounded*/
-                   && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+                   && m_HorizontalDir != 0f
                    && !player.rollingScript.isActiveAndEnabled
                    && !player.glidingScript.isActiveAndEnabled
                    && !player.grapplingScript.isActiveAndEnabled;
@@ -201,6 +203,8 @@ public class PlayerMovement : MonoBehaviour {
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
     /// </summary>
     public void Jump(float _jumpHeight, Vector2 _dir) {
+        e_PlayerJumped?.Invoke();
+
         if (coyoteTimeTimer > coyoteTimeTime && jumpsCounted < 1) {
             jumpsCounted = amountOfJumps;
         }
@@ -220,16 +224,16 @@ public class PlayerMovement : MonoBehaviour {
 
         player.pCollision.StartCoroutine(player.pCollision.DisableWallRay());
 
-        jumpForce = Mathf.Sqrt((_jumpHeight + .5f) * -2f * (Physics.gravity.y * player.rb.gravityScale));
+        jumpForce = Mathf.Sqrt(_jumpHeight * -2f * (Physics.gravity.y * player.rb.gravityScale));
         player.rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
     }
     void FrogJump() {
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetButton("Jump")) {
             if (frogJumpHeightMultiplier < frogJumpMaxMulti) {
                 frogJumpHeightMultiplier += Time.fixedDeltaTime * frogJumpMaxMulti / frogJumpTimeToMaxForce;
             }
         }
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        if (Input.GetButtonUp("Jump")) {
             frogJump = false;
             Jump(jumpHeight * frogJumpHeightMultiplier, Vector2.up);
             frogJumpHeightMultiplier = 0;
@@ -257,8 +261,19 @@ public class PlayerMovement : MonoBehaviour {
     /// Applies the fall gravity based on the players jump height and input
     /// </summary>
     private void ApplyFallGravity() {
-        if (!player.grapplingScript.isActiveAndEnabled) {
-            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
+        if (player.glidingScript.isActiveAndEnabled) {
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > owlJumpHeight) {
+                player.rb.gravityScale = fullJumpFallMultiplier;
+            }
+            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
+                player.rb.gravityScale = halfJumpFallMultiplier;
+            }
+            else {
+                player.rb.gravityScale = 1f;
+            }
+        }
+        else if (player.grapplingScript.isActiveAndEnabled){
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > frogJumpHeight) {
                 player.rb.gravityScale = fullJumpFallMultiplier;
             }
             else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
@@ -269,7 +284,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
         else {
-            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > frogJumpHeight) {
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
                 player.rb.gravityScale = fullJumpFallMultiplier;
             }
             else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
