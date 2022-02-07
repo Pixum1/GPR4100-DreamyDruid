@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviour
         if (e_PlayerDied == null)
             Debug.LogWarning("Null Reference");
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetButton("Reset"))
             e_PlayerDied?.Invoke();
     }
 

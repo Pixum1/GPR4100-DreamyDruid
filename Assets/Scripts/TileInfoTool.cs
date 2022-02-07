@@ -6,7 +6,8 @@ using UnityEditor;
 [System.Serializable]
 public class TileInfoTool : MonoBehaviour
 {
-    private Tilemap[] allTM;
+    [SerializeField]
+    private Tilemap[] tilemapsToUse;
 
     private List<Vector3Int> usedTiles = new List<Vector3Int>();
     public List<Vector3Int> surroundingTiles = new List<Vector3Int>();
@@ -24,8 +25,10 @@ public class TileInfoTool : MonoBehaviour
     private int index;
 
     private bool hasRun = false;
+    
+    public string TileDatajson;
 
-    public string json;
+    TileData tileData;
 
     [CustomEditor(typeof(TileInfoTool))]
     private class TileInfoToolEditor : Editor
@@ -33,7 +36,7 @@ public class TileInfoTool : MonoBehaviour
         public override void OnInspectorGUI()
         {
             TileInfoTool IT = (TileInfoTool)target;
-
+            DrawDefaultInspector();
             GUILayout.Space(5f);
             if (IT.hasRun)
             {
@@ -66,34 +69,45 @@ public class TileInfoTool : MonoBehaviour
             {
                 IT.Run();
             }
+            if (GUILayout.Button("Clear"))
+            {
+                IT.Clear();
+            }
         }
     }
     public void Run()
     {
-        TileData tileData = new TileData();
+        tileData = new TileData();
         hasRun = true;
         index = 0;
-        allTM = FindObjectsOfType<Tilemap>();
 
-        for (int i = 0; i < allTM.Length; i++)
+        for (int i = 0; i < tilemapsToUse.Length; i++)
         {
-            tMSize = allTM[i].size;
-            tMOrigin = allTM[i].origin;
+            tMSize = tilemapsToUse[i].size;
+            tMOrigin = tilemapsToUse[i].origin;
             tMWidth = tMSize.x;
             tMHeight = tMSize.y;
             GetTiles();
             index++;
         }
         tileData.surroundingTilesData = surroundingTiles;
-        json = JsonUtility.ToJson(tileData);
+        TileDatajson = JsonUtility.ToJson(tileData);
+    }
+
+    void Clear()
+    {
+        emptyTiles.Clear();
+        usedTiles.Clear();
+        surroundingTiles.Clear();
     }
 
     public TileData LoadTileData()
     {
-        TileData loadedTileData = JsonUtility.FromJson<TileData>(json);
-        return loadedTileData;
+        TileData tileData = JsonUtility.FromJson<TileData>(TileDatajson);
+        return tileData;
     }
 
+    [System.Serializable]
     public class TileData
     {
         public List<Vector3Int> surroundingTilesData;
@@ -106,7 +120,7 @@ public class TileInfoTool : MonoBehaviour
             for (int y = 0; y < tMHeight; y++)
             {
                 Vector3Int pos = new Vector3Int(tMOrigin.x + x, tMOrigin.y + y, 0);
-                if (allTM[index].HasTile(pos))
+                if (tilemapsToUse[index].HasTile(pos))
                 {
                     if (!usedTiles.Contains(pos))
                     {
@@ -136,7 +150,7 @@ public class TileInfoTool : MonoBehaviour
                 Vector3Int offset = new Vector3Int(x, y, 0);
                 Vector3Int pos = _tile + offset;
 
-                if (!allTM[index].HasTile(pos))
+                if (!tilemapsToUse[index].HasTile(pos))
                 {
                     if (!usedTiles.Contains(pos) && !surroundingTiles.Contains(pos))
                     {

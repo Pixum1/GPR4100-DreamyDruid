@@ -11,7 +11,7 @@ public class Gliding : MonoBehaviour
 
     private bool m_CanGlide {
         get {
-            return Input.GetKey(KeyCode.LeftControl) && !player.pCollision.m_IsGrounded;
+            return Input.GetButton("Ability") && !player.pCollision.m_IsGrounded;
         }
     }
     public bool m_IsGliding { 

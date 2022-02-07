@@ -55,12 +55,12 @@ public class Grappling : MonoBehaviour
             AddMomentum();
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Ability"))
         {
             CaptureMousePosition();
             StartGrapple();
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetButtonUp("Ability"))
         {
             StopGrapple();
         }

@@ -25,19 +25,19 @@ public class MovementSelector : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetAxisRaw("Evolve Horizontal") == 1f) {
             SwitchScript(GetComponent<Gliding>());
             currentScriptIcon = scriptIcons[0]; //Owl
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxisRaw("Evolve Vertical") == -1f) {
             SwitchScript(GetComponent<Grappling>());
             currentScriptIcon = scriptIcons[1]; //Frog
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetAxisRaw("Evolve Horizontal") == -1f) {
             SwitchScript(GetComponent<Rolling>());
             currentScriptIcon = scriptIcons[2]; //Armadillo
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetAxisRaw("Evolve Vertical") == 1f) {
             SwitchToHuman();
             currentScriptIcon = scriptIcons[3]; //Human
         }
@@ -52,6 +52,7 @@ public class MovementSelector : MonoBehaviour
         currentScript = _script;
     }    
     private void SwitchToHuman() {
-        currentScript.enabled = false;
+        if(currentScript != null)
+            currentScript.enabled = false;
     }
 }
