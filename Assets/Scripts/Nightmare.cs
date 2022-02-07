@@ -12,6 +12,7 @@ public class Nightmare : MonoBehaviour
     float maxTime;
     Checkpoint currentCheckpoint;
     CheckpointManager cPManager;
+    [SerializeField]
     Vector3Int resetPosition;
     [SerializeField]
     Vector3Int startPosition;
@@ -36,7 +37,8 @@ public class Nightmare : MonoBehaviour
         StopAllCoroutines();
         nightmareTilemap.ClearAllTiles();
         currentCheckpoint = cPManager.currentCP;
-        resetPosition = currentCheckpoint.nightmareResetPosition;
+        Vector3 resetPositonV3 = currentCheckpoint.transform.GetChild(0).transform.position;
+        resetPosition = new Vector3Int(Mathf.RoundToInt(resetPositonV3.x), Mathf.RoundToInt(resetPositonV3.y), 0);
         StartCoroutine(GetPathPoints());
         StartCoroutine(GetSurroundingTiles(resetPosition));
     }

@@ -9,7 +9,6 @@ public class Checkpoint : MonoBehaviour
     public bool isActive;
     [HideInInspector]
     public Vector2 playerPosWhenCollected;
-    public Vector3Int nightmareResetPosition;
 
     private void OnTriggerEnter2D(Collider2D _other) {
         if (_other.CompareTag("Player")) {

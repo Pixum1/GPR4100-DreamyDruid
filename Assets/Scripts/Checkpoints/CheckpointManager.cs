@@ -28,6 +28,8 @@ public class CheckpointManager : MonoBehaviour
     public GameObject CreateCheckpoint() {
         GameObject newCP = new GameObject("Checkpoint");
         newCP.transform.SetParent(transform);
+        GameObject nightmareRespawnPoint= new GameObject("NightmareResetPoint");
+        nightmareRespawnPoint.transform.SetParent(newCP.transform);
         newCP.AddComponent<Checkpoint>();
         newCP.AddComponent<BoxCollider2D>().isTrigger = true;
         return newCP;
