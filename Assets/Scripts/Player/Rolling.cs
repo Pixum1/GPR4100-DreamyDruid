@@ -40,7 +40,7 @@ public class Rolling : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Ability"))
         {
 
             if (canRoll)

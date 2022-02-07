@@ -226,7 +226,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
             }
-            else if (!player.grapplingScript.isActiveAndEnabled)
+            else if (!player.grapplingScript.isActiveAndEnabled&&!player.glidingScript.isActiveAndEnabled)
             {
                 Jump(jumpHeight, Vector2.up);
             }
