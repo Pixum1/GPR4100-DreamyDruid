@@ -109,10 +109,15 @@ public class PlayerCollision : MonoBehaviour
     /// <summary>
     /// Moves the player to the new position and remain his vertical velocity
     /// </summary>
-    private void ApplyCornerCorrection(float _verticalVelocity, float _newPos, int _direction) {
-        transform.position = new Vector3(transform.position.x + (Mathf.Clamp(_direction, -1, 1) * _newPos), transform.position.y, transform.position.z);
+    private void ApplyCornerCorrection(float _verticalVelocity, float _newPos, int _direction) 
+    {
+        if (!player.rollingScript.m_IsRolling)
+        {
 
-        player.rb.velocity = new Vector2(player.rb.velocity.x, _verticalVelocity);
+            transform.position = new Vector3(transform.position.x + (Mathf.Clamp(_direction, -1, 1) * _newPos), transform.position.y, transform.position.z);
+
+            player.rb.velocity = new Vector2(player.rb.velocity.x, _verticalVelocity);
+        }
     }
     #endregion
 

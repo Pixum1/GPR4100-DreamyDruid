@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
     [SerializeField]
     private PlayerController player;
@@ -18,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     [Tooltip("The friction applied when not moving <= decceleration")]
     private float groundLinDrag = 20f;
-    
+
 
     [Header("Jump")]
     [SerializeField]
@@ -31,7 +32,13 @@ public class PlayerMovement : MonoBehaviour {
     private float frogJumpMaxMulti = 15f;
     [SerializeField]
     private float frogJumpTimeToMaxForce = 2;
+    [SerializeField]
+    private float frogJumpMaxMoveSpeedMulti = 0.3f;
     private bool frogJump;
+    [SerializeField]
+    private float armadilloDrag = 0.5f;
+    [SerializeField]
+    private float armadilloMaxMoveSpeedMulti = 0.3f;
     [SerializeField]
     private float owlJumpHeight;
     [SerializeField]
@@ -48,7 +55,7 @@ public class PlayerMovement : MonoBehaviour {
     private int amountOfJumps = 1;
     private int jumpsCounted;
     private Vector2 lastJumpPos;
-    
+
 
     [Header("Jump Buffer & Coyote Time")]
     [SerializeField]
@@ -73,53 +80,71 @@ public class PlayerMovement : MonoBehaviour {
     #region bool / movement conditions
 
     public Action e_PlayerJumped;
-    public float m_HorizontalDir {
-        get {
+    public float m_HorizontalDir
+    {
+        get
+        {
             return Input.GetAxisRaw("Horizontal");
         }
     }
-    public bool m_ChangingDir {
-        get {
+    public bool m_ChangingDir
+    {
+        get
+        {
             return (player.rb.velocity.x > 0f && m_HorizontalDir < 0f)
                    || (player.rb.velocity.x < 0f && m_HorizontalDir > 0f);
         }
     }
-    public bool m_CanMove {
-        get {
+    public bool m_CanMove
+    {
+        get
+        {
             return m_HorizontalDir != 0f
                    && !player.grapplingScript.m_IsGrappling
+                   && !player.rollingScript.m_IsRolling
                    && !m_CanWallHang;
         }
     }
-    public bool m_CanJump {
-        get {
-            if(amountOfJumps > 1) {
+    public bool m_CanJump
+    {
+        get
+        {
+            if (amountOfJumps > 1)
+            {
                 return jumpBufferTimer < jumpBufferTime
                     && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
                     && !player.rollingScript.isActiveAndEnabled;
             }
-            else if (m_CanWallHang) {
-                return jumpBufferTimer < jumpBufferTime;
+            else if (m_CanWallHang)
+            {
+                return jumpBufferTimer < jumpBufferTime
+                    && !player.rollingScript.isActiveAndEnabled;
             }
-            else {
+            else
+            {
                 return jumpBufferTimer < jumpBufferTime
                     && coyoteTimeTimer < coyoteTimeTime
                     && !player.rollingScript.isActiveAndEnabled;
             }
         }
     }
-    public bool m_CanWallJump {
-        get {
-            return wallJumpBufferTimer < wallJumpBufferTime;
+    public bool m_CanWallJump
+    {
+        get
+        {
+            return wallJumpBufferTimer < wallJumpBufferTime
+                && !player.rollingScript.m_IsRolling;
         }
     }
-    public bool m_CanWallHang {
-        get {
+    public bool m_CanWallHang
+    {
+        get
+        {
             return (Input.GetKey(KeyCode.LeftShift) || Input.GetAxisRaw("WallHang") == 1f)
                    && (player.pCollision.m_IsOnLeftWall || player.pCollision.m_IsOnRightWall)
                    /*&& !m_IsGrounded*/
                    && m_HorizontalDir != 0f
-                   && !player.rollingScript.isActiveAndEnabled
+                   && !player.rollingScript.m_IsRolling
                    && !player.glidingScript.isActiveAndEnabled
                    && !player.grapplingScript.isActiveAndEnabled;
         }
@@ -128,36 +153,45 @@ public class PlayerMovement : MonoBehaviour {
     public bool PlayerJumped;
     #endregion
 
-    private void Update() {
+    private void Update()
+    {
 
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("Jump"))
+        {
             frogJump = false;
             jumpBufferTimer = 0; //reset the jump buffer
         }
-        if (frogJump) {
+        if (frogJump)
+        {
             FrogJump();
         }
 
-        if (player.pCollision.m_IsGrounded) {
+        if (player.pCollision.m_IsGrounded)
+        {
             ApplyGroundLinearDrag();
             jumpsCounted = 0; //reset jumps counter
             coyoteTimeTimer = 0; //reset coyote time counter
         }
-        else {
+        else
+        {
             ApplyAirLinearDrag();
 
-            if (m_CanWallHang) {
+            if (m_CanWallHang)
+            {
                 ApplyWallHangGravity();
             }
-            else {
+            else
+            {
                 ApplyFallGravity();
             }
         }
 
-        if (m_CanWallHang) {
+        if (m_CanWallHang)
+        {
             jumpsCounted = amountOfJumps - 1;
 
-            if ((player.pCollision.m_IsOnLeftWall && m_HorizontalDir > 0f) || (player.pCollision.m_IsOnRightWall && m_HorizontalDir < 0f)) {
+            if ((player.pCollision.m_IsOnLeftWall && m_HorizontalDir > 0f) || (player.pCollision.m_IsOnRightWall && m_HorizontalDir < 0f))
+            {
                 wallJumpBufferTimer = 0;
             }
         }
@@ -167,45 +201,69 @@ public class PlayerMovement : MonoBehaviour {
         wallJumpBufferTimer += Time.deltaTime;
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         if (m_CanMove)
             Move();
 
-        if (m_CanJump) {
-            if (m_CanWallJump) {
+        if (m_CanJump)
+        {
+            if (m_CanWallJump)
+            {
                 Jump(jumpHeight, new Vector2(m_HorizontalDir * 1.5f, 1f));
             }
-            else if (m_CanWallHang) {
-                Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir/2f, 1f));
+            else if (m_CanWallHang)
+            {
+                Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir / 2f, 1f));
             }
-            if (player.grapplingScript.isActiveAndEnabled) {
+            if (player.grapplingScript.isActiveAndEnabled)
+            {
                 jumpsCounted = amountOfJumps;
                 frogJump = true;
             }
-            if (player.glidingScript.isActiveAndEnabled) {
+            if (player.glidingScript.isActiveAndEnabled)
+            {
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
             }
-            else if (!player.grapplingScript.isActiveAndEnabled) {
+            else if (!player.grapplingScript.isActiveAndEnabled)
+            {
                 Jump(jumpHeight, Vector2.up);
             }
         }
     }
 
-    public void Move() {
-        player.rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
-
-        if (Mathf.Abs(player.rb.velocity.x) > maxSpeed)
-            player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed, player.rb.velocity.y); //Clamp velocity when max speed is reached!
+    public void Move()
+    {
+        if (!frogJump && !player.rollingScript.isActiveAndEnabled)
+        {
+            player.rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
+            if (Mathf.Abs(player.rb.velocity.x) > maxSpeed)
+                player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed, player.rb.velocity.y); //Clamp velocity when max speed is reached!
+        }
+        else if (frogJump)
+        {
+            player.rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
+            if (Mathf.Abs(player.rb.velocity.x) > maxSpeed * frogJumpMaxMoveSpeedMulti)
+                player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed * frogJumpMaxMoveSpeedMulti, player.rb.velocity.y); //Clamp velocity when max speed is reached!
+        }
+        else if (player.rollingScript.isActiveAndEnabled)
+        {
+            player.rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
+            if (Mathf.Abs(player.rb.velocity.x) > maxSpeed * armadilloMaxMoveSpeedMulti)
+                player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed * armadilloMaxMoveSpeedMulti, player.rb.velocity.y); //Clamp velocity when max speed is reached!
+        }
     }
 
     /// <summary>
     /// Makes the player jump with a specific force to reach an exact amount of units in vertical space
     /// </summary>
-    public void Jump(float _jumpHeight, Vector2 _dir) {
+    public void Jump(float _jumpHeight, Vector2 _dir)
+    {
         e_PlayerJumped?.Invoke();
 
-        if (coyoteTimeTimer > coyoteTimeTime && jumpsCounted < 1) {
+        if (coyoteTimeTimer > coyoteTimeTime && jumpsCounted < 1)
+        {
             jumpsCounted = amountOfJumps;
         }
 
@@ -227,13 +285,17 @@ public class PlayerMovement : MonoBehaviour {
         jumpForce = Mathf.Sqrt(_jumpHeight * -2f * (Physics.gravity.y * player.rb.gravityScale));
         player.rb.AddForce(_dir * jumpForce, ForceMode2D.Impulse);
     }
-    void FrogJump() {
-        if (Input.GetButton("Jump")) {
-            if (frogJumpHeightMultiplier < frogJumpMaxMulti) {
+    void FrogJump()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            if (frogJumpHeightMultiplier < frogJumpMaxMulti)
+            {
                 frogJumpHeightMultiplier += Time.fixedDeltaTime * frogJumpMaxMulti / frogJumpTimeToMaxForce;
             }
         }
-        if (Input.GetButtonUp("Jump")) {
+        if (Input.GetButtonUp("Jump"))
+        {
             frogJump = false;
             Jump(jumpHeight * frogJumpHeightMultiplier, Vector2.up);
             frogJumpHeightMultiplier = 0;
@@ -243,59 +305,89 @@ public class PlayerMovement : MonoBehaviour {
     /// <summary>
     /// Applies the ground friction based on wether the player is moving or giving no horizontal inputs
     /// </summary>
-    private void ApplyGroundLinearDrag() {
-        if (Mathf.Abs(m_HorizontalDir) < .4f || m_ChangingDir) {
-            player.rb.drag = groundLinDrag;
+    private void ApplyGroundLinearDrag()
+    {
+        if (!player.rollingScript.m_IsRolling)
+        {
+            if (Mathf.Abs(m_HorizontalDir) < .4f || m_ChangingDir)
+            {
+                player.rb.drag = groundLinDrag;
+            }
+            else
+            {
+                player.rb.drag = 0f;
+            }
         }
-        else {
-            player.rb.drag = 0f;
+        else
+        {
+            player.rb.drag = armadilloDrag;
         }
     }
     /// <summary>
     /// Applies the air resistance when the player is jumping
     /// </summary>
-    private void ApplyAirLinearDrag() {
-        player.rb.drag = airLinDrag;
+    private void ApplyAirLinearDrag()
+    {
+        if (!player.rollingScript.m_IsRolling)
+            player.rb.drag = airLinDrag;
     }
     /// <summary>
     /// Applies the fall gravity based on the players jump height and input
     /// </summary>
-    private void ApplyFallGravity() {
-        if (player.glidingScript.isActiveAndEnabled) {
-            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > owlJumpHeight) {
+    private void ApplyFallGravity()
+    {
+        if (player.glidingScript.isActiveAndEnabled)
+        {
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > owlJumpHeight)
+            {
                 player.rb.gravityScale = fullJumpFallMultiplier;
             }
-            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
+            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump"))
+            {
                 player.rb.gravityScale = halfJumpFallMultiplier;
             }
-            else {
+            else
+            {
                 player.rb.gravityScale = 1f;
             }
         }
-        else if (player.grapplingScript.isActiveAndEnabled){
-            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > frogJumpHeight) {
+        else if (player.grapplingScript.isActiveAndEnabled)
+        {
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > frogJumpHeight)
+            {
                 player.rb.gravityScale = fullJumpFallMultiplier;
             }
-            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
+            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump"))
+            {
                 player.rb.gravityScale = halfJumpFallMultiplier;
             }
-            else {
+            else
+            {
                 player.rb.gravityScale = 1f;
             }
         }
-        else {
-            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight) {
+        else if (!player.rollingScript.m_IsRolling)
+        {
+            player.rb.gravityScale = 5;
+        }
+        else
+        {
+            if (player.rb.velocity.y < 0f || transform.position.y - lastJumpPos.y > jumpHeight)
+            {
                 player.rb.gravityScale = fullJumpFallMultiplier;
             }
-            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump")) {
+            else if (player.rb.velocity.y > 0f && !Input.GetButton("Jump"))
+            {
                 player.rb.gravityScale = halfJumpFallMultiplier;
             }
-            else {
+            else
+            {
                 player.rb.gravityScale = 1f;
             }
         }
     }
-    private void ApplyWallHangGravity() {
+    private void ApplyWallHangGravity()
+    {
         player.rb.gravityScale = onWallGravityMultiplier;
         player.rb.velocity = new Vector2(0, 0f); //set y velocity to 0
     }

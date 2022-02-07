@@ -9,15 +9,18 @@ public class Rolling : MonoBehaviour
     [SerializeField]
     float speed;
     [SerializeField]
-    float maxAngularVel = 300;
-    private bool canRoll {
-        get {
-            return Input.GetAxis("Horizontal") != 0;
-        }
-    }
-    public bool m_IsRolling {
-        get {
-            return this.isActiveAndEnabled && canRoll;
+    float duration;
+    [SerializeField]
+    float cooldown = 3;
+    float cooldownLeft;
+    [SerializeField]
+    SpriteRenderer playerSpriteRenderer;
+    private bool canRoll;
+    public bool m_IsRolling
+    {
+        get
+        {
+            return this.isActiveAndEnabled && !canRoll;
         }
     }
 
@@ -25,24 +28,90 @@ public class Rolling : MonoBehaviour
 
     Collider2D boxCol;
     CircleCollider2D circleCol;
-
+    float timer;
+    int flipped;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         boxCol = GetComponent<BoxCollider2D>();
+        canRoll = true;
     }
 
     void Update()
     {
-        if (canRoll)
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Roll();
+
+            if (canRoll)
+            {
+                if (cooldownLeft <= 0)
+                {
+                    if (playerSpriteRenderer.flipX)
+                    {
+                        flipped = 1;
+                    }
+                    else
+                    {
+                        flipped = -1;
+                    }
+                    StartCoroutine(RollProperties());
+                }
+            }
+            else
+            {
+                StopCoroutine(RollProperties());
+                if (circleCol != null)
+                    Destroy(circleCol);
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                boxCol.enabled = true;
+                rb.freezeRotation = true;
+                canRoll = true;
+                timer = 0;
+                cooldownLeft = cooldown;
+            }
         }
+    }
+
+
+    private void FixedUpdate()
+    {
+        Roll();
     }
 
     void Roll()
     {
-        rb.AddTorque(speed * maxAngularVel * 1000 * -Input.GetAxis("Horizontal") * Time.deltaTime / Mathf.Max(Mathf.Abs(rb.angularVelocity), maxAngularVel));
+        if (m_IsRolling == true)
+        {
+            timer += Time.fixedDeltaTime;
+            rb.AddTorque(speed * 1000 * (timer + 1) * flipped * Time.fixedDeltaTime);
+            rb.AddForce(-transform.right * speed * 100 * (timer + 1) * flipped * Time.fixedDeltaTime);
+        }
+        else if (cooldownLeft > 0)
+        {
+            cooldownLeft -= Time.fixedDeltaTime;
+        }
+    }
+
+
+    IEnumerator RollProperties()
+    {
+        canRoll = false;
+        circleCol = gameObject.AddComponent<CircleCollider2D>();
+        circleCol.radius = 0.9f;
+        circleCol.sharedMaterial = physicsMaterial;
+        boxCol.enabled = false;
+        circleCol.enabled = true;
+        rb.freezeRotation = false;
+        rb.drag = 0.5f;
+        yield return new WaitForSeconds(duration);
+        Destroy(circleCol);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        boxCol.enabled = true;
+        rb.freezeRotation = true;
+        canRoll = true;
+        timer = 0;
+        cooldownLeft = cooldown;
     }
 
     private void OnDisable()
@@ -50,18 +119,11 @@ public class Rolling : MonoBehaviour
         Destroy(circleCol);
         transform.rotation = Quaternion.Euler(0, 0, 0);
         boxCol.enabled = true;
-        circleCol.enabled = false;
         rb.freezeRotation = true;
     }
 
     private void OnEnable()
     {
-        circleCol= gameObject.AddComponent<CircleCollider2D>();
-        circleCol.radius = 0.9f;
-        circleCol.sharedMaterial = physicsMaterial;
-        boxCol.enabled = false;
-        circleCol.enabled = true;
-        rb.freezeRotation = false;
-        rb.drag = 0.5f;
+        canRoll = true;
     }
 }
