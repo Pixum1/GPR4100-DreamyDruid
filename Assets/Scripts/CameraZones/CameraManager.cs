@@ -136,18 +136,6 @@ public class CameraManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns true if every corner of the camera is within a given "CameraZone"
-    /// </summary>
-    /// <param name="_zone"></param>
-    /// <returns></returns>
-    private bool CheckCameraBounds(CameraZone _zone) {
-        return _zone.col.bounds.Contains(GetCameraBounds()[0]) &&
-               _zone.col.bounds.Contains(GetCameraBounds()[1]) &&
-               _zone.col.bounds.Contains(GetCameraBounds()[2]) &&
-               _zone.col.bounds.Contains(GetCameraBounds()[3]);
-    }
-
-    /// <summary>
     /// Returns an array of Vector2 coordinates containing the dimensions of the Cameras bounds (0=top left, 1=bottom left, 2=top right, 3=bottom right)
     /// </summary>
     /// <returns>Array => (0=top left, 1=bottom left, 2=top right, 3=bottom right)</returns>
@@ -226,7 +214,7 @@ public class CameraManager : MonoBehaviour
         Time.timeScale = 0f;
         AdjustCamSize();
 
-        cam.transform.position = Vector3.MoveTowards(cam.transform.position, CalculateNewPosition(), camSwitchSpeed * 0.02f);
+        cam.transform.position = Vector3.MoveTowards(cam.transform.position, CalculateNewPosition(), camSwitchSpeed * Time.fixedUnscaledDeltaTime);
 
         if (Vector3.Distance(cam.transform.position, CalculateNewPosition()) < 0.25f) {
             previousZone = currentZone;
@@ -270,11 +258,11 @@ public class CameraManager : MonoBehaviour
     }
 
     public void ResetCameraPos() {
-        previousZone = currentZone;
-        cam.transform.position = new Vector3(objectToFollow.position.x, objectToFollow.position.y, cam.transform.position.z);
-        AdjustCamSize();
-        AdjustCamEdge(currentZone);
-        Time.timeScale = 1f;
+        //previousZone = currentZone;
+        GetCurrentZone();
+        cam.transform.position = CalculateNewPosition();
+        //AdjustCamSize();
+        //AdjustCamEdge(currentZone);
     }
 
     /// <summary>
