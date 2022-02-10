@@ -25,21 +25,21 @@ public class MovementSelector : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetAxisRaw("Evolve Horizontal") == 1f) {
-            SwitchScript(GetComponent<Gliding>());
-            currentScriptIcon = scriptIcons[0]; //Owl
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxisRaw("Evolve Horizontal") == 1f) {
+            SwitchToHuman();
+            currentScriptIcon = scriptIcons[3]; //Human
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxisRaw("Evolve Vertical") == -1f) {
-            SwitchScript(GetComponent<Grappling>());
-            currentScriptIcon = scriptIcons[1]; //Frog
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetAxisRaw("Evolve Horizontal") == -1f) {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxisRaw("Evolve Vertical") == -1f) {
             SwitchScript(GetComponent<Rolling>());
             currentScriptIcon = scriptIcons[2]; //Armadillo
         }
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxisRaw("Evolve Horizontal") == -1f) {
+            SwitchScript(GetComponent<Grappling>());
+            currentScriptIcon = scriptIcons[1]; //Frog
+        }
         if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetAxisRaw("Evolve Vertical") == 1f) {
-            SwitchToHuman();
-            currentScriptIcon = scriptIcons[3]; //Human
+            SwitchScript(GetComponent<Gliding>());
+            currentScriptIcon = scriptIcons[0]; //Owl
         }
     }
 
