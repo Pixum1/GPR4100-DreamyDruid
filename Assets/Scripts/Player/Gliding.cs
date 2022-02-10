@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ public class Gliding : MonoBehaviour
     {
         get
         {
-            return Input.GetButton("Ability") && !player.pCollision.m_IsGrounded;
+            return Input.GetAxisRaw("Ability") == 1f && !player.pCollision.m_IsGrounded;
         }
     }
     public bool m_IsGliding
