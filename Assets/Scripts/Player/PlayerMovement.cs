@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private float frogJumpMaxMulti = 15f;
     [SerializeField]
     private float frogJumpTimeToMaxForce = 2;
+    private float frogJumpTimer = 0f;
     [SerializeField]
     private float frogJumpMaxMoveSpeedMulti = 0.3f;
     private bool frogJump;
@@ -292,12 +293,19 @@ public class PlayerMovement : MonoBehaviour
             if (frogJumpHeightMultiplier < frogJumpMaxMulti)
             {
                 frogJumpHeightMultiplier += Time.fixedDeltaTime * frogJumpMaxMulti / frogJumpTimeToMaxForce;
+
+                frogJumpTimer += Time.fixedDeltaTime;
+
+                if(frogJumpTimer <= frogJumpTimeToMaxForce)
+                    transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y - Time.fixedDeltaTime/4);
             }
         }
         if (Input.GetButtonUp("Jump"))
         {
+            frogJumpTimer = 0f;
             frogJump = false;
             Jump(jumpHeight * frogJumpHeightMultiplier, Vector2.up);
+            transform.localScale = Vector2.one;
             frogJumpHeightMultiplier = 0;
         }
     }
