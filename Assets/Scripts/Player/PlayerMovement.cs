@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private float frogJumpMaxMulti = 15f;
     [SerializeField]
     private float frogJumpTimeToMaxForce = 2;
+    private float frogJumpTimer = 0f;
     [SerializeField]
     private float frogJumpMaxMoveSpeedMulti = 0.3f;
     private bool frogJump;
@@ -226,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
             }
-            else if (!player.grapplingScript.isActiveAndEnabled&&!player.glidingScript.isActiveAndEnabled)
+            else if (!player.grapplingScript.isActiveAndEnabled && !player.glidingScript.isActiveAndEnabled)
             {
                 Jump(jumpHeight, Vector2.up);
             }
@@ -244,8 +245,8 @@ public class PlayerMovement : MonoBehaviour
         else if (frogJump)
         {
             player.rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
-            if (Mathf.Abs(player.rb.velocity.x) > maxSpeed * frogJumpMaxMoveSpeedMulti)
-                player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed * frogJumpMaxMoveSpeedMulti, player.rb.velocity.y); //Clamp velocity when max speed is reached!
+            if (Mathf.Abs(player.rb.velocity.x) > maxSpeed / (Mathf.Max(3, frogJumpHeightMultiplier) * 0.3f))
+                player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed / (Mathf.Max(3, frogJumpHeightMultiplier) * 0.3f), player.rb.velocity.y); //Clamp velocity when max speed is reached!
         }
         else if (player.rollingScript.isActiveAndEnabled)
         {
@@ -292,12 +293,19 @@ public class PlayerMovement : MonoBehaviour
             if (frogJumpHeightMultiplier < frogJumpMaxMulti)
             {
                 frogJumpHeightMultiplier += Time.fixedDeltaTime * frogJumpMaxMulti / frogJumpTimeToMaxForce;
+
+                frogJumpTimer += Time.fixedDeltaTime;
+
+                if(frogJumpTimer <= frogJumpTimeToMaxForce)
+                    transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y - Time.fixedDeltaTime/4);
             }
         }
         if (Input.GetButtonUp("Jump"))
         {
+            frogJumpTimer = 0f;
             frogJump = false;
             Jump(jumpHeight * frogJumpHeightMultiplier, Vector2.up);
+            transform.localScale = Vector2.one;
             frogJumpHeightMultiplier = 0;
         }
     }
