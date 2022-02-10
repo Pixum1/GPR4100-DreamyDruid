@@ -8,6 +8,7 @@ public class CheckpointManager : MonoBehaviour
     public Checkpoint currentCP;
     private Checkpoint[] checkpoints;
 
+
     [SerializeField]
     private PlayerController player;
     private void Awake() {
@@ -42,7 +43,6 @@ public class CheckpointManager : MonoBehaviour
         }
 
         player.transform.position = currentCP.playerPosWhenCollected;
-        FindObjectOfType<CameraManager>().ResetCameraPos();
     }
     private void OnDisable() {
         player.pHealth.e_PlayerDied -= Respawn;
