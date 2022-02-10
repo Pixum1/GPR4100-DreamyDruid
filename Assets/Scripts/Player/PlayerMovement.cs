@@ -227,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
             }
-            else if (!player.grapplingScript.isActiveAndEnabled&&!player.glidingScript.isActiveAndEnabled)
+            else if (!player.grapplingScript.isActiveAndEnabled && !player.glidingScript.isActiveAndEnabled)
             {
                 Jump(jumpHeight, Vector2.up);
             }
@@ -245,8 +245,8 @@ public class PlayerMovement : MonoBehaviour
         else if (frogJump)
         {
             player.rb.AddForce(new Vector2(m_HorizontalDir, 0f) * acceleration);
-            if (Mathf.Abs(player.rb.velocity.x) > maxSpeed * frogJumpMaxMoveSpeedMulti)
-                player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed * frogJumpMaxMoveSpeedMulti, player.rb.velocity.y); //Clamp velocity when max speed is reached!
+            if (Mathf.Abs(player.rb.velocity.x) > maxSpeed / (Mathf.Max(3, frogJumpHeightMultiplier) * 0.3f))
+                player.rb.velocity = new Vector2(Mathf.Sign(player.rb.velocity.x) * maxSpeed / (Mathf.Max(3, frogJumpHeightMultiplier) * 0.3f), player.rb.velocity.y); //Clamp velocity when max speed is reached!
         }
         else if (player.rollingScript.isActiveAndEnabled)
         {
