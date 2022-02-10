@@ -34,6 +34,8 @@ public class Rolling : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         boxCol = GetComponent<BoxCollider2D>();
+        circleCol = gameObject.AddComponent<CircleCollider2D>();
+        circleCol.enabled = false;
         canRoll = true;
     }
 
@@ -61,8 +63,7 @@ public class Rolling : MonoBehaviour
             else
             {
                 StopCoroutine(RollProperties());
-                if (circleCol != null)
-                    Destroy(circleCol);
+                circleCol.enabled = false;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 boxCol.enabled = true;
                 rb.freezeRotation = true;
@@ -70,6 +71,18 @@ public class Rolling : MonoBehaviour
                 timer = 0;
                 cooldownLeft = cooldown;
             }
+        }
+
+        if (Input.GetButtonUp("Ability"))
+        {
+            StopCoroutine(RollProperties());
+            circleCol.enabled = false;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            boxCol.enabled = true;
+            rb.freezeRotation = true;
+            canRoll = true;
+            timer = 0;
+            cooldownLeft = cooldown;
         }
     }
 
@@ -84,8 +97,8 @@ public class Rolling : MonoBehaviour
         if (m_IsRolling == true)
         {
             timer += Time.fixedDeltaTime;
-            rb.AddTorque(speed * 1000 * (timer + 1) * flipped * Time.fixedDeltaTime);
-            rb.AddForce(-transform.right * speed * 100 * (timer + 1) * flipped * Time.fixedDeltaTime);
+            rb.AddTorque(speed * 100 * Mathf.Min(timer + 1,1.5f) * flipped * Time.fixedDeltaTime);
+            rb.AddForce(-transform.right * speed * 10 * Mathf.Min(timer + 1,1.5f) * flipped * Time.fixedDeltaTime);
         }
         else if (cooldownLeft > 0)
         {
@@ -97,7 +110,7 @@ public class Rolling : MonoBehaviour
     IEnumerator RollProperties()
     {
         canRoll = false;
-        circleCol = gameObject.AddComponent<CircleCollider2D>();
+        circleCol.enabled = true;
         circleCol.radius = 0.9f;
         circleCol.sharedMaterial = physicsMaterial;
         boxCol.enabled = false;
@@ -105,7 +118,7 @@ public class Rolling : MonoBehaviour
         rb.freezeRotation = false;
         rb.drag = 0.5f;
         yield return new WaitForSeconds(duration);
-        Destroy(circleCol);
+        circleCol.enabled = false;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         boxCol.enabled = true;
         rb.freezeRotation = true;
@@ -116,7 +129,7 @@ public class Rolling : MonoBehaviour
 
     private void OnDisable()
     {
-        Destroy(circleCol);
+        circleCol.enabled = false;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         boxCol.enabled = true;
         rb.freezeRotation = true;
