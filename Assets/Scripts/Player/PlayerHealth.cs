@@ -19,16 +19,31 @@ public class PlayerHealth : MonoBehaviour
 
     public Action e_PlayerDied;
 
+    private Color newColor;
+
+    private bool isFadingIn;
+    private bool isFadingOut;
+
     private void Awake() {
         cameraManager = FindObjectOfType<CameraManager>();
+        newColor = new Color(0,0,0,0);
     }
 
     private void Update() {
+        Debug.Log(Time.unscaledDeltaTime);
         if (e_PlayerDied == null)
             Debug.LogWarning("Null Reference");
 
-        if (Input.GetButton("Reset"))
+        if (Input.GetButton("Reset")) {
             PlayerDies();
+        }
+
+        if (isFadingIn) {
+            FadeIn();
+        }
+        if (isFadingOut) {
+            FadeOut();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D _other) {
@@ -38,7 +53,32 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void PlayerDies() {
-        e_PlayerDied?.Invoke();
-        cameraManager.ResetCameraPos();
+
+        isFadingIn = true;
+    }
+
+    private void FadeIn() {
+        Time.timeScale = 0f;
+        if (newColor.a < 1) {
+            newColor.a += Time.unscaledDeltaTime * transitionSpeed;
+            deathFadeImg.color = newColor;
+        }
+        else {
+            e_PlayerDied?.Invoke();
+            cameraManager.ResetCameraPos();
+            isFadingIn = false;
+            isFadingOut = true;
+        }
+    }
+    private void FadeOut() {
+        if (newColor.a > 0) {
+            newColor.a -= Time.unscaledDeltaTime * transitionSpeed;
+            deathFadeImg.color = newColor;
+        }
+        else {
+            isFadingOut = false;
+
+            Time.timeScale = 1;
+        }
     }
 }
