@@ -30,7 +30,6 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void Update() {
-        Debug.Log(Time.unscaledDeltaTime);
         if (e_PlayerDied == null)
             Debug.LogWarning("Null Reference");
 
@@ -64,20 +63,19 @@ public class PlayerHealth : MonoBehaviour
             deathFadeImg.color = newColor;
         }
         else {
-            e_PlayerDied?.Invoke();
-            cameraManager.ResetCameraPos();
             isFadingIn = false;
             isFadingOut = true;
+            e_PlayerDied?.Invoke();
         }
     }
     private void FadeOut() {
+        cameraManager.ResetCameraPos();
         if (newColor.a > 0) {
             newColor.a -= Time.unscaledDeltaTime * transitionSpeed;
             deathFadeImg.color = newColor;
         }
         else {
             isFadingOut = false;
-
             Time.timeScale = 1;
         }
     }
