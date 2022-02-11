@@ -81,6 +81,7 @@ public class MovementSelector : MonoBehaviour
         if (!isBear)
             evolveParticles.Play();
 
+        currentScript = null;
         isBear = true;
     }
 }
