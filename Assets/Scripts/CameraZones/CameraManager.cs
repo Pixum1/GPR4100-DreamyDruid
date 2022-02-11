@@ -54,9 +54,9 @@ public class CameraManager : MonoBehaviour
     }
     private void Update() {
         GetCurrentZone();
-        if(previousZone == null) {
-            ResetCameraPos();
-        }
+        //if (previousZone == null) {
+        //    ResetCameraPos();
+        //}
 
         if (currentZone != previousZone) {
             SetCameraPosition(); //set camera position if the current zone has been switched (saves performance)
@@ -233,36 +233,38 @@ public class CameraManager : MonoBehaviour
         sideX = Vector3.zero;
         sideY = new Vector3(0, objectToFollow.position.y, 0);
 
-        //if the player moves into the zone from its RIGHT side
-        if (objectToFollow.position.x > currentZone.col.bounds.center.x) {
-            sideX = currentZone.col.bounds.max - new Vector3(cameraWidth / 2, 0, 0);
-        }
+        if(currentZone != null) {
+            //if the player moves into the zone from its RIGHT side
+            if (objectToFollow.position.x > currentZone.col.bounds.center.x) {
+                sideX = currentZone.col.bounds.max - new Vector3(cameraWidth / 2, 0, 0);
+            }
 
-        //if the player moves into the zone from its LEFT side
-        else if (objectToFollow.position.x < currentZone.col.bounds.center.x){
-            sideX = currentZone.col.bounds.min + new Vector3(cameraWidth / 2, 0, 0);
-        }
+            //if the player moves into the zone from its LEFT side
+            else if (objectToFollow.position.x < currentZone.col.bounds.center.x) {
+                sideX = currentZone.col.bounds.min + new Vector3(cameraWidth / 2, 0, 0);
+            }
 
-        //if the player moves into the LOWER PART OF THE ZONE
-        if (distanceToBottom < currentZone.col.bounds.min.y) {
-            sideY = currentZone.col.bounds.min + new Vector3(0, cameraHeight / 2, 0);
-        }
+            //if the player moves into the LOWER PART OF THE ZONE
+            if (distanceToBottom < currentZone.col.bounds.min.y) {
+                sideY = currentZone.col.bounds.min + new Vector3(0, cameraHeight / 2, 0);
+            }
 
-        //if the player moves into the UPPER PART OF THE ZONE
-        else if (distanceToTop > currentZone.col.bounds.max.y) {
-            sideY = currentZone.col.bounds.max - new Vector3(0, cameraHeight / 2, 0);
+            //if the player moves into the UPPER PART OF THE ZONE
+            else if (distanceToTop > currentZone.col.bounds.max.y) {
+                sideY = currentZone.col.bounds.max - new Vector3(0, cameraHeight / 2, 0);
+            }
         }
+        
 
         newPos = new Vector3(sideX.x, sideY.y, cam.transform.position.z);
         return newPos;
     }
 
     public void ResetCameraPos() {
-        //previousZone = currentZone;
+        currentZone = null;
+        previousZone = null;
         GetCurrentZone();
         cam.transform.position = CalculateNewPosition();
-        //AdjustCamSize();
-        //AdjustCamEdge(currentZone);
     }
 
     /// <summary>

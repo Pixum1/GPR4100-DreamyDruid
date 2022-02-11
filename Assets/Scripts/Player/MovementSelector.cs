@@ -9,6 +9,9 @@ public class MovementSelector : MonoBehaviour
     Behaviour currentScript;
     [SerializeField]
     Image[] selectIcons; //0 = Owl, 1 = Frog, 2 = Armadillo, 3 = Human
+    [SerializeField]
+    private ParticleSystem evolveParticles;
+    private bool isBear;
 
     private void Start() {
         if(currentScript != null) {
@@ -63,11 +66,22 @@ public class MovementSelector : MonoBehaviour
         if(currentScript != null)
             currentScript.enabled = false;
 
+        if (currentScript != _script)
+            evolveParticles.Play();
+
+        isBear = false;
         _script.enabled = true;
         currentScript = _script;
+
     }    
     private void SwitchToHuman() {
         if(currentScript != null)
             currentScript.enabled = false;
+
+        if (!isBear)
+            evolveParticles.Play();
+
+        currentScript = null;
+        isBear = true;
     }
 }

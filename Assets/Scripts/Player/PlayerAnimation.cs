@@ -16,7 +16,7 @@ public class PlayerAnimation : MonoBehaviour {
     [SerializeField]
     private Animator animator;
     [SerializeField]
-    private ParticleSystem particles;
+    private ParticleSystem jumpParticles;
     private string currentAnimation;
 
     private string idleAnim = "Idle_anim";
@@ -80,7 +80,7 @@ public class PlayerAnimation : MonoBehaviour {
     }
 
     private void PlayJumpParticles() {
-        particles.Play();
+        jumpParticles.Play();
     }
 
     private void ChangeAnimationSprites(string _animalName) {

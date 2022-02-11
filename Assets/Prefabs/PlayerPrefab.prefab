@@ -14702,6 +14702,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  evolveParticles: {fileID: 1194938002}
 --- !u!114 &9041703462974372383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14819,8 +14820,8 @@ MonoBehaviour:
   playerSprite: {fileID: 9041703462974372376}
   wallHangSprite: {fileID: 0}
   wallHangLookAwaySprite: {fileID: 0}
-  animator: {fileID: 0}
-  particles: {fileID: 325120068}
+  animator: {fileID: 9041703462974372378}
+  jumpParticles: {fileID: 325120068}
 --- !u!114 &9041703462974372379
 MonoBehaviour:
   m_ObjectHideFlags: 0
