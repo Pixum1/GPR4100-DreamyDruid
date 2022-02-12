@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private AudioMixer mixer;
+
+    [SerializeField]
+    private GameObject[] MenuButtons;
     
     [SerializeField]
     private Slider masterSlider;
@@ -25,7 +28,7 @@ public class UIManager : MonoBehaviour
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
     }
-    public void ChangeScene(int _sceneIndex) {
+    public void LoadScene(int _sceneIndex) {
         SceneManager.LoadScene(_sceneIndex);
     }
 
@@ -33,8 +36,11 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void TriggerPanel() {
-        optionsPanel.SetActive(!optionsPanel.active);
+    public void TriggerPanel(GameObject _panel) {
+        _panel.SetActive(!_panel.active);
+        for (int i = 0; i < MenuButtons.Length; i++) {
+            MenuButtons[i].SetActive(!MenuButtons[i].active);
+        }
     }
 
     #region Sound Management
