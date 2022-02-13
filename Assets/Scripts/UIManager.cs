@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -29,6 +30,15 @@ public class UIManager : MonoBehaviour
     private GameObject lastSelectedObject;
     private GameObject newSelectedObject;
 
+    [SerializeField]
+    private Image transitionImage;
+    [SerializeField]
+    private float transitionSpeed;
+    private bool transition;
+    private Color color = new Color(0, 0, 0, 0);
+    [SerializeField]
+    private TMP_Text transitionText;
+
     private void Start() {
         masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
@@ -37,7 +47,24 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
     public void LoadScene(int _sceneIndex) {
+        StartCoroutine(Transition(_sceneIndex));
+    }
+
+    private IEnumerator Transition(int _sceneIndex) {
+        this.GetComponent<Canvas>().enabled = false;
+        transitionText.text = $"World {_sceneIndex}" ;
+        while(transitionImage.color.a < 1) {
+            color.a += Time.deltaTime / transitionSpeed;
+            transitionImage.color = color;
+            yield return null;
+        }
+        while (transitionText.color.a < 1) {
+            transitionText.color = new Color(transitionText.color.r, transitionText.color.g, transitionText.color.b, transitionText.color.a + Time.deltaTime / transitionSpeed);
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(_sceneIndex);
     }
 
