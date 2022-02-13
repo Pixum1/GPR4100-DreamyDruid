@@ -39,29 +39,69 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text transitionText;
 
-    private void Start() {
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+    [Header("InGame")]
+    [SerializeField]
+    private GameObject pausePanel;
+
+    private void Start() {
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0)) {
+            masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+            sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
+    private void Update() {
+        if(SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0)) {
+
+            if(Input.GetButtonDown("Escape")) {
+                TriggerPanel(pausePanel);
+            }
+            if (!transition) {
+                if (pausePanel.active) {
+                    Time.timeScale = 0f;
+                }
+                else {
+                    Time.timeScale = 1f;
+                }
+            }
+        }
+    }
     public void LoadScene(int _sceneIndex) {
-        StartCoroutine(Transition(_sceneIndex));
+        if(SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0))
+            StartCoroutine(InGameTransition(_sceneIndex));
+        else
+            StartCoroutine(Transition(_sceneIndex));
+    }
+
+    private IEnumerator InGameTransition(int _sceneIndex) {
+        transition = true;
+        Time.timeScale = 0f;
+        if(pausePanel.active)
+            pausePanel.SetActive(false);
+        while (transitionImage.color.a < 1) {
+            color.a += Time.unscaledDeltaTime / transitionSpeed;
+            transitionImage.color = color;
+            yield return null;
+        }
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(_sceneIndex);
     }
 
     private IEnumerator Transition(int _sceneIndex) {
         this.GetComponent<Canvas>().enabled = false;
-        transitionText.text = $"World {_sceneIndex}" ;
         while(transitionImage.color.a < 1) {
-            color.a += Time.deltaTime / transitionSpeed;
+            color.a += Time.unscaledDeltaTime / transitionSpeed;
             transitionImage.color = color;
             yield return null;
         }
+        transitionText.text = $"World {_sceneIndex}";
+
         while (transitionText.color.a < 1) {
-            transitionText.color = new Color(transitionText.color.r, transitionText.color.g, transitionText.color.b, transitionText.color.a + Time.deltaTime / transitionSpeed);
+            transitionText.color = new Color(transitionText.color.r, transitionText.color.g, transitionText.color.b, transitionText.color.a + Time.unscaledDeltaTime / transitionSpeed);
             yield return null;
         }
         yield return new WaitForSeconds(2f);
@@ -71,13 +111,13 @@ public class UIManager : MonoBehaviour
     public void ExitGame() {
         Application.Quit();
     }
-
     public void TriggerPanel(GameObject _panel) {
         if (_panel.active) {
             eventSystem.SetSelectedGameObject(lastSelectedObject);
         }
         else {
             lastSelectedObject = eventSystem.currentSelectedGameObject;
+
             newSelectedObject = _panel.GetComponentInChildren<Button>().gameObject;
             eventSystem.SetSelectedGameObject(newSelectedObject);
         }
