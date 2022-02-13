@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class UIManager : MonoBehaviour
     private AudioMixer mixer;
 
     [SerializeField]
-    private GameObject[] MenuButtons;
+    private GameObject[] menuItems;
     
     [SerializeField]
     private Slider masterSlider;
@@ -22,11 +23,19 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject optionsPanel;
+    [SerializeField]
+    private EventSystem eventSystem;
+
+    private GameObject lastSelectedObject;
+    private GameObject newSelectedObject;
 
     private void Start() {
         masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void LoadScene(int _sceneIndex) {
         SceneManager.LoadScene(_sceneIndex);
@@ -37,10 +46,19 @@ public class UIManager : MonoBehaviour
     }
 
     public void TriggerPanel(GameObject _panel) {
-        _panel.SetActive(!_panel.active);
-        for (int i = 0; i < MenuButtons.Length; i++) {
-            MenuButtons[i].SetActive(!MenuButtons[i].active);
+        if (_panel.active) {
+            eventSystem.SetSelectedGameObject(lastSelectedObject);
         }
+        else {
+            lastSelectedObject = eventSystem.currentSelectedGameObject;
+            newSelectedObject = _panel.GetComponentInChildren<Button>().gameObject;
+            eventSystem.SetSelectedGameObject(newSelectedObject);
+        }
+        for (int i = 0; i < menuItems.Length; i++) {
+            menuItems[i].SetActive(!menuItems[i].active);
+        }
+        _panel.SetActive(!_panel.active);
+        
     }
 
     #region Sound Management
