@@ -23,15 +23,38 @@ public class Nightmare : MonoBehaviour
     [SerializeField]
     TileBase nmTile;
     List<Vector3> playerPathPoints = new List<Vector3>();
+    public bool active;
+    [SerializeField]
+    Checkpoint startCheckpoint;
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
         cPManager = GameObject.Find("CheckPointManager").GetComponent<CheckpointManager>();
         playerController.pHealth.e_PlayerDied += new Action(ResetNightmare);
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        StartCoroutine(GetPathPoints());
-        StartCoroutine(GetSurroundingTiles(startPosition));
+        active = false;
     }
+
+    private void Update()
+    {
+        StartNightmare();
+    }
+
+    void StartNightmare()
+    {
+        if (!active)
+        {
+            currentCheckpoint = cPManager.currentCP;
+            if (startCheckpoint==currentCheckpoint)
+            {
+                Debug.Log("Start");
+                active = true;
+                StartCoroutine(GetPathPoints());
+                StartCoroutine(GetSurroundingTiles(startPosition));
+            }
+        }
+    }
+
     private void ResetNightmare()
     {
         StopAllCoroutines();

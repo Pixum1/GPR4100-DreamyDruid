@@ -6,21 +6,23 @@ public class PlayerSound : MonoBehaviour
 {
     [SerializeField]
     AudioSource walkSource;
-
     [SerializeField]
     AudioClip walk;
 
     [SerializeField]
     AudioSource rollSource;
-
     [SerializeField]
     AudioClip roll;
 
     [SerializeField]
     AudioSource jumpSource;
-
     [SerializeField]
     AudioClip jump;
+
+    [SerializeField]
+    AudioSource nightmareSource;
+    [SerializeField]
+    AudioClip nightmare;
 
     [SerializeField]
     Rigidbody2D rb;
@@ -32,7 +34,10 @@ public class PlayerSound : MonoBehaviour
     PlayerMovement playerMovement;
 
     [SerializeField]
-    Rolling rolling;
+    Rolling rollingScript;
+
+    [SerializeField]
+    Nightmare nightmareScript;
 
     void Start()
     {
@@ -41,7 +46,7 @@ public class PlayerSound : MonoBehaviour
 
     void Update()
     {
-        if (!rolling.m_IsRolling)
+        if (!rollingScript.m_IsRolling)
         {
             if (rollSource.isPlaying)
             {
@@ -64,16 +69,25 @@ public class PlayerSound : MonoBehaviour
                 playerMovement.PlayerJumped = false;
             }
         }
-        else if(rolling.isActiveAndEnabled)
+        else if (rollingScript.isActiveAndEnabled)
         {
             if (!rollSource.isPlaying && Mathf.Abs(rb.angularVelocity) > 10f)
             {
                 rollSource.PlayOneShot(roll);
             }
-            else if(Mathf.Abs(rb.angularVelocity) < 10f)
+            else if (Mathf.Abs(rb.angularVelocity) < 10f)
             {
                 rollSource.Stop();
             }
+        }
+
+        if (nightmareScript.active && !nightmareSource.isPlaying)
+        {
+            nightmareSource.PlayOneShot(nightmare);
+        }
+        else if (nightmareScript.active == false && nightmareSource.isPlaying)
+        {
+            nightmareSource.Stop();
         }
 
 
