@@ -26,6 +26,8 @@ public class Nightmare : MonoBehaviour
     public bool active;
     [SerializeField]
     Checkpoint startCheckpoint;
+    [SerializeField]
+    CrowAnimation crow;
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
@@ -37,22 +39,23 @@ public class Nightmare : MonoBehaviour
 
     private void Update()
     {
-        StartNightmare();
-    }
-
-    void StartNightmare()
-    {
+        currentCheckpoint = cPManager.currentCP;
         if (!active)
         {
-            currentCheckpoint = cPManager.currentCP;
-            if (startCheckpoint==currentCheckpoint)
+            if (startCheckpoint == currentCheckpoint)
             {
-                Debug.Log("Start");
-                active = true;
-                StartCoroutine(GetPathPoints());
-                StartCoroutine(GetSurroundingTiles(startPosition));
+                StartCoroutine(StartNightmare());
             }
         }
+    }
+
+    IEnumerator StartNightmare()
+    {
+        crow.active=true;
+        active = true;
+        StartCoroutine(GetPathPoints());
+        yield return new WaitForSeconds(6);
+        StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[8])));
     }
 
     private void ResetNightmare()

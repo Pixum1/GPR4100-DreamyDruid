@@ -22,7 +22,23 @@ public class PlayerSound : MonoBehaviour
     [SerializeField]
     AudioSource nightmareSource;
     [SerializeField]
+    AudioClip nightmareStart;
+    [SerializeField]
     AudioClip nightmare;
+
+    [SerializeField]
+    AudioSource musicSource;
+    [SerializeField]
+    AudioClip defaultMusic;
+    [SerializeField]
+    AudioClip nightmareMusic;
+
+    [SerializeField]
+    AudioSource crowSource;
+    [SerializeField]
+    AudioClip crowIdle;
+    [SerializeField]
+    AudioClip crowFly;
 
     [SerializeField]
     Rigidbody2D rb;
@@ -83,7 +99,7 @@ public class PlayerSound : MonoBehaviour
 
         if (nightmareScript.active && !nightmareSource.isPlaying)
         {
-            nightmareSource.PlayOneShot(nightmare);
+            StartCoroutine(NightmareSound());
         }
         else if (nightmareScript.active == false && nightmareSource.isPlaying)
         {
@@ -91,5 +107,17 @@ public class PlayerSound : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator NightmareSound()
+    {
+        crowSource.PlayOneShot(crowFly);
+        nightmareSource.PlayOneShot(nightmareStart);
+        yield return new WaitForSeconds(4);
+        musicSource.Stop();
+        musicSource.clip = nightmareMusic;
+        musicSource.Play();
+        yield return new WaitForSeconds(2);
+        nightmareSource.Play();
     }
 }
