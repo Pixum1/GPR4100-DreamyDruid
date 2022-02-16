@@ -575,6 +575,12 @@ MonoBehaviour:
   transitionImage: {fileID: 1859924543}
   transitionSpeed: 2
   transitionText: {fileID: 22140056}
+  worldButtons:
+  - {fileID: 1959490152}
+  - {fileID: 1771789695}
+  - {fileID: 950497386}
+  - {fileID: 1735885114}
+  pausePanel: {fileID: 0}
 --- !u!114 &349810570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,7 +1241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -123.359985}
+  m_AnchoredPosition: {x: 0, y: -123.360016}
   m_SizeDelta: {x: -633.19, y: -321.28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &676261937
@@ -6470,6 +6476,7 @@ GameObject:
   - component: {fileID: 950497388}
   - component: {fileID: 950497387}
   - component: {fileID: 950497386}
+  - component: {fileID: 950497389}
   - component: {fileID: 950497385}
   m_Layer: 5
   m_Name: World3
@@ -6507,7 +6514,7 @@ Animator:
   m_GameObject: {fileID: 950497383}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c7e587288c844004c8f35613100c3d7a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 28edc2d9dae48a044a16286ba006fad3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6592,7 +6599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2c39c0da3adfb2b4e914adc395c42917, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6610,6 +6617,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950497383}
   m_CullTransparentMesh: 1
+--- !u!114 &950497389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950497383}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: -10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &981015078
 GameObject:
   m_ObjectHideFlags: 0
@@ -8342,7 +8364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: -135}
+  m_AnchoredPosition: {x: 0, y: -135.00003}
   m_SizeDelta: {x: -956.91, y: -344.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515609993
@@ -8991,6 +9013,7 @@ GameObject:
   - component: {fileID: 1735885116}
   - component: {fileID: 1735885115}
   - component: {fileID: 1735885114}
+  - component: {fileID: 1735885117}
   - component: {fileID: 1735885113}
   m_Layer: 5
   m_Name: World4
@@ -9028,7 +9051,7 @@ Animator:
   m_GameObject: {fileID: 1735885111}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c7e587288c844004c8f35613100c3d7a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 28edc2d9dae48a044a16286ba006fad3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -9113,7 +9136,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 95a288fc8c8f62248ad5a1e97a7f2d89, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9131,6 +9154,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735885111}
   m_CullTransparentMesh: 1
+--- !u!114 &1735885117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735885111}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: -10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1771789692
 GameObject:
   m_ObjectHideFlags: 0
@@ -9143,6 +9181,7 @@ GameObject:
   - component: {fileID: 1771789697}
   - component: {fileID: 1771789696}
   - component: {fileID: 1771789695}
+  - component: {fileID: 1771789698}
   - component: {fileID: 1771789694}
   m_Layer: 5
   m_Name: World2
@@ -9180,7 +9219,7 @@ Animator:
   m_GameObject: {fileID: 1771789692}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c7e587288c844004c8f35613100c3d7a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 28edc2d9dae48a044a16286ba006fad3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -9265,7 +9304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6dd1e70252f7bb141b9c454dea1e8351, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9283,6 +9322,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771789692}
   m_CullTransparentMesh: 1
+--- !u!114 &1771789698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771789692}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: -10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1859924541
 GameObject:
   m_ObjectHideFlags: 0
@@ -9655,6 +9709,7 @@ GameObject:
   - component: {fileID: 1959490154}
   - component: {fileID: 1959490153}
   - component: {fileID: 1959490152}
+  - component: {fileID: 1959490155}
   - component: {fileID: 1959490151}
   m_Layer: 5
   m_Name: World1
@@ -9692,7 +9747,7 @@ Animator:
   m_GameObject: {fileID: 1959490149}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c7e587288c844004c8f35613100c3d7a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 28edc2d9dae48a044a16286ba006fad3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -9777,7 +9832,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: a926a819fe0833741899c62caac04239, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9795,6 +9850,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959490149}
   m_CullTransparentMesh: 1
+--- !u!114 &1959490155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959490149}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: -10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1989353562
 GameObject:
   m_ObjectHideFlags: 0

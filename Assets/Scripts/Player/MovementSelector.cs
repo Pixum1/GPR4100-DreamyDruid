@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MovementSelector : MonoBehaviour
@@ -12,6 +13,13 @@ public class MovementSelector : MonoBehaviour
     [SerializeField]
     private ParticleSystem evolveParticles;
     private bool isBear;
+
+    private bool frogAccess;
+    private bool armadilloAccess;
+    private bool owlAccess;
+
+    [SerializeField]
+    private Image[] accessImg;
 
     private void Start() {
         if(currentScript != null) {
@@ -36,15 +44,27 @@ public class MovementSelector : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxisRaw("Evolve Vertical") == 1f) {
+        for(int i = 0; i < accessImg.Length; i++)
+        {
+            if(SceneManager.GetActiveScene().buildIndex - 1 > i)
+            {
+                accessImg[i].enabled = false;
+            }
+            else
+            {
+                accessImg[i].enabled = true;
+            }
+        }
+
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxisRaw("Evolve Vertical") == 1f) && !accessImg[2].enabled) {
             SwitchScript(GetComponent<Gliding>());
             ActivateSelectionIcon(selectIcons[0]);
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxisRaw("Evolve Horizontal") == -1f) {
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxisRaw("Evolve Horizontal") == -1f) && !accessImg[0].enabled) {
             SwitchScript(GetComponent<Grappling>());
             ActivateSelectionIcon(selectIcons[1]);
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxisRaw("Evolve Vertical") == -1f) {
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxisRaw("Evolve Vertical") == -1f) && !accessImg[1].enabled) {
             SwitchScript(GetComponent<Rolling>());
             ActivateSelectionIcon(selectIcons[2]);
         }

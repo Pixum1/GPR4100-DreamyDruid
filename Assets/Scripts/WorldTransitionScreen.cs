@@ -48,6 +48,7 @@ public class WorldTransitionScreen : MonoBehaviour
     {
         if (distanceToPlayer < 1)
         {
+            PlayerPrefs.SetInt("WorldUnlock", SceneManager.GetActiveScene().buildIndex + 1);
             SceneManager.LoadSceneAsync("Main Menu");
         }
     }

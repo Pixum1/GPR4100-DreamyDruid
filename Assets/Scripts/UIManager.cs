@@ -9,6 +9,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Main Menu")]
     [SerializeField]
     private AudioMixer mixer;
 
@@ -39,6 +40,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text transitionText;
 
+    [SerializeField]
+    private Button[] worldButtons;
+
 
     [Header("InGame")]
     [SerializeField]
@@ -66,6 +70,21 @@ public class UIManager : MonoBehaviour
                 }
                 else {
                     Time.timeScale = 1f;
+                }
+            }
+        }
+        else
+        {
+            
+            for (int i = 1; i < worldButtons.Length; i++)
+            {
+                if(PlayerPrefs.GetInt("WorldUnlock") > i)
+                {
+                    worldButtons[i].interactable = true;
+                }
+                else
+                {
+                    worldButtons[i].interactable = false;
                 }
             }
         }
