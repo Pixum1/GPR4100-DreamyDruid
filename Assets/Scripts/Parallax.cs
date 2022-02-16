@@ -8,6 +8,8 @@ public class Parallax : MonoBehaviour
     private float startPos;
     [SerializeField]
     private float parallaxEffect;
+    [SerializeField]
+    private float autoScrollEffect;
 
     private void Start()
     {
@@ -19,13 +21,25 @@ public class Parallax : MonoBehaviour
         float temp = Camera.main.transform.position.x * (1 - parallaxEffect);
         float distance = Camera.main.transform.position.x * parallaxEffect;
 
-        transform.position = new Vector2(startPos + distance, transform.position.y);
+        if (autoScrollEffect == 0)
+        {
+            transform.position = new Vector2(startPos + distance, transform.position.y);
+        }
+        else
+        {
+            transform.position += Vector3.right * autoScrollEffect;
 
-        if(temp > startPos + length)
+            if(transform.position.x > startPos + length)
+            {
+                transform.position = new Vector2(startPos, transform.position.y);
+            }
+        }
+
+        if (temp > startPos + length)
         {
             startPos += length;
         }
-        else if(temp < startPos - length)
+        else if (temp < startPos - length)
         {
             startPos -= length;
         }

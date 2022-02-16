@@ -26,14 +26,14 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake() {
         cameraManager = FindObjectOfType<CameraManager>();
-        newColor = new Color(0,0,0,0);
+        newColor = new Color(0, 0, 0, 0);
     }
 
     private void Update() {
         if (e_PlayerDied == null)
             Debug.LogWarning("Null Reference");
 
-        if (Input.GetButton("Reset")) {
+        if (Input.GetButtonDown("Reset") && (!isFadingIn && !isFadingOut)) {
             PlayerDies();
         }
 
@@ -46,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D _other) {
-        if (_other.CompareTag("Obstacle")) {
+        if (_other.CompareTag("Obstacle") && (!isFadingIn && !isFadingOut)) {
             PlayerDies();
         }
     }
