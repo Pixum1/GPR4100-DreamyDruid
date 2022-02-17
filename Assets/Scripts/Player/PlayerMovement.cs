@@ -230,6 +230,7 @@ public class PlayerMovement : MonoBehaviour
             else if (!player.grapplingScript.isActiveAndEnabled && !player.glidingScript.isActiveAndEnabled)
             {
                 Jump(jumpHeight, Vector2.up);
+                PlayerJumped=true;
             }
         }
     }

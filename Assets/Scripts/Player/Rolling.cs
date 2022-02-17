@@ -133,6 +133,7 @@ public class Rolling : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, 0);
         boxCol.enabled = true;
         rb.freezeRotation = true;
+        canRoll = true;
     }
 
     private void OnEnable()
