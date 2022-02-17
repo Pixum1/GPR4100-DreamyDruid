@@ -10,6 +10,10 @@ public class Nightmare : MonoBehaviour
     Transform player;
     [SerializeField]
     float maxTime;
+    [SerializeField]
+    int pathPositionsAmount=20;
+    [SerializeField]
+    float pathFollowDistance = 15;
     Checkpoint currentCheckpoint;
     CheckpointManager cPManager;
     [SerializeField]
@@ -71,11 +75,11 @@ public class Nightmare : MonoBehaviour
     private IEnumerator GetPathPoints()
     {
         playerPathPoints.Insert(0, player.position);
-        if (playerPathPoints.Count >= 11)
+        if (playerPathPoints.Count >= pathPositionsAmount+1)
         {
-            playerPathPoints.RemoveAt(10);
+            playerPathPoints.RemoveAt(pathPositionsAmount);
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         StartCoroutine(GetPathPoints());
     }
     private IEnumerator GetSurroundingTiles(Vector3Int _tile)
@@ -95,7 +99,7 @@ public class Nightmare : MonoBehaviour
                     for (int i = 0; i < playerPathPoints.Count; i++)
                     {
                         float distanceToPathpoint = Vector2.Distance(playerPathPoints[i], posVec2);
-                        if (distanceToPathpoint < 20)
+                        if (distanceToPathpoint < pathFollowDistance)
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
