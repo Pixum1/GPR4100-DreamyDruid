@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour {
     private PlayerController player;
 
     [SerializeField]
-    private SpriteRenderer playerSprite;
+    public SpriteRenderer playerSprite;
     [SerializeField]
     private Sprite wallHangSprite;
     [SerializeField]

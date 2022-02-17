@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class Nightmare : MonoBehaviour
@@ -11,7 +12,7 @@ public class Nightmare : MonoBehaviour
     [SerializeField]
     float maxTime;
     [SerializeField]
-    int pathPositionsAmount=20;
+    int pathPositionsAmount = 20;
     [SerializeField]
     float pathFollowDistance = 15;
     Checkpoint currentCheckpoint;
@@ -32,6 +33,16 @@ public class Nightmare : MonoBehaviour
     Checkpoint startCheckpoint;
     [SerializeField]
     CrowAnimation crow;
+
+    [Header("Cinematic")]
+    [SerializeField]
+    private float nightmareStartTime;
+    [SerializeField]
+    private RectTransform[] blackBars;
+    [SerializeField]
+    private float blackBarTime;
+    [SerializeField]
+    private GameObject animalGrid;
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
@@ -55,11 +66,34 @@ public class Nightmare : MonoBehaviour
 
     IEnumerator StartNightmare()
     {
-        crow.active=true;
+        playerController.pMovement.movementInput = false;
+        crow.active = true;
         active = true;
         StartCoroutine(GetPathPoints());
-        yield return new WaitForSeconds(6);
-        StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[8])));
+
+        animalGrid.SetActive(false);
+        while(blackBars[0].rect.height < 100)
+        {
+            for (int i = 0; i < blackBars.Length; i++)
+            {
+                blackBars[i].sizeDelta = new Vector2(blackBars[i].sizeDelta.x, blackBars[i].sizeDelta.y + Time.unscaledDeltaTime * blackBarTime);    
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(nightmareStartTime/3);
+        playerController.pAnimation.playerSprite.flipX = true;
+        yield return new WaitForSeconds(nightmareStartTime/3);
+        playerController.pAnimation.playerSprite.flipX = false;
+        yield return new WaitForSeconds(nightmareStartTime/3);
+
+        playerController.pMovement.movementInput = true;
+        for (int j = 0; j < blackBars.Length; j++)
+        {
+            blackBars[j].sizeDelta = Vector2.zero;
+        }
+        animalGrid.SetActive(true);
+
+        StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[(int)nightmareStartTime*2])));
     }
 
     private void ResetNightmare()
@@ -75,7 +109,7 @@ public class Nightmare : MonoBehaviour
     private IEnumerator GetPathPoints()
     {
         playerPathPoints.Insert(0, player.position);
-        if (playerPathPoints.Count >= pathPositionsAmount+1)
+        if (playerPathPoints.Count >= pathPositionsAmount + 1)
         {
             playerPathPoints.RemoveAt(pathPositionsAmount);
         }
