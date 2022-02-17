@@ -50,6 +50,7 @@ public class Nightmare : MonoBehaviour
         playerController.pHealth.e_PlayerDied += new Action(ResetNightmare);
         player = GameObject.FindGameObjectWithTag("Player").transform;
         active = false;
+        StartCoroutine(GetPathPoints());
     }
 
     private void Update()
@@ -68,8 +69,7 @@ public class Nightmare : MonoBehaviour
     {
         playerController.pMovement.movementInput = false;
         crow.active = true;
-        active = true;
-        StartCoroutine(GetPathPoints());
+        active = true;        
 
         animalGrid.SetActive(false);
         while(blackBars[0].rect.height < 100)
