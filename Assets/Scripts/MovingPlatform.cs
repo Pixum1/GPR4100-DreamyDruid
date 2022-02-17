@@ -44,14 +44,19 @@ public class MovingPlatform : MonoBehaviour
         StartCoroutine(Move());
     }
 
-    private void OnTriggerStay2D(Collider2D collision) {
-        if (collision.CompareTag("Player")) {
-            if (movingLeft) {
-                collision.transform.position = Vector2.MoveTowards(collision.transform.position, destLeftPos, speed * Time.deltaTime);
-            }
-            else if (movingRight) {
-                collision.transform.position = Vector2.MoveTowards(collision.transform.position, destRightPos, speed * Time.deltaTime);
-            }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            collision.collider.transform.SetParent(transform);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            collision.collider.transform.SetParent(null);
         }
     }
 
