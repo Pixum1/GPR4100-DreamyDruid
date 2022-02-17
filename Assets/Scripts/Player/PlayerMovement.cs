@@ -79,13 +79,17 @@ public class PlayerMovement : MonoBehaviour
     private float onWallGravityMultiplier;
 
     #region bool / movement conditions
+    public bool movementInput = true;
 
     public Action e_PlayerJumped;
     public float m_HorizontalDir
     {
         get
         {
-            return Input.GetAxisRaw("Horizontal");
+            if (movementInput)
+                return Input.GetAxisRaw("Horizontal");
+            else
+                return 0;
         }
     }
     public bool m_ChangingDir
@@ -230,7 +234,7 @@ public class PlayerMovement : MonoBehaviour
             else if (!player.grapplingScript.isActiveAndEnabled && !player.glidingScript.isActiveAndEnabled)
             {
                 Jump(jumpHeight, Vector2.up);
-                PlayerJumped=true;
+                PlayerJumped = true;
             }
         }
     }
@@ -297,8 +301,8 @@ public class PlayerMovement : MonoBehaviour
 
                 frogJumpTimer += Time.fixedDeltaTime;
 
-                if(frogJumpTimer <= frogJumpTimeToMaxForce)
-                    transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y - Time.fixedDeltaTime/4);
+                if (frogJumpTimer <= frogJumpTimeToMaxForce)
+                    transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y - Time.fixedDeltaTime / 4);
             }
         }
         if (Input.GetButtonUp("Jump"))
