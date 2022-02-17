@@ -23,6 +23,8 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField]
     private Vector3 groundRayOffset;
     [SerializeField]
+    private Vector3 groundRayVerticalOffset;
+    [SerializeField]
     private float wallRayLength = 1f;
     [SerializeField]
     private Vector3 wallRayOffset;
@@ -52,8 +54,8 @@ public class PlayerCollision : MonoBehaviour
     }
 
     private void Update() {
-        m_IsGrounded = Physics2D.Raycast(transform.position + groundRayOffset, Vector2.down, groundRayLength, groundLayer)
-                   || Physics2D.Raycast(transform.position - groundRayOffset, Vector2.down, groundRayLength, groundLayer);
+        m_IsGrounded = Physics2D.Raycast(transform.position + groundRayOffset + groundRayVerticalOffset, Vector2.down, groundRayLength, groundLayer)
+                   || Physics2D.Raycast(transform.position - groundRayOffset + groundRayVerticalOffset, Vector2.down, groundRayLength, groundLayer);
 
         m_IsOnLeftWall = Physics2D.Raycast(transform.position + wallRayOffset, -Vector3.right, wallRayLength, wallHangLayer)
                    || Physics2D.Raycast(transform.position - wallRayOffset, -Vector3.right, wallRayLength, wallHangLayer);
@@ -130,8 +132,8 @@ public class PlayerCollision : MonoBehaviour
     }
     private void DrawGroundRays() {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + groundRayOffset, transform.position + groundRayOffset + Vector3.down * groundRayLength);
-        Gizmos.DrawLine(transform.position - groundRayOffset, transform.position - groundRayOffset + Vector3.down * groundRayLength);
+        Gizmos.DrawLine(transform.position + groundRayOffset + groundRayVerticalOffset, transform.position + groundRayOffset + groundRayVerticalOffset + Vector3.down * groundRayLength);
+        Gizmos.DrawLine(transform.position - groundRayOffset + groundRayVerticalOffset, transform.position - groundRayOffset + groundRayVerticalOffset + Vector3.down * groundRayLength);
     }
     private void DrawCornerCheckRays() {
         Gizmos.color = Color.yellow;
