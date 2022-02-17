@@ -111,7 +111,7 @@ public class Rolling : MonoBehaviour
     {
         canRoll = false;
         circleCol.enabled = true;
-        circleCol.radius = 0.9f;
+        circleCol.radius = 0.45f;
         circleCol.sharedMaterial = physicsMaterial;
         boxCol.enabled = false;
         circleCol.enabled = true;
