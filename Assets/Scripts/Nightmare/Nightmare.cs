@@ -92,8 +92,8 @@ public class Nightmare : MonoBehaviour
             blackBars[j].sizeDelta = Vector2.zero;
         }
         animalGrid.SetActive(true);
-
-        StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[(int)nightmareStartTime*2])));
+        StartCoroutine(GetSurroundingTiles(startPosition));
+        //StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[(int)nightmareStartTime*2])));
     }
 
     private void ResetNightmare()
