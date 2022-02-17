@@ -10,7 +10,6 @@ public class FragileFloor : MonoBehaviour
     [SerializeField]
     private float fallSpeed = 2f;
 
-    private bool called;
 
     private void Start()
     {
@@ -22,22 +21,26 @@ public class FragileFloor : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             StartCoroutine(Fall());
-            called = true;
         }
     }
 
     private IEnumerator Fall()
     {
-        if (!called)
+        Vector3 endPos = new Vector3(startPos.x, startPos.y - 5f);
+        yield return new WaitForSeconds(timeToFall);
+        while (transform.position.y - endPos.y > 0f)
         {
-            Vector3 endPos = new Vector3(startPos.x, startPos.y - 5f);
-            yield return new WaitForSeconds(timeToFall);
-            while (transform.position.y - endPos.y > 0f)
-            {
-                transform.position -= Vector3.up * fallSpeed * Time.deltaTime;
-                yield return null;
-            }
-            gameObject.SetActive(false);
+            transform.position -= Vector3.up * fallSpeed * Time.deltaTime;
+            yield return null;
         }
+        SetState(false);
+        yield return new WaitForSeconds(5f);
+        SetState(true);
+        transform.position = startPos;
+    }
+    public void SetState(bool _state)
+    {
+        this.GetComponent<SpriteRenderer>().enabled = _state;
+        this.GetComponent<Collider2D>().enabled = _state;
     }
 }

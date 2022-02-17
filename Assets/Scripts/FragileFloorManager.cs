@@ -26,11 +26,9 @@ public class FragileFloorManager : MonoBehaviour
     {
         foreach(FragileFloor f in allFloorTiles)
         {
-            GameObject g = Instantiate(floorTile);
-            g.transform.position = f.transform.position;
-            Destroy(f.gameObject);
+            f.StopAllCoroutines();
+            f.transform.position = f.startPos;
+            f.SetState(true);
         }
-        allFloorTiles.Clear();
-        allFloorTiles.AddRange(FindObjectsOfType<FragileFloor>());
     }
 }
