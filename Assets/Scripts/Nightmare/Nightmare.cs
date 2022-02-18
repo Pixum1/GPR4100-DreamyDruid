@@ -68,6 +68,7 @@ public class Nightmare : MonoBehaviour
         {
             if (startCheckpoint == currentCheckpoint)
             {
+                Debug.Log("1");
                 StartCoroutine(StartNightmare());
             }
         }
@@ -117,14 +118,17 @@ public class Nightmare : MonoBehaviour
 
     private void ResetNightmare()
     {
-        tileNumber = 0;
-        StopAllCoroutines();
-        nightmareTilemap.ClearAllTiles();
-        currentCheckpoint = cPManager.currentCP;
-        Vector3 resetPositonV3 = currentCheckpoint.transform.GetChild(0).transform.position;
-        resetPosition = new Vector3Int(Mathf.RoundToInt(resetPositonV3.x), Mathf.RoundToInt(resetPositonV3.y), 0);
-        StartCoroutine(GetPathPoints());
-        StartCoroutine(GetSurroundingTiles(resetPosition));
+        if (active)
+        {
+            tileNumber = 0;
+            StopAllCoroutines();
+            nightmareTilemap.ClearAllTiles();
+            currentCheckpoint = cPManager.currentCP;
+            Vector3 resetPositonV3 = currentCheckpoint.transform.GetChild(0).transform.position;
+            resetPosition = new Vector3Int(Mathf.RoundToInt(resetPositonV3.x), Mathf.RoundToInt(resetPositonV3.y), 0);
+            StartCoroutine(GetPathPoints());
+            StartCoroutine(GetSurroundingTiles(resetPosition));
+        }
     }
     private IEnumerator GetPathPoints()
     {
@@ -161,7 +165,7 @@ public class Nightmare : MonoBehaviour
                             tileNumber++;
                             break;
                         }
-                        else if (distanceToPathpoint < 20 && tileNumber < 100)
+                        else if (distanceToPathpoint < 30 && tileNumber < 200)
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
@@ -176,7 +180,7 @@ public class Nightmare : MonoBehaviour
     }
     private void OnDisable()
     {
-        playerController.pHealth.e_PlayerDied -= ResetNightmare;
+            playerController.pHealth.e_PlayerDied -= ResetNightmare;
     }
 
     private void OnDrawGizmos()
