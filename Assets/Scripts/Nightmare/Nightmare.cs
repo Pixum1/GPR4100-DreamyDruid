@@ -50,6 +50,7 @@ public class Nightmare : MonoBehaviour
     private Color nmColor;
     [SerializeField]
     private float colorChangeSpeed;
+    int tileNumber;
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
@@ -75,7 +76,7 @@ public class Nightmare : MonoBehaviour
     IEnumerator StartNightmare()
     {
         crow.active = true;
-        active = true;        
+        active = true;
 
         #region Cinematic Stuff
         playerController.pMovement.movementInput = false;
@@ -116,6 +117,7 @@ public class Nightmare : MonoBehaviour
 
     private void ResetNightmare()
     {
+        tileNumber = 0;
         StopAllCoroutines();
         nightmareTilemap.ClearAllTiles();
         currentCheckpoint = cPManager.currentCP;
@@ -156,6 +158,15 @@ public class Nightmare : MonoBehaviour
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
                             StartCoroutine(GetSurroundingTiles(pos));
+                            tileNumber++;
+                            break;
+                        }
+                        else if (distanceToPathpoint < 20 && tileNumber < 100)
+                        {
+                            nightmareTilemap.SetTile(pos, nmTile);
+                            yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
+                            StartCoroutine(GetSurroundingTiles(pos));
+                            tileNumber++;
                             break;
                         }
                     }
