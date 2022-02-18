@@ -60,8 +60,12 @@ public class Rolling : MonoBehaviour
                     StartCoroutine(RollProperties());
                 }
             }
-            else
-            {
+        }
+
+        if (!Input.GetButton("Ability"))
+        {
+            if (Physics2D.CircleCast(transform.position + Vector3.up, 0.2f, Vector2.up).collider == null)
+            {                
                 StopCoroutine(RollProperties());
                 circleCol.enabled = false;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -72,20 +76,7 @@ public class Rolling : MonoBehaviour
                 cooldownLeft = cooldown;
             }
         }
-
-        if (Input.GetButtonUp("Ability"))
-        {
-            StopCoroutine(RollProperties());
-            circleCol.enabled = false;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            boxCol.enabled = true;
-            rb.freezeRotation = true;
-            canRoll = true;
-            timer = 0;
-            cooldownLeft = cooldown;
-        }
     }
-
 
     private void FixedUpdate()
     {
@@ -97,8 +88,8 @@ public class Rolling : MonoBehaviour
         if (m_IsRolling == true)
         {
             timer += Time.fixedDeltaTime;
-            rb.AddTorque(speed * 100 * Mathf.Min(timer + 1,1.5f) * flipped * Time.fixedDeltaTime);
-            rb.AddForce(-transform.right * speed * 10 * Mathf.Min(timer + 1,1.5f) * flipped * Time.fixedDeltaTime);
+            rb.AddTorque(speed * 100 * Mathf.Min(timer + 1, 1.5f) * flipped * Time.fixedDeltaTime);
+            rb.AddForce(-transform.right * speed * 10 * Mathf.Min(timer + 1, 1.5f) * flipped * Time.fixedDeltaTime);
         }
         else if (cooldownLeft > 0)
         {
@@ -139,5 +130,11 @@ public class Rolling : MonoBehaviour
     private void OnEnable()
     {
         canRoll = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + Vector3.up, 0.2f);
     }
 }

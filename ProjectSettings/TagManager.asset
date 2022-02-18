@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CameraZone
   - Obstacle
+  - Ground
   layers:
   - Default
   - TransparentFX
