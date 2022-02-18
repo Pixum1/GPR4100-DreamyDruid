@@ -14703,6 +14703,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   evolveParticles: {fileID: 1194938002}
+  accessImg: []
 --- !u!114 &9041703462974372383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14755,6 +14756,7 @@ MonoBehaviour:
   coyoteTimeTime: 0.2
   wallJumpBufferTime: 0.3
   onWallGravityMultiplier: 10
+  movementInput: 1
   PlayerJumped: 0
 --- !u!114 &850183184172662531
 MonoBehaviour:
@@ -14780,6 +14782,7 @@ MonoBehaviour:
     m_Bits: 384
   groundRayLength: 1.1
   groundRayOffset: {x: 0.39, y: 0, z: 0}
+  groundRayVerticalOffset: {x: 0, y: 0, z: 0}
   wallRayLength: 0.65
   wallRayOffset: {x: 0, y: 0.44, z: 0}
   CCRayLength: 0.8
@@ -14849,9 +14852,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicsMaterial: {fileID: 6200000, guid: 9f158a2947c3f534584c19bc442de070, type: 2}
-  speed: 1
-  duration: 1.5
-  cooldown: 3
+  speed: 5
+  duration: 100
+  cooldown: 0
   playerSpriteRenderer: {fileID: 9041703462974372376}
 --- !u!114 &9041703462974372380
 MonoBehaviour:
