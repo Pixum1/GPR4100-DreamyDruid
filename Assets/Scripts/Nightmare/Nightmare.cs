@@ -131,7 +131,7 @@ public class Nightmare : MonoBehaviour
         {
             playerPathPoints.RemoveAt(pathPositionsAmount);
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         StartCoroutine(GetPathPoints());
     }
     private IEnumerator GetSurroundingTiles(Vector3Int _tile)
