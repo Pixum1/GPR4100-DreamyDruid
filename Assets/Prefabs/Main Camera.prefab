@@ -265,6 +265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0
   autoScrollEffect: 0.01
+  nmColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  colorChangeSpeed: 0.5
 --- !u!1 &7383800143473184843
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +694,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0
   autoScrollEffect: 0
+  nmColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  colorChangeSpeed: 0.5
 --- !u!1 &7383800144330808824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,6 +1077,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0.2
   autoScrollEffect: 0
+  nmColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  colorChangeSpeed: 0.5
 --- !u!1 &7988410128168026692
 GameObject:
   m_ObjectHideFlags: 0

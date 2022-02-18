@@ -290,8 +290,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0
   autoScrollEffect: 0.02
-  nmColor: {r: 0, g: 0, b: 0, a: 0}
-  colorChangeSpeed: 0
+  nmColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  colorChangeSpeed: 0.5
 --- !u!212 &169016163
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -702,8 +702,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0
   autoScrollEffect: 0.01
-  nmColor: {r: 0, g: 0, b: 0, a: 0}
-  colorChangeSpeed: 0
+  nmColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  colorChangeSpeed: 0.5
 --- !u!212 &255090315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1090,8 +1090,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0
   autoScrollEffect: 0.025
-  nmColor: {r: 0, g: 0, b: 0, a: 0}
-  colorChangeSpeed: 0
+  nmColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  colorChangeSpeed: 0.5
 --- !u!212 &323288202
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1283,8 +1283,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0
   autoScrollEffect: 0.015
-  nmColor: {r: 0, g: 0, b: 0, a: 0}
-  colorChangeSpeed: 0
+  nmColor: {r: 1, g: 0.4669811, b: 0.4669811, a: 1}
+  colorChangeSpeed: 0.5
 --- !u!212 &434386567
 SpriteRenderer:
   m_ObjectHideFlags: 0
