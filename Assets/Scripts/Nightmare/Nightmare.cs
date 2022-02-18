@@ -167,4 +167,10 @@ public class Nightmare : MonoBehaviour
     {
         playerController.pHealth.e_PlayerDied -= ResetNightmare;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(startPosition, Vector2.one);
+    }
 }
