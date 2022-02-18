@@ -86,6 +86,174 @@ TextureImporter:
   - first:
       213: -5592517038270362476
     second: drit_grass_27
+  - first:
+      213: -2051339882982223258
+    second: drit_grass_28
+  - first:
+      213: -7255249517105990966
+    second: drit_grass_29
+  - first:
+      213: 5445776622596051824
+    second: drit_grass_30
+  - first:
+      213: -2975956581660365585
+    second: drit_grass_31
+  - first:
+      213: 354532262867099754
+    second: drit_grass_32
+  - first:
+      213: -2072988622178970640
+    second: drit_grass_33
+  - first:
+      213: -7602885802041195580
+    second: drit_grass_34
+  - first:
+      213: -2217045954725431776
+    second: drit_grass_35
+  - first:
+      213: 6399395259524436968
+    second: drit_grass_36
+  - first:
+      213: -535890457286479614
+    second: drit_grass_37
+  - first:
+      213: 4706646216866256197
+    second: drit_grass_38
+  - first:
+      213: -7725629399510336894
+    second: drit_grass_39
+  - first:
+      213: 6179412456762257738
+    second: drit_grass_40
+  - first:
+      213: -8614683748072791767
+    second: drit_grass_41
+  - first:
+      213: 1832655393162648729
+    second: drit_grass_42
+  - first:
+      213: -7641655125778150350
+    second: drit_grass_43
+  - first:
+      213: 3759593557652064592
+    second: drit_grass_44
+  - first:
+      213: 4937745861890490060
+    second: drit_grass_45
+  - first:
+      213: 7807116457705374815
+    second: drit_grass_46
+  - first:
+      213: -2426546116802890848
+    second: drit_grass_47
+  - first:
+      213: 1233182594449970474
+    second: drit_grass_48
+  - first:
+      213: 3555557384431221358
+    second: drit_grass_49
+  - first:
+      213: -4974641356295479137
+    second: drit_grass_50
+  - first:
+      213: -5464314285494258294
+    second: drit_grass_51
+  - first:
+      213: 5820886323357742047
+    second: drit_grass_52
+  - first:
+      213: 7447950037484571347
+    second: drit_grass_53
+  - first:
+      213: 5701304531300311148
+    second: drit_grass_54
+  - first:
+      213: -7165006412776236531
+    second: drit_grass_55
+  - first:
+      213: -4712412753156110147
+    second: drit_grass_56
+  - first:
+      213: 7074325677770110448
+    second: drit_grass_57
+  - first:
+      213: 6827325375674912659
+    second: drit_grass_58
+  - first:
+      213: -2167380468082955004
+    second: drit_grass_59
+  - first:
+      213: -3479710336487775570
+    second: drit_grass_60
+  - first:
+      213: 1528426836715059824
+    second: drit_grass_61
+  - first:
+      213: 8972677148681644686
+    second: drit_grass_62
+  - first:
+      213: 5416390658361656850
+    second: drit_grass_63
+  - first:
+      213: 8962084268690976418
+    second: drit_grass_64
+  - first:
+      213: -7906864634283510966
+    second: drit_grass_65
+  - first:
+      213: 3612462667425679933
+    second: drit_grass_66
+  - first:
+      213: -1392582176446692864
+    second: drit_grass_67
+  - first:
+      213: 1305806078007926134
+    second: drit_grass_68
+  - first:
+      213: 389546708405909261
+    second: drit_grass_69
+  - first:
+      213: -1664787594920275023
+    second: drit_grass_70
+  - first:
+      213: 8776798376551602906
+    second: drit_grass_71
+  - first:
+      213: 8631544156211967003
+    second: drit_grass_72
+  - first:
+      213: 2047742137554575118
+    second: drit_grass_73
+  - first:
+      213: 6924101604825130524
+    second: drit_grass_74
+  - first:
+      213: 3041344704897259371
+    second: drit_grass_75
+  - first:
+      213: 242603256837821766
+    second: drit_grass_76
+  - first:
+      213: -6069901179167946357
+    second: drit_grass_77
+  - first:
+      213: -5114055769617993677
+    second: drit_grass_78
+  - first:
+      213: 4360139570657721883
+    second: drit_grass_79
+  - first:
+      213: 7743962018148809277
+    second: drit_grass_80
+  - first:
+      213: -3478632383959766449
+    second: drit_grass_81
+  - first:
+      213: -8637304695926145207
+    second: drit_grass_82
+  - first:
+      213: 1548452649614895935
+    second: drit_grass_83
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -274,8 +442,8 @@ TextureImporter:
       name: drit_grass_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
+        x: 80
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -295,8 +463,8 @@ TextureImporter:
       name: drit_grass_5
       rect:
         serializedVersion: 2
-        x: 8
-        y: 16
+        x: 88
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -316,8 +484,8 @@ TextureImporter:
       name: drit_grass_6
       rect:
         serializedVersion: 2
-        x: 16
-        y: 16
+        x: 96
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -337,8 +505,8 @@ TextureImporter:
       name: drit_grass_7
       rect:
         serializedVersion: 2
-        x: 24
-        y: 16
+        x: 104
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -358,8 +526,8 @@ TextureImporter:
       name: drit_grass_8
       rect:
         serializedVersion: 2
-        x: 32
-        y: 16
+        x: 144
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -379,8 +547,8 @@ TextureImporter:
       name: drit_grass_9
       rect:
         serializedVersion: 2
-        x: 40
-        y: 16
+        x: 152
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -400,8 +568,8 @@ TextureImporter:
       name: drit_grass_10
       rect:
         serializedVersion: 2
-        x: 48
-        y: 16
+        x: 160
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -421,8 +589,8 @@ TextureImporter:
       name: drit_grass_11
       rect:
         serializedVersion: 2
-        x: 56
-        y: 16
+        x: 168
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -443,7 +611,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -464,7 +632,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -485,7 +653,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -506,7 +674,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -527,7 +695,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -548,7 +716,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -569,7 +737,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -590,7 +758,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 56
-        y: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -610,8 +778,8 @@ TextureImporter:
       name: drit_grass_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 64
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -631,8 +799,8 @@ TextureImporter:
       name: drit_grass_21
       rect:
         serializedVersion: 2
-        x: 8
-        y: 0
+        x: 72
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -652,8 +820,8 @@ TextureImporter:
       name: drit_grass_22
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
+        x: 80
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -673,8 +841,8 @@ TextureImporter:
       name: drit_grass_23
       rect:
         serializedVersion: 2
-        x: 24
-        y: 0
+        x: 88
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -694,8 +862,8 @@ TextureImporter:
       name: drit_grass_24
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 96
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -715,8 +883,8 @@ TextureImporter:
       name: drit_grass_25
       rect:
         serializedVersion: 2
-        x: 40
-        y: 0
+        x: 104
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -736,8 +904,8 @@ TextureImporter:
       name: drit_grass_26
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
+        x: 112
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -757,8 +925,8 @@ TextureImporter:
       name: drit_grass_27
       rect:
         serializedVersion: 2
-        x: 56
-        y: 0
+        x: 120
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -770,6 +938,1182 @@ TextureImporter:
       bones: []
       spriteID: 49c439552636362b0800000000000000
       internalID: -5592517038270362476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_28
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 662d041be3d2883e0800000000000000
+      internalID: -2051339882982223258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_29
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac2b210110d205b90800000000000000
+      internalID: -7255249517105990966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_30
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 073d6fb3cf8439b40800000000000000
+      internalID: 5445776622596051824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_31
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fece52b914743b6d0800000000000000
+      internalID: -2975956581660365585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_32
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a60eb95f63d8be400800000000000000
+      internalID: 354532262867099754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_33
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f3989fc4d34b33e0800000000000000
+      internalID: -2072988622178970640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_34
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c3497515af1d7690800000000000000
+      internalID: -7602885802041195580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_35
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 026bfd953787b31e0800000000000000
+      internalID: -2217045954725431776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e3d54545183fc850800000000000000
+      internalID: 6399395259524436968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_37
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201fae6e7722098f0800000000000000
+      internalID: -535890457286479614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_38
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 545dfbf1ccd515140800000000000000
+      internalID: 4706646216866256197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_39
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28a3fd74efc09c490800000000000000
+      internalID: -7725629399510336894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_40
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4130f5b3eea1c550800000000000000
+      internalID: 6179412456762257738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_41
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9216acf06ce727880800000000000000
+      internalID: -8614683748072791767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_42
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99cd929ce56ee6910800000000000000
+      internalID: 1832655393162648729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_43
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23c43fb762363f590800000000000000
+      internalID: -7641655125778150350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_44
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 059c2b7eb62cc2430800000000000000
+      internalID: 3759593557652064592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_45
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cce332933b5668440800000000000000
+      internalID: 4937745861890490060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_46
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5482aded03785c60800000000000000
+      internalID: 7807116457705374815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_47
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a33cd4c92d235ed0800000000000000
+      internalID: -2426546116802890848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_48
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a25926539052d1110800000000000000
+      internalID: 1233182594449970474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_49
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6a3a8d5a90e75130800000000000000
+      internalID: 3555557384431221358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_50
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f906a011b0686fab0800000000000000
+      internalID: -4974641356295479137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_51
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a85b508cb1bda24b0800000000000000
+      internalID: -5464314285494258294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_52
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd3faad4541f7c050800000000000000
+      internalID: 5820886323357742047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_53
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3da0021291f6c5760800000000000000
+      internalID: 7447950037484571347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_54
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c60ea70b34a1f1f40800000000000000
+      internalID: 5701304531300311148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_55
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0a931121a8c09c90800000000000000
+      internalID: -7165006412776236531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_56
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db80c1581952a9eb0800000000000000
+      internalID: -4712412753156110147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_57
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f579e8f8bd0d2260800000000000000
+      internalID: 7074325677770110448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_58
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39f0d17a1488fbe50800000000000000
+      internalID: 6827325375674912659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_59
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40dabc292faebe1e0800000000000000
+      internalID: -2167380468082955004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea22460a2e595bfc0800000000000000
+      internalID: -3479710336487775570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_61
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07a339b2c10163510800000000000000
+      internalID: 1528426836715059824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_62
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8a2f63d35a558c70800000000000000
+      internalID: 8972677148681644686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_63
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21604644b92ea2b40800000000000000
+      internalID: 5416390658361656850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_64
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ae2172c828bf5c70800000000000000
+      internalID: 8962084268690976418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_65
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43be6ae18c254290800000000000000
+      internalID: -7906864634283510966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_66
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a844808ab022230800000000000000
+      internalID: 3612462667425679933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_67
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 002ca5483ed8cace0800000000000000
+      internalID: -1392582176446692864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_68
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67d5531a5b72f1210800000000000000
+      internalID: 1305806078007926134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_69
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d07f4f9daa2f76500800000000000000
+      internalID: 389546708405909261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_70
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b3dc4ab08c75e8e0800000000000000
+      internalID: -1664787594920275023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_71
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ada559b3f937dc970800000000000000
+      internalID: 8776798376551602906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_72
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b14fc1e9da769c770800000000000000
+      internalID: 8631544156211967003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_73
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0f1a8cef9a0b6c10800000000000000
+      internalID: 2047742137554575118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_74
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c16605069b9571060800000000000000
+      internalID: 6924101604825130524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_75
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b679ae635e6053a20800000000000000
+      internalID: 3041344704897259371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_76
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 645db217066ed5300800000000000000
+      internalID: 242603256837821766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_77
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8948f9890163cba0800000000000000
+      internalID: -6069901179167946357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_78
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 330f16a7f593709b0800000000000000
+      internalID: -5114055769617993677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_79
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1e7d28a6d3528c30800000000000000
+      internalID: 4360139570657721883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_80
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a70ed1d64187b60800000000000000
+      internalID: 7743962018148809277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_81
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4a68e1074a69bfc0800000000000000
+      internalID: -3478632383959766449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_82
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94f32863421222880800000000000000
+      internalID: -8637304695926145207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_83
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3beec31b753d7510800000000000000
+      internalID: 1548452649614895935
       vertices: []
       indices: 
       edges: []
