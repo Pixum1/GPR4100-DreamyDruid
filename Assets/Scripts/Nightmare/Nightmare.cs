@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class Nightmare : MonoBehaviour
 {
+    [Header("Nightmare Values")]
     private PlayerController playerController;
     Transform player;
     [SerializeField]
@@ -43,6 +44,12 @@ public class Nightmare : MonoBehaviour
     private float blackBarTime;
     [SerializeField]
     private GameObject animalGrid;
+    [SerializeField]
+    private Tilemap[] allTilemaps;
+    [SerializeField]
+    private Color nmColor;
+    [SerializeField]
+    private float colorChangeSpeed;
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
@@ -67,24 +74,33 @@ public class Nightmare : MonoBehaviour
 
     IEnumerator StartNightmare()
     {
-        playerController.pMovement.movementInput = false;
         crow.active = true;
         active = true;        
 
+        #region Cinematic Stuff
+        playerController.pMovement.movementInput = false;
         animalGrid.SetActive(false);
-        while(blackBars[0].rect.height < 100)
+        while (blackBars[0].rect.height < 100)
         {
             for (int i = 0; i < blackBars.Length; i++)
             {
-                blackBars[i].sizeDelta = new Vector2(blackBars[i].sizeDelta.x, blackBars[i].sizeDelta.y + Time.unscaledDeltaTime * blackBarTime);    
+                blackBars[i].sizeDelta = new Vector2(blackBars[i].sizeDelta.x, blackBars[i].sizeDelta.y + Time.unscaledDeltaTime * blackBarTime);
             }
             yield return null;
         }
-        yield return new WaitForSeconds(nightmareStartTime/3);
+        while (allTilemaps[0].color.g >= nmColor.g && allTilemaps[0].color.b >= nmColor.b)
+        {
+            for (int i = 0; i < allTilemaps.Length; i++)
+            {
+                allTilemaps[i].color = new Color(allTilemaps[i].color.r, allTilemaps[i].color.g - (Time.deltaTime * colorChangeSpeed), allTilemaps[i].color.b - (Time.deltaTime * colorChangeSpeed));
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(nightmareStartTime / 3);
         playerController.pAnimation.playerSprite.flipX = true;
-        yield return new WaitForSeconds(nightmareStartTime/3);
+        yield return new WaitForSeconds(nightmareStartTime / 3);
         playerController.pAnimation.playerSprite.flipX = false;
-        yield return new WaitForSeconds(nightmareStartTime/3);
+        yield return new WaitForSeconds(nightmareStartTime / 3);
 
         playerController.pMovement.movementInput = true;
         for (int j = 0; j < blackBars.Length; j++)
@@ -92,6 +108,8 @@ public class Nightmare : MonoBehaviour
             blackBars[j].sizeDelta = Vector2.zero;
         }
         animalGrid.SetActive(true);
+        #endregion
+
         StartCoroutine(GetSurroundingTiles(startPosition));
         //StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[(int)nightmareStartTime*2])));
     }
