@@ -254,6 +254,42 @@ TextureImporter:
   - first:
       213: 1548452649614895935
     second: drit_grass_83
+  - first:
+      213: -2945840467468101442
+    second: drit_grass_84
+  - first:
+      213: 4047539224132217164
+    second: drit_grass_85
+  - first:
+      213: 6675408431047343997
+    second: drit_grass_86
+  - first:
+      213: -8072060115705406222
+    second: drit_grass_87
+  - first:
+      213: 8868663266158964720
+    second: drit_grass_88
+  - first:
+      213: 6071630150394939533
+    second: drit_grass_89
+  - first:
+      213: 8587218767677285553
+    second: drit_grass_90
+  - first:
+      213: -5289142007651098448
+    second: drit_grass_91
+  - first:
+      213: 9167397819248174366
+    second: drit_grass_92
+  - first:
+      213: 1714932730909964817
+    second: drit_grass_93
+  - first:
+      213: 6960086225426679246
+    second: drit_grass_94
+  - first:
+      213: -8791467535740384075
+    second: drit_grass_95
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -359,7 +395,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 24
+        y: 112
         width: 8
         height: 8
       alignment: 0
@@ -380,7 +416,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 24
+        y: 112
         width: 8
         height: 8
       alignment: 0
@@ -401,7 +437,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 24
+        y: 112
         width: 8
         height: 8
       alignment: 0
@@ -422,7 +458,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 24
+        y: 112
         width: 8
         height: 8
       alignment: 0
@@ -442,8 +478,8 @@ TextureImporter:
       name: drit_grass_4
       rect:
         serializedVersion: 2
-        x: 80
-        y: 24
+        x: 0
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -463,8 +499,8 @@ TextureImporter:
       name: drit_grass_5
       rect:
         serializedVersion: 2
-        x: 88
-        y: 24
+        x: 8
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -484,8 +520,8 @@ TextureImporter:
       name: drit_grass_6
       rect:
         serializedVersion: 2
-        x: 96
-        y: 24
+        x: 16
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -505,8 +541,8 @@ TextureImporter:
       name: drit_grass_7
       rect:
         serializedVersion: 2
-        x: 104
-        y: 24
+        x: 24
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -526,8 +562,8 @@ TextureImporter:
       name: drit_grass_8
       rect:
         serializedVersion: 2
-        x: 144
-        y: 24
+        x: 32
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -547,8 +583,8 @@ TextureImporter:
       name: drit_grass_9
       rect:
         serializedVersion: 2
-        x: 152
-        y: 24
+        x: 40
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -568,8 +604,8 @@ TextureImporter:
       name: drit_grass_10
       rect:
         serializedVersion: 2
-        x: 160
-        y: 24
+        x: 48
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -589,8 +625,8 @@ TextureImporter:
       name: drit_grass_11
       rect:
         serializedVersion: 2
-        x: 168
-        y: 24
+        x: 56
+        y: 104
         width: 8
         height: 8
       alignment: 0
@@ -611,7 +647,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -632,7 +668,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -653,7 +689,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -674,7 +710,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -695,7 +731,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -716,7 +752,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -737,7 +773,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -758,7 +794,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 56
-        y: 16
+        y: 96
         width: 8
         height: 8
       alignment: 0
@@ -778,8 +814,8 @@ TextureImporter:
       name: drit_grass_20
       rect:
         serializedVersion: 2
-        x: 64
-        y: 16
+        x: 0
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -799,8 +835,8 @@ TextureImporter:
       name: drit_grass_21
       rect:
         serializedVersion: 2
-        x: 72
-        y: 16
+        x: 8
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -820,8 +856,8 @@ TextureImporter:
       name: drit_grass_22
       rect:
         serializedVersion: 2
-        x: 80
-        y: 16
+        x: 16
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -841,8 +877,8 @@ TextureImporter:
       name: drit_grass_23
       rect:
         serializedVersion: 2
-        x: 88
-        y: 16
+        x: 24
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -862,8 +898,8 @@ TextureImporter:
       name: drit_grass_24
       rect:
         serializedVersion: 2
-        x: 96
-        y: 16
+        x: 32
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -883,8 +919,8 @@ TextureImporter:
       name: drit_grass_25
       rect:
         serializedVersion: 2
-        x: 104
-        y: 16
+        x: 40
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -904,8 +940,8 @@ TextureImporter:
       name: drit_grass_26
       rect:
         serializedVersion: 2
-        x: 112
-        y: 16
+        x: 48
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -925,8 +961,8 @@ TextureImporter:
       name: drit_grass_27
       rect:
         serializedVersion: 2
-        x: 120
-        y: 16
+        x: 56
+        y: 88
         width: 8
         height: 8
       alignment: 0
@@ -946,8 +982,8 @@ TextureImporter:
       name: drit_grass_28
       rect:
         serializedVersion: 2
-        x: 128
-        y: 16
+        x: 16
+        y: 80
         width: 8
         height: 8
       alignment: 0
@@ -967,8 +1003,8 @@ TextureImporter:
       name: drit_grass_29
       rect:
         serializedVersion: 2
-        x: 136
-        y: 16
+        x: 24
+        y: 80
         width: 8
         height: 8
       alignment: 0
@@ -988,8 +1024,8 @@ TextureImporter:
       name: drit_grass_30
       rect:
         serializedVersion: 2
-        x: 144
-        y: 16
+        x: 32
+        y: 80
         width: 8
         height: 8
       alignment: 0
@@ -1009,8 +1045,8 @@ TextureImporter:
       name: drit_grass_31
       rect:
         serializedVersion: 2
-        x: 152
-        y: 16
+        x: 40
+        y: 80
         width: 8
         height: 8
       alignment: 0
@@ -1030,8 +1066,8 @@ TextureImporter:
       name: drit_grass_32
       rect:
         serializedVersion: 2
-        x: 160
-        y: 16
+        x: 16
+        y: 72
         width: 8
         height: 8
       alignment: 0
@@ -1051,8 +1087,8 @@ TextureImporter:
       name: drit_grass_33
       rect:
         serializedVersion: 2
-        x: 168
-        y: 16
+        x: 24
+        y: 72
         width: 8
         height: 8
       alignment: 0
@@ -1072,8 +1108,8 @@ TextureImporter:
       name: drit_grass_34
       rect:
         serializedVersion: 2
-        x: 176
-        y: 16
+        x: 32
+        y: 72
         width: 8
         height: 8
       alignment: 0
@@ -1093,8 +1129,8 @@ TextureImporter:
       name: drit_grass_35
       rect:
         serializedVersion: 2
-        x: 184
-        y: 16
+        x: 40
+        y: 72
         width: 8
         height: 8
       alignment: 0
@@ -1115,7 +1151,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1136,7 +1172,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1157,7 +1193,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1178,7 +1214,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 24
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1199,7 +1235,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1220,7 +1256,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1241,7 +1277,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1262,7 +1298,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 56
-        y: 8
+        y: 64
         width: 8
         height: 8
       alignment: 0
@@ -1282,8 +1318,8 @@ TextureImporter:
       name: drit_grass_44
       rect:
         serializedVersion: 2
-        x: 64
-        y: 8
+        x: 0
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1303,8 +1339,8 @@ TextureImporter:
       name: drit_grass_45
       rect:
         serializedVersion: 2
-        x: 72
-        y: 8
+        x: 8
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1324,8 +1360,8 @@ TextureImporter:
       name: drit_grass_46
       rect:
         serializedVersion: 2
-        x: 80
-        y: 8
+        x: 16
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1345,8 +1381,8 @@ TextureImporter:
       name: drit_grass_47
       rect:
         serializedVersion: 2
-        x: 88
-        y: 8
+        x: 24
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1366,8 +1402,8 @@ TextureImporter:
       name: drit_grass_48
       rect:
         serializedVersion: 2
-        x: 96
-        y: 8
+        x: 32
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1387,8 +1423,8 @@ TextureImporter:
       name: drit_grass_49
       rect:
         serializedVersion: 2
-        x: 104
-        y: 8
+        x: 40
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1408,8 +1444,8 @@ TextureImporter:
       name: drit_grass_50
       rect:
         serializedVersion: 2
-        x: 112
-        y: 8
+        x: 48
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1429,8 +1465,8 @@ TextureImporter:
       name: drit_grass_51
       rect:
         serializedVersion: 2
-        x: 120
-        y: 8
+        x: 56
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -1450,8 +1486,8 @@ TextureImporter:
       name: drit_grass_52
       rect:
         serializedVersion: 2
-        x: 128
-        y: 8
+        x: 0
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1471,8 +1507,8 @@ TextureImporter:
       name: drit_grass_53
       rect:
         serializedVersion: 2
-        x: 136
-        y: 8
+        x: 8
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1492,8 +1528,8 @@ TextureImporter:
       name: drit_grass_54
       rect:
         serializedVersion: 2
-        x: 144
-        y: 8
+        x: 16
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1513,8 +1549,8 @@ TextureImporter:
       name: drit_grass_55
       rect:
         serializedVersion: 2
-        x: 152
-        y: 8
+        x: 24
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1534,8 +1570,8 @@ TextureImporter:
       name: drit_grass_56
       rect:
         serializedVersion: 2
-        x: 160
-        y: 8
+        x: 32
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1555,8 +1591,8 @@ TextureImporter:
       name: drit_grass_57
       rect:
         serializedVersion: 2
-        x: 168
-        y: 8
+        x: 40
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1576,8 +1612,8 @@ TextureImporter:
       name: drit_grass_58
       rect:
         serializedVersion: 2
-        x: 176
-        y: 8
+        x: 48
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1597,8 +1633,8 @@ TextureImporter:
       name: drit_grass_59
       rect:
         serializedVersion: 2
-        x: 184
-        y: 8
+        x: 56
+        y: 48
         width: 8
         height: 8
       alignment: 0
@@ -1618,8 +1654,8 @@ TextureImporter:
       name: drit_grass_60
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 16
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -1639,8 +1675,8 @@ TextureImporter:
       name: drit_grass_61
       rect:
         serializedVersion: 2
-        x: 8
-        y: 0
+        x: 24
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -1660,8 +1696,8 @@ TextureImporter:
       name: drit_grass_62
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
+        x: 32
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -1681,8 +1717,8 @@ TextureImporter:
       name: drit_grass_63
       rect:
         serializedVersion: 2
-        x: 24
-        y: 0
+        x: 40
+        y: 40
         width: 8
         height: 8
       alignment: 0
@@ -1702,8 +1738,8 @@ TextureImporter:
       name: drit_grass_64
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 16
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -1723,8 +1759,8 @@ TextureImporter:
       name: drit_grass_65
       rect:
         serializedVersion: 2
-        x: 40
-        y: 0
+        x: 24
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -1744,8 +1780,8 @@ TextureImporter:
       name: drit_grass_66
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
+        x: 32
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -1765,8 +1801,8 @@ TextureImporter:
       name: drit_grass_67
       rect:
         serializedVersion: 2
-        x: 56
-        y: 0
+        x: 40
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -1786,8 +1822,8 @@ TextureImporter:
       name: drit_grass_68
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 0
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1807,8 +1843,8 @@ TextureImporter:
       name: drit_grass_69
       rect:
         serializedVersion: 2
-        x: 72
-        y: 0
+        x: 8
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1828,8 +1864,8 @@ TextureImporter:
       name: drit_grass_70
       rect:
         serializedVersion: 2
-        x: 80
-        y: 0
+        x: 16
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1849,8 +1885,8 @@ TextureImporter:
       name: drit_grass_71
       rect:
         serializedVersion: 2
-        x: 88
-        y: 0
+        x: 24
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1870,8 +1906,8 @@ TextureImporter:
       name: drit_grass_72
       rect:
         serializedVersion: 2
-        x: 96
-        y: 0
+        x: 32
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1891,8 +1927,8 @@ TextureImporter:
       name: drit_grass_73
       rect:
         serializedVersion: 2
-        x: 104
-        y: 0
+        x: 40
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1912,8 +1948,8 @@ TextureImporter:
       name: drit_grass_74
       rect:
         serializedVersion: 2
-        x: 112
-        y: 0
+        x: 48
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1933,8 +1969,8 @@ TextureImporter:
       name: drit_grass_75
       rect:
         serializedVersion: 2
-        x: 120
-        y: 0
+        x: 56
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -1954,8 +1990,8 @@ TextureImporter:
       name: drit_grass_76
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
+        x: 0
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -1975,8 +2011,8 @@ TextureImporter:
       name: drit_grass_77
       rect:
         serializedVersion: 2
-        x: 136
-        y: 0
+        x: 8
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -1996,8 +2032,8 @@ TextureImporter:
       name: drit_grass_78
       rect:
         serializedVersion: 2
-        x: 144
-        y: 0
+        x: 16
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -2017,8 +2053,8 @@ TextureImporter:
       name: drit_grass_79
       rect:
         serializedVersion: 2
-        x: 152
-        y: 0
+        x: 24
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -2038,8 +2074,8 @@ TextureImporter:
       name: drit_grass_80
       rect:
         serializedVersion: 2
-        x: 160
-        y: 0
+        x: 32
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -2059,8 +2095,8 @@ TextureImporter:
       name: drit_grass_81
       rect:
         serializedVersion: 2
-        x: 168
-        y: 0
+        x: 40
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -2080,8 +2116,8 @@ TextureImporter:
       name: drit_grass_82
       rect:
         serializedVersion: 2
-        x: 176
-        y: 0
+        x: 48
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -2101,8 +2137,8 @@ TextureImporter:
       name: drit_grass_83
       rect:
         serializedVersion: 2
-        x: 184
-        y: 0
+        x: 56
+        y: 16
         width: 8
         height: 8
       alignment: 0
@@ -2114,6 +2150,258 @@ TextureImporter:
       bones: []
       spriteID: f3beec31b753d7510800000000000000
       internalID: 1548452649614895935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_84
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb8d79bd3b54e17d0800000000000000
+      internalID: -2945840467468101442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_85
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c496cd4ca7fbb2830800000000000000
+      internalID: 4047539224132217164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_86
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f7937a990d3ac50800000000000000
+      internalID: 6675408431047343997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_87
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fcd7c5a7184aff80800000000000000
+      internalID: -8072060115705406222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_88
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ffe5fb9042d31b70800000000000000
+      internalID: 8868663266158964720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_89
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8887d1f373c24450800000000000000
+      internalID: 6071630150394939533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_90
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b4e8ffd8fdeb2770800000000000000
+      internalID: 8587218767677285553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_91
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b02c5bfd513996b0800000000000000
+      internalID: -5289142007651098448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_92
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e156af2eeb3293f70800000000000000
+      internalID: 9167397819248174366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_93
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11a349f8b3aacc710800000000000000
+      internalID: 1714932730909964817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_94
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec585a0cb81379060800000000000000
+      internalID: 6960086225426679246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: drit_grass_95
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bcc0ddfade6ef580800000000000000
+      internalID: -8791467535740384075
       vertices: []
       indices: 
       edges: []
