@@ -99,6 +99,18 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: UI_Button_Keyboard_3
     m_HashCode: 1956300683
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 4
+    m_Scale: 1
+    m_Name: UI_Button_Keyboard_4
+    m_HashCode: 1956300684
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 5
+    m_Scale: 1
+    m_Name: UI_Button_Keyboard_9
+    m_HashCode: 1956300673
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -109,7 +121,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 27
     m_GlyphRect:
       m_X: 0
-      m_Y: 36
+      m_Y: 72
       m_Width: 27
       m_Height: 11
     m_Scale: 1.5
@@ -124,7 +136,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 17
     m_GlyphRect:
       m_X: 0
-      m_Y: 24
+      m_Y: 60
       m_Width: 17
       m_Height: 11
     m_Scale: 1.5
@@ -139,7 +151,7 @@ MonoBehaviour:
       m_HorizontalAdvance: 25
     m_GlyphRect:
       m_X: 0
-      m_Y: 12
+      m_Y: 48
       m_Width: 25
       m_Height: 11
     m_Scale: 1.5
@@ -154,11 +166,41 @@ MonoBehaviour:
       m_HorizontalAdvance: 11
     m_GlyphRect:
       m_X: 0
-      m_Y: 0
+      m_Y: 36
       m_Width: 11
       m_Height: 11
     m_Scale: 1.5
     m_AtlasIndex: 0
     sprite: {fileID: -712290592680595544, guid: 21a9ee02acf4aba4a97feae155e8629c, type: 3}
+  - m_Index: 4
+    m_Metrics:
+      m_Width: 23
+      m_Height: 11
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 7
+      m_HorizontalAdvance: 23
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 24
+      m_Width: 23
+      m_Height: 11
+    m_Scale: 1.5
+    m_AtlasIndex: 0
+    sprite: {fileID: -3647544356251326036, guid: 21a9ee02acf4aba4a97feae155e8629c, type: 3}
+  - m_Index: 5
+    m_Metrics:
+      m_Width: 35
+      m_Height: 23
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 16
+      m_HorizontalAdvance: 35
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 35
+      m_Height: 23
+    m_Scale: 2
+    m_AtlasIndex: 0
+    sprite: {fileID: 2161072220966002784, guid: 21a9ee02acf4aba4a97feae155e8629c, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
