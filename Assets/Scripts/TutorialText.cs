@@ -144,7 +144,7 @@ public class TutorialTextEditor : Editor
         index = EditorGUILayout.IntField("Sprite Asset Index: ", index);
         if (GUILayout.Button("Add Keyword"))
         {
-            if (keyword != null)
+            if (keyword != null && !text.keywordIndex.Contains(index))
             {
                 text.keywords.Add(keyword);
                 text.keywordIndex.Add(index);

@@ -84,9 +84,11 @@ MonoBehaviour:
   - <pause>
   - <ability>
   - <reset>
-  keywordIndex: 00000000010000000200000003000000
+  - <move>
+  - <evolve>
+  keywordIndex: 000000000100000002000000030000000400000005000000
   inputMethod: Controller
-  tutorialText: Press <jump> to jump
+  tutorialText: Use <move> to move around
   trigger: {fileID: 4747272778379666901}
   playerLayer:
     serializedVersion: 2
@@ -256,7 +258,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press <sprite=0> to jump
+  m_text: Use <sprite=4> to move around
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bcaba731468dc7a44959ce930d8000db, type: 2}
   m_sharedMaterial: {fileID: 9166916363493242822, guid: bcaba731468dc7a44959ce930d8000db, type: 2}
