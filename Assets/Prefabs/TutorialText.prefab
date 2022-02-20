@@ -39,8 +39,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4747272778674920862}
+  - component: {fileID: 3856877680364322078}
   m_Layer: 0
-  m_Name: Tutorial
+  m_Name: TutorialText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,6 +63,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3856877680364322078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747272778674920863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed8c4de922edcf46929ec82230f07ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprites: {fileID: 11400000, guid: 8768da1ae5f7c844d93d690d71acb528, type: 2}
+  controllerSprites: {fileID: 11400000, guid: 17e0dfa56778c3e4e9c2c949c740041a, type: 2}
+  currentSpriteAsset: {fileID: 11400000, guid: 17e0dfa56778c3e4e9c2c949c740041a, type: 2}
+  textField: {fileID: 4747272779621267143}
+  keywords:
+  - <jump>
+  - <pause>
+  - <ability>
+  - <reset>
+  keywordIndex: 00000000010000000200000003000000
+  inputMethod: Controller
+  tutorialText: Press <jump> to jump
+  trigger: {fileID: 4747272778379666901}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &4747272779090102615
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,7 +103,6 @@ GameObject:
   - component: {fileID: 4747272779090102603}
   - component: {fileID: 4747272779090102600}
   - component: {fileID: 4747272779090102601}
-  - component: {fileID: 4747272779090102602}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -163,25 +191,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4747272779090102602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4747272779090102615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fed8c4de922edcf46929ec82230f07ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textField: {fileID: 4747272779621267143}
-  inputMethod: Keyboard
-  tutorialText: Press <jump> to jump
-  trigger: {fileID: 4747272778379666901}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &4747272779621267141
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +275,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 11400000, guid: ccb2d59a00579bf4ba33861f2fa4d7f4, type: 2}
+  m_spriteAsset: {fileID: 11400000, guid: 17e0dfa56778c3e4e9c2c949c740041a, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
