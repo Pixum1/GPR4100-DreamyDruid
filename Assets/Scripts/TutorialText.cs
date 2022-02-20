@@ -8,17 +8,14 @@ using UnityEditor;
 public class TutorialText : MonoBehaviour
 {
     [Header("TextInput")]
+    public TMP_SpriteAsset keyboardSprites;
+    public TMP_SpriteAsset controllerSprites;
+    [HideInInspector] public TMP_SpriteAsset currentSpriteAsset;
     [SerializeField]
     private TMP_Text textField;
 
-    public const string CONTROLLER_ABILITY_BUTTON = "<sprite=3>";
-    public const string KEYBOARD_ABILITY_BUTTON = "<sprite=2>";
-    public const string CONTROLLER_JUMP_BUTTON = "<sprite=6>";
-    public const string KEYBOARD_JUMP_BUTTON = "<sprite=0>";
-    public const string CONTROLLER_RESET_BUTTON = "<sprite=7>";
-    public const string KEYBOARD_RESET_BUTTON = "<sprite=8>";
-    public const string CONTROLLER_PAUSE_BUTTON = "<sprite=5>";
-    public const string KEYBOARD_PAUSE_BUTTON = "<sprite=1>";
+    public List<string> keywords;
+    [HideInInspector] public List<int> keywordIndex;
 
     private const string controller = "Controller";
     private const string keyboard = "Keyboard";
@@ -32,10 +29,20 @@ public class TutorialText : MonoBehaviour
     private LayerMask playerLayer;
     private bool triggered = false;
 
+    private void Awake()
+    {
+        if (keywords == null)
+            keywords = new List<string>();
+        if (keywordIndex == null)
+            keywordIndex = new List<int>();
+    }
+
     private void Start()
     {
-        GetComponent<Canvas>().worldCamera = Camera.main;
+        GetComponentInChildren<Canvas>().worldCamera = Camera.main;
         textField.color = new Color(textField.color.r, textField.color.g, textField.color.b, 0);
+        textField.spriteAsset = currentSpriteAsset;
+
     }
 
     private void Update()
@@ -52,9 +59,15 @@ public class TutorialText : MonoBehaviour
         {
             StopCoroutine(FadeText());
             inputMethod = "Keyboard";
-            if(textField.color.a > 0)
+            if (textField.color.a > 0)
                 StartCoroutine(FadeText());
         }
+
+        if (inputMethod == controller)
+            currentSpriteAsset = controllerSprites;
+        else if (inputMethod == keyboard)
+            currentSpriteAsset = keyboardSprites;
+
         #endregion
 
         if (Physics2D.OverlapBox(trigger.transform.position, trigger.transform.localScale, 0, playerLayer) && !triggered)
@@ -66,53 +79,22 @@ public class TutorialText : MonoBehaviour
 
     public void UpdateText()
     {
+        textField.spriteAsset = currentSpriteAsset;
         string tempText = tutorialText;
-
-        if(inputMethod == controller)
+        for (int i = 0; i < keywords.Count; i++)
         {
-            if (tutorialText.Contains("<ability>"))
+            if (tutorialText.Contains(keywords[i]))
             {
-                textField.text = tempText.Replace("<ability>", CONTROLLER_ABILITY_BUTTON);
-            }
-            if (tutorialText.Contains("<jump>"))
-            {
-                textField.text = tempText.Replace("<jump>", CONTROLLER_JUMP_BUTTON);
-            }
-            if (tutorialText.Contains("<reset>"))
-            {
-                textField.text = tempText.Replace("<reset>", CONTROLLER_RESET_BUTTON);
-            }
-            if (tutorialText.Contains("<pause>"))
-            {
-                textField.text = tempText.Replace("<pause>", CONTROLLER_PAUSE_BUTTON);
+                tempText = tempText.Replace(keywords[i], $"<sprite={keywordIndex[i]}>");
             }
         }
-        else if(inputMethod == keyboard)
-        {
-            if (tutorialText.Contains("<ability>"))
-            {
-                textField.text = tempText.Replace("<ability>", KEYBOARD_ABILITY_BUTTON);
-            }
-            if (tutorialText.Contains("<jump>"))
-            {
-                textField.text = tempText.Replace("<jump>", KEYBOARD_JUMP_BUTTON);
-            }
-            if (tutorialText.Contains("<reset>"))
-            {
-                textField.text = tempText.Replace("<reset>", KEYBOARD_RESET_BUTTON);
-            }
-            if (tutorialText.Contains("<pause>"))
-            {
-
-                textField.text = tempText.Replace("<pause>", KEYBOARD_PAUSE_BUTTON);
-            }
-        }
+        textField.text = tempText;
     }
 
     private IEnumerator TriggerText()
     {
         triggered = true;
-        while(textField.color.a < 1)
+        while (textField.color.a < 1)
         {
             textField.color = new Color(textField.color.r, textField.color.g, textField.color.b, textField.color.a + Time.deltaTime * 2f);
             yield return null;
@@ -125,7 +107,7 @@ public class TutorialText : MonoBehaviour
             textField.color = new Color(textField.color.r, textField.color.g, textField.color.b, textField.color.a - Time.deltaTime * 4f);
             yield return null;
         }
-        UpdateText();
+        textField.spriteAsset = currentSpriteAsset;
         while (textField.color.a < 1)
         {
             textField.color = new Color(textField.color.r, textField.color.g, textField.color.b, textField.color.a + Time.deltaTime * 4f);
@@ -141,9 +123,14 @@ public class TutorialText : MonoBehaviour
 }
 
 [CustomEditor(typeof(TutorialText))]
-public class TutorialTextEditor: Editor
+public class TutorialTextEditor : Editor
 {
     int selected = 0;
+
+    [SerializeField]
+    private string keyword;
+    [SerializeField]
+    private int index;
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -151,6 +138,22 @@ public class TutorialTextEditor: Editor
         GUILayout.Label("Preview Settings");
         TutorialText text = (TutorialText)target;
 
+        GUILayout.BeginVertical();
+
+        keyword = EditorGUILayout.TextField("Keyword: ",keyword);
+        index = EditorGUILayout.IntField("Sprite Asset Index: ", index);
+        if (GUILayout.Button("Add Keyword"))
+        {
+            if (keyword != null)
+            {
+                text.keywords.Add(keyword);
+                text.keywordIndex.Add(index);
+            }
+        }
+
+        GUILayout.EndVertical();
+
+        GUILayout.Space(20f);
         string[] options = new string[]
         {
             "Controller", "Keyboard",
@@ -158,13 +161,24 @@ public class TutorialTextEditor: Editor
         selected = EditorGUILayout.Popup("Preview Input Methods", selected, options);
 
         if (selected == 0)
+        {
             text.inputMethod = "Controller";
+            text.currentSpriteAsset = text.controllerSprites;
+        }
         else if (selected == 1)
+        {
             text.inputMethod = "Keyboard";
+            text.currentSpriteAsset = text.keyboardSprites;
+        }
 
         if (GUILayout.Button("Show Text"))
         {
             text.UpdateText();
+        }
+
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(target);
         }
     }
 }
