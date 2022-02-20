@@ -2,69 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grappling : MonoBehaviour {
+public class Grappling : MonoBehaviour
+{
 
     private Rigidbody2D rb;
     [SerializeField]
     private float dragValue;
-
     [SerializeField]
     private LayerMask grappable;
-    
     private LineRenderer lr;
-
     private Vector3 mousePos;
-
+    [SerializeField]
+    SpriteRenderer playerSprite;
     [SerializeField]
     private Material ropeMaterial;
-
     [SerializeField]
     private Color ropeColor;
-
     [SerializeField]
     private float maxDistance = 50f;
-
     [SerializeField]
     private float ropeSegmentLength = 0.25f;
-
     [SerializeField]
     private float initialDrawDelay = 0.2f;
-
     [SerializeField]
     private float ropeWidth = 0.2f;
-
-    public bool m_IsGrappling {
-        get {
+    public bool m_IsGrappling
+    {
+        get
+        {
             return this.isActiveAndEnabled && grapplingAnchor != null;
         }
     }
 
-    private List<RopeSegment> ropeSegments = new List<RopeSegment>();   
-
+    private List<RopeSegment> ropeSegments = new List<RopeSegment>();
     private DistanceJoint2D distJoint;
     private SpringJoint2D springJoint;
-
     private GameObject grapplingAnchor;
     private GameObject playerAnchor;
-
     private int segmentAmount;
-
     private bool isGrappling;
-
     private float drawDelay;
-
-    private void Awake() {
+    bool isAddingMomentum;
+    private void Awake()
+    {
         drawDelay = initialDrawDelay;
         rb = GetComponent<Rigidbody2D>();
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (isAddingMomentum)
+        {
+            AddMomentum();
+        }
+
+        if (Input.GetButtonDown("Ability"))
         {
             CaptureMousePosition();
             StartGrapple();
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetButtonUp("Ability"))
         {
             StopGrapple();
         }
@@ -117,13 +113,13 @@ public class Grappling : MonoBehaviour {
             StopGrapple();
         }
         RaycastHit2D hit = Physics2D.Raycast(origin: transform.position, direction: mousePos - transform.position, maxDistance, grappable);
-        if (hit) 
+        if (hit)
         {
             rb.drag = dragValue; //adjust drag
             //rb.AddForce(Vector2.right * Mathf.Clamp(rb.velocity.x, -1 * 10f, 1 * 10f) * 5, ForceMode2D.Impulse); <- Kümmer sich lars drum
 
             lr = gameObject.AddComponent<LineRenderer>();
-            segmentAmount = Mathf.RoundToInt(hit.distance / (ropeSegmentLength+ropeSegmentLength*0.15f));
+            segmentAmount = Mathf.RoundToInt(hit.distance / (ropeSegmentLength + ropeSegmentLength * 0.15f));
             grapplingAnchor = new GameObject("GrapplingAnchor");
             playerAnchor = new GameObject("PlayerAnchor");
             CreateRope();
@@ -148,6 +144,23 @@ public class Grappling : MonoBehaviour {
             springJoint.distance = 0f;
             springJoint.frequency = 5f;
             springJoint.dampingRatio = 1f;
+            StartCoroutine("AddMomentumIE");
+        }
+    }
+    IEnumerator AddMomentumIE()
+    {
+        isAddingMomentum = true;
+        yield return new WaitForSeconds(0.5f);
+        isAddingMomentum = false;
+    }
+    void AddMomentum()
+    {
+        if (grapplingAnchor != null)
+        {
+            float playerAnchorDistX = grapplingAnchor.transform.position.x - transform.position.x;
+            float playerAnchorDistY = grapplingAnchor.transform.position.y - transform.position.y;
+            float f = .1f;
+            rb.AddForce(new Vector2(Mathf.Clamp(f * playerAnchorDistX, -maxDistance, maxDistance), -Mathf.Clamp(f * playerAnchorDistY, -maxDistance * .25f, maxDistance * .25f)), ForceMode2D.Impulse);
         }
     }
     private void CreateRope()
@@ -162,9 +175,9 @@ public class Grappling : MonoBehaviour {
     }
     private void SimulateRope()
     {
-        Vector2 forceGravity = new Vector2(0f, -1f);
+        Vector2 forceGravity = new Vector2(0f, -0.5f);
 
-        RopeSegment lastSegment = ropeSegments[segmentAmount-1];
+        RopeSegment lastSegment = ropeSegments[segmentAmount - 1];
 
         lastSegment.posNow = transform.position;
         lastSegment.posOld = lastSegment.posNow;
@@ -194,7 +207,7 @@ public class Grappling : MonoBehaviour {
         lastSegment.posNow = playerAnchor.transform.position;
         ropeSegments[segmentAmount - 1] = lastSegment;
 
-        for (int i = 0; i < segmentAmount-1; i++)
+        for (int i = 0; i < segmentAmount - 1; i++)
         {
             RopeSegment firstSeg = ropeSegments[i];
             RopeSegment secondSeg = ropeSegments[i + 1];
@@ -207,9 +220,9 @@ public class Grappling : MonoBehaviour {
 
             if (i != 0)
             {
-                firstSeg.posNow -= changeAmount * 0.5f;
+                firstSeg.posNow -= changeAmount * 0.75f;
                 ropeSegments[i] = firstSeg;
-                secondSeg.posNow += changeAmount * 0.5f;
+                secondSeg.posNow += changeAmount * 0.75f;
                 ropeSegments[i + 1] = secondSeg;
             }
             else

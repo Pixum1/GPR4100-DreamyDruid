@@ -54,23 +54,18 @@ public class CameraManager : MonoBehaviour
     }
     private void Update() {
         GetCurrentZone();
-        if(previousZone == null) {
-            ResetCameraPos();
-        }
+        //if (previousZone == null) {
+        //    ResetCameraPos();
+        //}
 
         if (currentZone != previousZone) {
             SetCameraPosition(); //set camera position if the current zone has been switched (saves performance)
         }
 
-        if (cameraWidth < currentZone.col.bounds.size.x) {
-            if (CheckCameraBounds(currentZone)) {
-                ///INSERT IF STATEMENT --> if player is outside of deadzone
-                if (!rect.Contains(objectToFollow.position)) {
-                    //cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, cam.transform.position.z);
-                    CameraMoveByRect();
-                    AdjustCamEdge(currentZone);
-                }
-            }
+        if (!rect.Contains(objectToFollow.position) && Time.timeScale > 0f) {
+            //cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, cam.transform.position.z);
+            CameraMoveByRect();
+            AdjustCamEdge(currentZone);
         }
         RecalculateBounds();
     }
@@ -138,18 +133,6 @@ public class CameraManager : MonoBehaviour
 
         distTop = rect.yMax - objectToFollow.position.y;//-
         distBot = rect.yMin - objectToFollow.position.y;//+
-    }
-
-    /// <summary>
-    /// Returns true if every corner of the camera is within a given "CameraZone"
-    /// </summary>
-    /// <param name="_zone"></param>
-    /// <returns></returns>
-    private bool CheckCameraBounds(CameraZone _zone) {
-        return _zone.col.bounds.Contains(GetCameraBounds()[0]) &&
-               _zone.col.bounds.Contains(GetCameraBounds()[1]) &&
-               _zone.col.bounds.Contains(GetCameraBounds()[2]) &&
-               _zone.col.bounds.Contains(GetCameraBounds()[3]);
     }
 
     /// <summary>
@@ -231,7 +214,7 @@ public class CameraManager : MonoBehaviour
         Time.timeScale = 0f;
         AdjustCamSize();
 
-        cam.transform.position = Vector3.MoveTowards(cam.transform.position, CalculateNewPosition(), camSwitchSpeed * 0.02f);
+        cam.transform.position = Vector3.MoveTowards(cam.transform.position, CalculateNewPosition(), camSwitchSpeed * Time.fixedUnscaledDeltaTime);
 
         if (Vector3.Distance(cam.transform.position, CalculateNewPosition()) < 0.25f) {
             previousZone = currentZone;
@@ -250,36 +233,38 @@ public class CameraManager : MonoBehaviour
         sideX = Vector3.zero;
         sideY = new Vector3(0, objectToFollow.position.y, 0);
 
-        //if the player moves into the zone from its RIGHT side
-        if (objectToFollow.position.x > currentZone.col.bounds.center.x) {
-            sideX = currentZone.col.bounds.max - new Vector3(cameraWidth / 2, 0, 0);
-        }
+        if(currentZone != null) {
+            //if the player moves into the zone from its RIGHT side
+            if (objectToFollow.position.x > currentZone.col.bounds.center.x) {
+                sideX = currentZone.col.bounds.max - new Vector3(cameraWidth / 2, 0, 0);
+            }
 
-        //if the player moves into the zone from its LEFT side
-        else if (objectToFollow.position.x < currentZone.col.bounds.center.x){
-            sideX = currentZone.col.bounds.min + new Vector3(cameraWidth / 2, 0, 0);
-        }
+            //if the player moves into the zone from its LEFT side
+            else if (objectToFollow.position.x < currentZone.col.bounds.center.x) {
+                sideX = currentZone.col.bounds.min + new Vector3(cameraWidth / 2, 0, 0);
+            }
 
-        //if the player moves into the LOWER PART OF THE ZONE
-        if (distanceToBottom < currentZone.col.bounds.min.y) {
-            sideY = currentZone.col.bounds.min + new Vector3(0, cameraHeight / 2, 0);
-        }
+            //if the player moves into the LOWER PART OF THE ZONE
+            if (distanceToBottom < currentZone.col.bounds.min.y) {
+                sideY = currentZone.col.bounds.min + new Vector3(0, cameraHeight / 2, 0);
+            }
 
-        //if the player moves into the UPPER PART OF THE ZONE
-        else if (distanceToTop > currentZone.col.bounds.max.y) {
-            sideY = currentZone.col.bounds.max - new Vector3(0, cameraHeight / 2, 0);
+            //if the player moves into the UPPER PART OF THE ZONE
+            else if (distanceToTop > currentZone.col.bounds.max.y) {
+                sideY = currentZone.col.bounds.max - new Vector3(0, cameraHeight / 2, 0);
+            }
         }
+        
 
         newPos = new Vector3(sideX.x, sideY.y, cam.transform.position.z);
         return newPos;
     }
 
     public void ResetCameraPos() {
-        previousZone = currentZone;
-        cam.transform.position = new Vector3(objectToFollow.position.x, objectToFollow.position.y, cam.transform.position.z);
-        AdjustCamSize();
-        AdjustCamEdge(currentZone);
-        Time.timeScale = 1f;
+        currentZone = null;
+        previousZone = null;
+        GetCurrentZone();
+        cam.transform.position = CalculateNewPosition();
     }
 
     /// <summary>

@@ -2,45 +2,83 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MovementSelector : MonoBehaviour
 {
     Behaviour currentScript;
     [SerializeField]
-    Image[] scriptIcons; //0 = Owl, 1 = Frog, 2 = Armadillo, 3 = Human
-    Image currentScriptIcon;
+    Image[] selectIcons; //0 = Owl, 1 = Frog, 2 = Armadillo, 3 = Human
+    [SerializeField]
+    private ParticleSystem evolveParticles;
+    private bool isBear;
 
-    private void Awake() {
-        currentScriptIcon = scriptIcons[3]; //Human
-    }
-    private void Update()
-    {
-        foreach(Image icon in scriptIcons) {
-            if (icon != currentScriptIcon) { 
-                icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, .5f);
+    private bool frogAccess;
+    private bool armadilloAccess;
+    private bool owlAccess;
+
+    [SerializeField]
+    private Image[] accessImg;
+
+    private void Start() {
+        if(currentScript != null) {
+            if (GetComponent<Gliding>().isActiveAndEnabled) {
+                ActivateSelectionIcon(selectIcons[0]);
+            }
+            else if (GetComponent<Grappling>().isActiveAndEnabled) {
+                ActivateSelectionIcon(selectIcons[1]);
+            }
+            else if (GetComponent<Rolling>().isActiveAndEnabled) {
+                ActivateSelectionIcon(selectIcons[2]);
             }
             else {
-                icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 1f);
+
+                ActivateSelectionIcon(selectIcons[3]);
+            }
+        }
+        else {
+            ActivateSelectionIcon(selectIcons[3]);
+        }
+    }
+
+    private void Update()
+    {
+        for(int i = 0; i < accessImg.Length; i++)
+        {
+            if(SceneManager.GetActiveScene().buildIndex - 1 > i)
+            {
+                accessImg[i].enabled = false;
+            }
+            else
+            {
+                accessImg[i].enabled = true;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxisRaw("Evolve Vertical") == 1f) && !accessImg[2].enabled) {
             SwitchScript(GetComponent<Gliding>());
-            currentScriptIcon = scriptIcons[0]; //Owl
+            ActivateSelectionIcon(selectIcons[0]);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxisRaw("Evolve Horizontal") == -1f) && !accessImg[0].enabled) {
             SwitchScript(GetComponent<Grappling>());
-            currentScriptIcon = scriptIcons[1]; //Frog
+            ActivateSelectionIcon(selectIcons[1]);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxisRaw("Evolve Vertical") == -1f) && !accessImg[1].enabled) {
             SwitchScript(GetComponent<Rolling>());
-            currentScriptIcon = scriptIcons[2]; //Armadillo
+            ActivateSelectionIcon(selectIcons[2]);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxisRaw("Evolve Horizontal") == 1f) {
             SwitchToHuman();
-            currentScriptIcon = scriptIcons[3]; //Human
+            ActivateSelectionIcon(selectIcons[3]);
         }
+    }
+
+    private void ActivateSelectionIcon(Image _selectIcon) {
+        for (int i = 0; i < selectIcons.Length; i++) {
+            selectIcons[i].enabled = false;
+        }
+        _selectIcon.enabled = true;
     }
 
     void SwitchScript(Behaviour _script)
@@ -48,10 +86,22 @@ public class MovementSelector : MonoBehaviour
         if(currentScript != null)
             currentScript.enabled = false;
 
+        if (currentScript != _script)
+            evolveParticles.Play();
+
+        isBear = false;
         _script.enabled = true;
         currentScript = _script;
+
     }    
     private void SwitchToHuman() {
-        currentScript.enabled = false;
+        if(currentScript != null)
+            currentScript.enabled = false;
+
+        if (!isBear)
+            evolveParticles.Play();
+
+        currentScript = null;
+        isBear = true;
     }
 }

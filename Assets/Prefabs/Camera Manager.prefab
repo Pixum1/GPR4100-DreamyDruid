@@ -60,4 +60,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d1b94d7e65e0384dad29127e03c8671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zonePrefab: {fileID: 2411936333085112610, guid: df2359fbad6e1ff42b5af6d7092957f1, type: 3}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64

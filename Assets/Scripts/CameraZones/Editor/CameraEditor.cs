@@ -10,8 +10,8 @@ public class CameraEditor : Editor
         ZoneManager zone = (ZoneManager)target;
 
         if(GUILayout.Button("Create new zone")) {
-            CameraZone newZone = zone.CreateZone();
-            Selection.activeGameObject = newZone.gameObject; //Select the new Zone in hierarchy
+            GameObject newZone = zone.CreateZone();
+            Selection.activeGameObject = newZone; //Select the new Zone in hierarchy
         }
     }
 }

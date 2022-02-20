@@ -6,20 +6,21 @@ public class Rolling : MonoBehaviour
 {
     [SerializeField]
     PhysicsMaterial2D physicsMaterial;
-
     [SerializeField]
-    float speed;    
-
+    float speed;
     [SerializeField]
-    float maxAngularVel = 300;
-    private bool canRoll {
-        get {
-            return Input.GetAxis("Horizontal") != 0;
-        }
-    }
-    public bool m_IsRolling {
-        get {
-            return this.isActiveAndEnabled && canRoll;
+    float duration;
+    [SerializeField]
+    float cooldown = 3;
+    float cooldownLeft;
+    [SerializeField]
+    SpriteRenderer playerSpriteRenderer;
+    private bool canRoll;
+    public bool m_IsRolling
+    {
+        get
+        {
+            return this.isActiveAndEnabled && !canRoll;
         }
     }
 
@@ -27,43 +28,113 @@ public class Rolling : MonoBehaviour
 
     Collider2D boxCol;
     CircleCollider2D circleCol;
-
+    float timer;
+    int flipped;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         boxCol = GetComponent<BoxCollider2D>();
+        circleCol = gameObject.AddComponent<CircleCollider2D>();
+        circleCol.enabled = false;
+        canRoll = true;
     }
 
     void Update()
     {
-        if (canRoll)
+
+        if (Input.GetButtonDown("Ability"))
         {
-            Roll();
+
+            if (canRoll)
+            {
+                if (cooldownLeft <= 0)
+                {
+                    if (playerSpriteRenderer.flipX)
+                    {
+                        flipped = 1;
+                    }
+                    else
+                    {
+                        flipped = -1;
+                    }
+                    StartCoroutine(RollProperties());
+                }
+            }
         }
+
+        if (!Input.GetButton("Ability"))
+        {
+            if (Physics2D.CircleCast(transform.position + Vector3.up, 0.2f, Vector2.up).collider == null)
+            {                
+                StopCoroutine(RollProperties());
+                circleCol.enabled = false;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                boxCol.enabled = true;
+                rb.freezeRotation = true;
+                canRoll = true;
+                timer = 0;
+                cooldownLeft = cooldown;
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        Roll();
     }
 
     void Roll()
     {
-        rb.AddTorque(speed * maxAngularVel * 1000 * -Input.GetAxis("Horizontal") * Time.deltaTime / Mathf.Max(Mathf.Abs(rb.angularVelocity), maxAngularVel));
+        if (m_IsRolling == true)
+        {
+            timer += Time.fixedDeltaTime;
+            rb.AddTorque(speed * 100 * Mathf.Min(timer + 1, 1.5f) * flipped * Time.fixedDeltaTime);
+            rb.AddForce(-transform.right * speed * 10 * Mathf.Min(timer + 1, 1.5f) * flipped * Time.fixedDeltaTime);
+        }
+        else if (cooldownLeft > 0)
+        {
+            cooldownLeft -= Time.fixedDeltaTime;
+        }
     }
 
-    private void OnDisable()
-    {
-        Destroy(circleCol);
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        boxCol.enabled = true;
-        circleCol.enabled = false;
-        rb.freezeRotation = true;
-    }
 
-    private void OnEnable()
+    IEnumerator RollProperties()
     {
-        circleCol= gameObject.AddComponent<CircleCollider2D>();
-        circleCol.radius = 0.9f;
+        canRoll = false;
+        circleCol.enabled = true;
+        circleCol.radius = 0.45f;
         circleCol.sharedMaterial = physicsMaterial;
         boxCol.enabled = false;
         circleCol.enabled = true;
         rb.freezeRotation = false;
         rb.drag = 0.5f;
+        yield return new WaitForSeconds(duration);
+        circleCol.enabled = false;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        boxCol.enabled = true;
+        rb.freezeRotation = true;
+        canRoll = true;
+        timer = 0;
+        cooldownLeft = cooldown;
+    }
+
+    private void OnDisable()
+    {
+        circleCol.enabled = false;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        boxCol.enabled = true;
+        rb.freezeRotation = true;
+        canRoll = true;
+    }
+
+    private void OnEnable()
+    {
+        canRoll = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + Vector3.up, 0.2f);
     }
 }
