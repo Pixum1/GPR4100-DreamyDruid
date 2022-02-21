@@ -7,13 +7,14 @@ using UnityEditor;
 
 public class TutorialText : MonoBehaviour
 {
-    [Header("TextInput")]
+    [Header("References")]
     public TMP_SpriteAsset keyboardSprites;
     public TMP_SpriteAsset controllerSprites;
     [HideInInspector] public TMP_SpriteAsset currentSpriteAsset;
     [SerializeField]
     private TMP_Text textField;
 
+    [SerializeField]
     public List<string> keywords;
     [HideInInspector] public List<int> keywordIndex;
 
@@ -21,7 +22,7 @@ public class TutorialText : MonoBehaviour
     private const string keyboard = "Keyboard";
     [HideInInspector] public string inputMethod = controller;
 
-    public string tutorialText;
+    [HideInInspector] public string tutorialText;
 
     [SerializeField]
     private GameObject trigger;
@@ -63,9 +64,9 @@ public class TutorialText : MonoBehaviour
                 StartCoroutine(FadeText());
         }
 
-        if (inputMethod == controller)
+        if (inputMethod == controller && controllerSprites != null)
             currentSpriteAsset = controllerSprites;
-        else if (inputMethod == keyboard)
+        else if (inputMethod == keyboard && keyboardSprites != null)
             currentSpriteAsset = keyboardSprites;
 
         #endregion
@@ -135,10 +136,15 @@ public class TutorialTextEditor : Editor
     {
         base.OnInspectorGUI();
         GUILayout.Space(20f);
-        GUILayout.Label("Preview Settings");
+        GUILayout.Label("Displayed Tutorial Text");
         TutorialText text = (TutorialText)target;
 
         GUILayout.BeginVertical();
+
+        text.tutorialText = EditorGUILayout.TextArea(text.tutorialText);
+
+        GUILayout.Space(20f);
+        GUILayout.Label("Create new Keywords");
 
         keyword = EditorGUILayout.TextField("Keyword: ",keyword);
         index = EditorGUILayout.IntField("Sprite Asset Index: ", index);
@@ -154,6 +160,8 @@ public class TutorialTextEditor : Editor
         GUILayout.EndVertical();
 
         GUILayout.Space(20f);
+        GUILayout.Label("Preview Settings");
+
         string[] options = new string[]
         {
             "Controller", "Keyboard",
