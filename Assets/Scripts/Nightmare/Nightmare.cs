@@ -180,7 +180,7 @@ public class Nightmare : MonoBehaviour
     }
     private void OnDisable()
     {
-            playerController.pHealth.e_PlayerDied -= ResetNightmare;
+        playerController.pHealth.e_PlayerDied -= ResetNightmare;
     }
 
     private void OnDrawGizmos()
