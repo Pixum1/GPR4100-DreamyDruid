@@ -68,7 +68,6 @@ public class Nightmare : MonoBehaviour
         {
             if (startCheckpoint == currentCheckpoint)
             {
-                Debug.Log("1");
                 StartCoroutine(StartNightmare());
             }
         }
@@ -81,6 +80,7 @@ public class Nightmare : MonoBehaviour
 
         #region Cinematic Stuff
         playerController.pMovement.movementInput = false;
+        playerController.pHealth.canReset = false;
         animalGrid.SetActive(false);
         while (blackBars[0].rect.height < 100)
         {
@@ -105,6 +105,7 @@ public class Nightmare : MonoBehaviour
         yield return new WaitForSeconds(nightmareStartTime / 3);
 
         playerController.pMovement.movementInput = true;
+        playerController.pHealth.canReset = true;
         for (int j = 0; j < blackBars.Length; j++)
         {
             blackBars[j].sizeDelta = Vector2.zero;
@@ -180,7 +181,7 @@ public class Nightmare : MonoBehaviour
     }
     private void OnDisable()
     {
-            playerController.pHealth.e_PlayerDied -= ResetNightmare;
+        playerController.pHealth.e_PlayerDied -= ResetNightmare;
     }
 
     private void OnDrawGizmos()

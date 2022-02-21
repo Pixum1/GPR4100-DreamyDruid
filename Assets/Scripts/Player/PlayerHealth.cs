@@ -21,6 +21,8 @@ public class PlayerHealth : MonoBehaviour
 
     private Color newColor;
 
+    public bool canReset = true;
+
     private bool isFadingIn;
     private bool isFadingOut;
 
@@ -33,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
         if (e_PlayerDied == null)
             Debug.LogWarning("Null Reference");
 
-        if (Input.GetButtonDown("Reset") && (!isFadingIn && !isFadingOut)) {
+        if (Input.GetButtonDown("Reset") && !isFadingIn && !isFadingOut && canReset) {
             PlayerDies();
         }
 
