@@ -76,6 +76,10 @@ public class TutorialText : MonoBehaviour
             UpdateText();
             StartCoroutine(TriggerText());
         }
+        else if(Physics2D.OverlapBox(trigger.transform.position, trigger.transform.localScale, 0, playerLayer) == null && !triggered)
+        {
+            StartCoroutine(CloseText());
+        }
     }
 
     public void UpdateText()
@@ -100,6 +104,17 @@ public class TutorialText : MonoBehaviour
             textField.color = new Color(textField.color.r, textField.color.g, textField.color.b, textField.color.a + Time.deltaTime * 2f);
             yield return null;
         }
+        triggered = false;
+    }
+    private IEnumerator CloseText()
+    {
+        triggered = true;
+        while (textField.color.a > 0)
+        {
+            textField.color = new Color(textField.color.r, textField.color.g, textField.color.b, textField.color.a - Time.deltaTime * 2f);
+            yield return null;
+        }
+        triggered = false;
     }
     private IEnumerator FadeText()
     {
