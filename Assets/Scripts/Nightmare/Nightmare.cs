@@ -78,7 +78,7 @@ public class Nightmare : MonoBehaviour
     {
         crow.active = true;
         active = true;
-
+        playerPathPoints.Clear();
         #region Cinematic Stuff
         playerController.pMovement.movementInput = false;
         animalGrid.SetActive(false);
@@ -126,6 +126,7 @@ public class Nightmare : MonoBehaviour
             currentCheckpoint = cPManager.currentCP;
             Vector3 resetPositonV3 = currentCheckpoint.transform.GetChild(0).transform.position;
             resetPosition = new Vector3Int(Mathf.RoundToInt(resetPositonV3.x), Mathf.RoundToInt(resetPositonV3.y), 0);
+            playerPathPoints.Clear();
             StartCoroutine(GetPathPoints());
             StartCoroutine(GetSurroundingTiles(resetPosition));
         }
