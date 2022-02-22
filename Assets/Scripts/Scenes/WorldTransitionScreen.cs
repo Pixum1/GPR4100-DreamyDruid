@@ -48,7 +48,7 @@ public class WorldTransitionScreen : MonoBehaviour
     {
         if (distanceToPlayer < 1)
         {
-            if(SceneManager.GetActiveScene().buildIndex > PlayerPrefs.GetInt("WorldUnlock"))
+            if(PlayerPrefs.GetInt("WorldUnlock") < SceneManager.GetActiveScene().buildIndex + 1)
             {
                 PlayerPrefs.SetInt("WorldUnlock", SceneManager.GetActiveScene().buildIndex + 1);
             }

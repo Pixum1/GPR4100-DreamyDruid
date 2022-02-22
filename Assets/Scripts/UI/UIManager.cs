@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     private bool menuTransition;
     private int currentMenuLoadIndex;
     [SerializeField]
-    private TMP_Text skipText;
+    private TMP_Text[] loadScreenTexts;
     private Color color = new Color(0, 0, 0, 0);
     [SerializeField]
     private TMP_Text transitionText;
@@ -65,7 +65,10 @@ public class UIManager : MonoBehaviour
     {
         if (menuTransition)
         {
-            skipText.enabled = true;
+            for (int i = 0; i < loadScreenTexts.Length; i++)
+            {
+                loadScreenTexts[i].enabled = true;
+            }
             if (Input.GetButtonDown("Jump"))
             {
                 SceneManager.LoadScene(currentMenuLoadIndex);
@@ -77,6 +80,8 @@ public class UIManager : MonoBehaviour
             if (Input.GetButtonDown("Escape"))
             {
                 TriggerPanel(pausePanel);
+                if (optionsPanel.active)
+                    TriggerPanel(optionsPanel);
             }
             if (!transition)
             {
