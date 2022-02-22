@@ -154,7 +154,10 @@ public class Nightmare : MonoBehaviour
                 {
                     Vector2 posVec2 = new Vector2(pos.x, pos.y);
                     float distanceToPlayer = Vector2.Distance(player.position, posVec2);
-                    float f = Mathf.Max(0.002f * Mathf.Pow(distanceToPlayer, 2.5f), .8f);
+                    //Nightmare Speed Formula
+                    float j = 2.5f;// Modify Speed quadratic (use with caution)
+                    float l = 0.002f;// Modify Speed linear
+                    float f = Mathf.Max(l * Mathf.Pow(distanceToPlayer, j), .8f);
                     float timeToNext = maxTime / f;
                     for (int i = 0; i < playerPathPoints.Count; i++)
                     {
