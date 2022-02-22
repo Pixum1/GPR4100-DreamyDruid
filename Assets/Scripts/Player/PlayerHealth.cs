@@ -31,6 +31,11 @@ public class PlayerHealth : MonoBehaviour
         newColor = new Color(0, 0, 0, 0);
     }
 
+    private void Start()
+    {
+        canReset = true;
+    }
+
     private void Update() {
         if (e_PlayerDied == null)
             Debug.LogWarning("Null Reference");
