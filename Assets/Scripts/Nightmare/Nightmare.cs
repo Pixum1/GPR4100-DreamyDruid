@@ -35,7 +35,6 @@ public class Nightmare : MonoBehaviour
     Checkpoint startCheckpoint;
     [SerializeField]
     CrowAnimation crow;
-
     [Header("Cinematic")]
     [SerializeField]
     private float nightmareStartTime;
