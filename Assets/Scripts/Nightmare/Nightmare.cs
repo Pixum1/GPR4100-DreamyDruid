@@ -30,6 +30,7 @@ public class Nightmare : MonoBehaviour
     TileBase nmTile;
     List<Vector3> playerPathPoints = new List<Vector3>();
     public bool active;
+    public bool nmStarting;
     [SerializeField]
     Checkpoint startCheckpoint;
     [SerializeField]
@@ -80,6 +81,7 @@ public class Nightmare : MonoBehaviour
 
     IEnumerator StartNightmare()
     {
+        nmStarting = true;
         crow.active = true;
         active = true;
         playerPathPoints.Clear();
@@ -119,6 +121,7 @@ public class Nightmare : MonoBehaviour
         #endregion
 
         StartCoroutine(GetSurroundingTiles(startPosition));
+        nmStarting = false;
         //StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[(int)nightmareStartTime*2])));
     }
 
