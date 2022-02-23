@@ -114,23 +114,27 @@ public class PlayerMovement : MonoBehaviour
     {
         get
         {
-            if (amountOfJumps > 1)
+            if (movementInput)
             {
-                return jumpBufferTimer < jumpBufferTime
-                    && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
-                    && !player.rollingScript.isActiveAndEnabled;
+                if (amountOfJumps > 1)
+                {
+                    return jumpBufferTimer < jumpBufferTime
+                        && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
+                        && !player.rollingScript.isActiveAndEnabled;
+                }
+                else if (m_CanWallHang)
+                {
+                    return jumpBufferTimer < jumpBufferTime
+                        && !player.rollingScript.isActiveAndEnabled;
+                }
+                else
+                {
+                    return jumpBufferTimer < jumpBufferTime
+                        && coyoteTimeTimer < coyoteTimeTime
+                        && !player.rollingScript.isActiveAndEnabled;
+                }
             }
-            else if (m_CanWallHang)
-            {
-                return jumpBufferTimer < jumpBufferTime
-                    && !player.rollingScript.isActiveAndEnabled;
-            }
-            else
-            {
-                return jumpBufferTimer < jumpBufferTime
-                    && coyoteTimeTimer < coyoteTimeTime
-                    && !player.rollingScript.isActiveAndEnabled;
-            }
+            else return false;
         }
     }
     public bool m_CanWallJump

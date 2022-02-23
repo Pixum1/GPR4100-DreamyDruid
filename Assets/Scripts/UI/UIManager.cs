@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] menuItems;
-    
+
     [SerializeField]
     private Slider masterSlider;
     [SerializeField]
@@ -36,6 +36,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private float transitionSpeed;
     private bool transition;
+    private bool menuTransition;
+    private int currentMenuLoadIndex;
+    [SerializeField]
+    private TMP_Text[] loadScreenTexts;
     private Color color = new Color(0, 0, 0, 0);
     [SerializeField]
     private TMP_Text transitionText;
@@ -48,37 +52,55 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject pausePanel;
 
-    private void Start() {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0)) {
-            masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
-            sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
-            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+    private void Start()
+    {
+        masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    private void Update() {
-        if(SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0)) {
-
-            if(Input.GetButtonDown("Escape")) {
-                TriggerPanel(pausePanel);
+    private void Update()
+    {
+        if (menuTransition)
+        {
+            for (int i = 0; i < loadScreenTexts.Length; i++)
+            {
+                loadScreenTexts[i].enabled = true;
             }
-            if (!transition) {
-                if (pausePanel.active) {
+            if (Input.GetButtonDown("Jump"))
+            {
+                SceneManager.LoadScene(currentMenuLoadIndex);
+            }
+        }
+
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0))
+        {
+            if (Input.GetButtonDown("Escape"))
+            {
+                TriggerPanel(pausePanel);
+                if (optionsPanel.active)
+                    TriggerPanel(optionsPanel);
+            }
+            if (!transition)
+            {
+                if (pausePanel.active)
+                {
                     Time.timeScale = 0f;
                 }
-                else {
+                else
+                {
                     Time.timeScale = 1f;
                 }
             }
         }
         else
         {
-            
+
             for (int i = 1; i < worldButtons.Length; i++)
             {
-                if(PlayerPrefs.GetInt("WorldUnlock") > i)
+                if (PlayerPrefs.GetInt("WorldUnlock") > i)
                 {
                     worldButtons[i].interactable = true;
                 }
@@ -89,19 +111,22 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-    public void LoadScene(int _sceneIndex) {
-        if(SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0))
+    public void LoadScene(int _sceneIndex)
+    {
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(0))
             StartCoroutine(InGameTransition(_sceneIndex));
         else
             StartCoroutine(Transition(_sceneIndex));
     }
 
-    private IEnumerator InGameTransition(int _sceneIndex) {
+    private IEnumerator InGameTransition(int _sceneIndex)
+    {
         transition = true;
         Time.timeScale = 0f;
-        if(pausePanel.active)
+        if (pausePanel.active)
             pausePanel.SetActive(false);
-        while (transitionImage.color.a < 1) {
+        while (transitionImage.color.a < 1)
+        {
             color.a += Time.unscaledDeltaTime / transitionSpeed;
             transitionImage.color = color;
             yield return null;
@@ -110,58 +135,73 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(_sceneIndex);
     }
 
-    private IEnumerator Transition(int _sceneIndex) {
+    private IEnumerator Transition(int _sceneIndex)
+    {
+        currentMenuLoadIndex = _sceneIndex;
         this.GetComponent<Canvas>().enabled = false;
-        while(transitionImage.color.a < 1) {
+        while (transitionImage.color.a < 1)
+        {
             color.a += Time.unscaledDeltaTime / transitionSpeed;
             transitionImage.color = color;
             yield return null;
         }
+        menuTransition = true;
         transitionText.text = $"World {_sceneIndex}";
 
-        while (transitionText.color.a < 1) {
+        while (transitionText.color.a < 1)
+        {
             transitionText.color = new Color(transitionText.color.r, transitionText.color.g, transitionText.color.b, transitionText.color.a + Time.unscaledDeltaTime / transitionSpeed);
             yield return null;
         }
         yield return new WaitForSeconds(2f);
+        menuTransition = false;
         SceneManager.LoadScene(_sceneIndex);
     }
 
-    public void ExitGame() {
+    public void ExitGame()
+    {
         Application.Quit();
     }
-    public void TriggerPanel(GameObject _panel) {
-        if (_panel.active) {
+    public void TriggerPanel(GameObject _panel)
+    {
+        if (_panel.active)
+        {
             eventSystem.SetSelectedGameObject(lastSelectedObject);
         }
-        else {
+        else
+        {
             lastSelectedObject = eventSystem.currentSelectedGameObject;
 
             newSelectedObject = _panel.GetComponentInChildren<Button>().gameObject;
             eventSystem.SetSelectedGameObject(newSelectedObject);
         }
-        for (int i = 0; i < menuItems.Length; i++) {
+        for (int i = 0; i < menuItems.Length; i++)
+        {
             menuItems[i].SetActive(!menuItems[i].active);
         }
         _panel.SetActive(!_panel.active);
-        
+
     }
 
     #region Sound Management
-    public void ChangeMasterVolume(float _volume) {
+    public void ChangeMasterVolume(float _volume)
+    {
         mixer.SetFloat("MasterVolume", Mathf.Log10(_volume) * 20f);
         SaveVolumeLevel(masterSlider, "MasterVolume");
     }
-    public void ChangeSFXVolume(float _volume) {
+    public void ChangeSFXVolume(float _volume)
+    {
         mixer.SetFloat("SFXVolume", Mathf.Log10(_volume) * 20f);
         SaveVolumeLevel(sfxSlider, "SFXVolume");
     }
-    public void ChangeMusicVolume(float _volume) {
+    public void ChangeMusicVolume(float _volume)
+    {
         mixer.SetFloat("MusicVolume", Mathf.Log10(_volume) * 20f);
         SaveVolumeLevel(musicSlider, "MusicVolume");
     }
 
-    private void SaveVolumeLevel(Slider _slider, string _prefsName) {
+    private void SaveVolumeLevel(Slider _slider, string _prefsName)
+    {
         float sliderValue = _slider.value;
         PlayerPrefs.SetFloat(_prefsName, sliderValue);
     }

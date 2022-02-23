@@ -34,7 +34,6 @@ public class Nightmare : MonoBehaviour
     Checkpoint startCheckpoint;
     [SerializeField]
     CrowAnimation crow;
-
     [Header("Cinematic")]
     [SerializeField]
     private float nightmareStartTime;
@@ -68,19 +67,24 @@ public class Nightmare : MonoBehaviour
         {
             if (startCheckpoint == currentCheckpoint)
             {
-                Debug.Log("1");
                 StartCoroutine(StartNightmare());
             }
         }
+        if (PlayerPrefs.GetInt("DeathCount") > 10 && PlayerPrefs.GetInt("DeathCount") < 30)
+            maxTime = .15f;
+
+        else if (PlayerPrefs.GetInt("DeathCount") > 30)
+            maxTime = .175f;
     }
 
     IEnumerator StartNightmare()
     {
         crow.active = true;
         active = true;
-
+        playerPathPoints.Clear();
         #region Cinematic Stuff
         playerController.pMovement.movementInput = false;
+        playerController.pHealth.canReset = false;
         animalGrid.SetActive(false);
         while (blackBars[0].rect.height < 100)
         {
@@ -105,6 +109,7 @@ public class Nightmare : MonoBehaviour
         yield return new WaitForSeconds(nightmareStartTime / 3);
 
         playerController.pMovement.movementInput = true;
+        playerController.pHealth.canReset = true;
         for (int j = 0; j < blackBars.Length; j++)
         {
             blackBars[j].sizeDelta = Vector2.zero;
@@ -126,6 +131,7 @@ public class Nightmare : MonoBehaviour
             currentCheckpoint = cPManager.currentCP;
             Vector3 resetPositonV3 = currentCheckpoint.transform.GetChild(0).transform.position;
             resetPosition = new Vector3Int(Mathf.RoundToInt(resetPositonV3.x), Mathf.RoundToInt(resetPositonV3.y), 0);
+            playerPathPoints.Clear();
             StartCoroutine(GetPathPoints());
             StartCoroutine(GetSurroundingTiles(resetPosition));
         }
@@ -137,7 +143,7 @@ public class Nightmare : MonoBehaviour
         {
             playerPathPoints.RemoveAt(pathPositionsAmount);
         }
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(.1f);
         StartCoroutine(GetPathPoints());
     }
     private IEnumerator GetSurroundingTiles(Vector3Int _tile)
@@ -152,7 +158,10 @@ public class Nightmare : MonoBehaviour
                 {
                     Vector2 posVec2 = new Vector2(pos.x, pos.y);
                     float distanceToPlayer = Vector2.Distance(player.position, posVec2);
-                    float f = Mathf.Max(0.002f * Mathf.Pow(distanceToPlayer, 2.0f), 1);
+                    //Nightmare Speed Formula
+                    float j = 2.5f;// Modify Speed quadratic (use with caution)
+                    float l = 0.002f;// Modify Speed linear
+                    float f = Mathf.Max(l * Mathf.Pow(distanceToPlayer, j), .8f);
                     float timeToNext = maxTime / f;
                     for (int i = 0; i < playerPathPoints.Count; i++)
                     {
@@ -161,16 +170,16 @@ public class Nightmare : MonoBehaviour
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
-                            StartCoroutine(GetSurroundingTiles(pos));
                             tileNumber++;
+                            StartCoroutine(GetSurroundingTiles(pos));
                             break;
                         }
                         else if (distanceToPathpoint < 30 && tileNumber < 200)
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
-                            StartCoroutine(GetSurroundingTiles(pos));
                             tileNumber++;
+                            StartCoroutine(GetSurroundingTiles(pos));
                             break;
                         }
                     }
@@ -180,7 +189,7 @@ public class Nightmare : MonoBehaviour
     }
     private void OnDisable()
     {
-            playerController.pHealth.e_PlayerDied -= ResetNightmare;
+        playerController.pHealth.e_PlayerDied -= ResetNightmare;
     }
 
     private void OnDrawGizmos()
