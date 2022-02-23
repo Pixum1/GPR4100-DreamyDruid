@@ -26,7 +26,8 @@ public class PlayerHealth : MonoBehaviour
     private bool isFadingIn;
     private bool isFadingOut;
 
-    private void Awake() {
+    private void Awake()
+    {
         cameraManager = FindObjectOfType<CameraManager>();
         newColor = new Color(0, 0, 0, 0);
     }
@@ -36,52 +37,72 @@ public class PlayerHealth : MonoBehaviour
         canReset = true;
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (e_PlayerDied == null)
             Debug.LogWarning("Null Reference");
 
-        if (Input.GetButtonDown("Reset") && !isFadingIn && !isFadingOut && canReset) {
+        if (Input.GetButtonDown("Reset") && !isFadingIn && !isFadingOut && canReset)
+        {
             PlayerDies();
         }
 
-        if (isFadingIn) {
+        if (isFadingIn)
+        {
             FadeIn();
         }
-        if (isFadingOut) {
+        if (isFadingOut)
+        {
             FadeOut();
         }
     }
 
-    private void OnTriggerStay2D(Collider2D _other) {
-        if (_other.CompareTag("Obstacle") && (!isFadingIn && !isFadingOut)) {
+    private void OnTriggerStay2D(Collider2D _other)
+    {
+        if (_other.CompareTag("Obstacle") && (!isFadingIn && !isFadingOut))
+        {
             PlayerDies();
         }
     }
 
-    private void PlayerDies() {
-
+    private void PlayerDies()
+    {
+        if(PlayerPrefs.GetInt("DeathCount") == 0)
+        {
+            PlayerPrefs.SetInt("DeathCount", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("DeathCount", PlayerPrefs.GetInt("DeathCount") + 1);
+        }
         isFadingIn = true;
     }
 
-    private void FadeIn() {
+    private void FadeIn()
+    {
         Time.timeScale = 0f;
-        if (newColor.a < 1) {
+        if (newColor.a < 1)
+        {
             newColor.a += Time.unscaledDeltaTime * transitionSpeed;
             deathFadeImg.color = newColor;
         }
-        else {
+        else
+        {
             isFadingIn = false;
             isFadingOut = true;
             e_PlayerDied?.Invoke();
         }
     }
-    private void FadeOut() {
+    private void FadeOut()
+    {
         cameraManager.ResetCameraPos();
-        if (newColor.a > 0) {
+        if (newColor.a > 0)
+        {
             newColor.a -= Time.unscaledDeltaTime * transitionSpeed;
             deathFadeImg.color = newColor;
         }
-        else {
+        else
+        {
             isFadingOut = false;
             Time.timeScale = 1;
         }

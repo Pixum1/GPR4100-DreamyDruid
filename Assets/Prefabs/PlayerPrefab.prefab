@@ -14807,6 +14807,8 @@ MonoBehaviour:
   player: {fileID: 9041703462974372383}
   deathFadeImg: {fileID: 0}
   transitionSpeed: 0
+  canReset: 1
+  playerDeathCount: {fileID: 11400000, guid: 22541b935c2ad0e41aaad4f2a3c658b0, type: 2}
 --- !u!114 &1671751616852207037
 MonoBehaviour:
   m_ObjectHideFlags: 0
