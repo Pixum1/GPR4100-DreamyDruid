@@ -52,6 +52,7 @@ public class WorldTransitionScreen : MonoBehaviour
             {
                 PlayerPrefs.SetInt("WorldUnlock", SceneManager.GetActiveScene().buildIndex + 1);
             }
+            PlayerPrefs.SetInt("DeathCount", 0);
             SceneManager.LoadSceneAsync("Main Menu");
         }
     }

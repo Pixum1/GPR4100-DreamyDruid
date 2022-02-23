@@ -71,6 +71,11 @@ public class Nightmare : MonoBehaviour
                 StartCoroutine(StartNightmare());
             }
         }
+        if (PlayerPrefs.GetInt("DeathCount") > 10 && PlayerPrefs.GetInt("DeathCount") < 30)
+            maxTime = .15f;
+
+        else if (PlayerPrefs.GetInt("DeathCount") > 30)
+            maxTime = .175f;
     }
 
     IEnumerator StartNightmare()
@@ -139,7 +144,7 @@ public class Nightmare : MonoBehaviour
         {
             playerPathPoints.RemoveAt(pathPositionsAmount);
         }
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(.1f);
         StartCoroutine(GetPathPoints());
     }
     private IEnumerator GetSurroundingTiles(Vector3Int _tile)
@@ -166,16 +171,16 @@ public class Nightmare : MonoBehaviour
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
-                            StartCoroutine(GetSurroundingTiles(pos));
                             tileNumber++;
+                            StartCoroutine(GetSurroundingTiles(pos));
                             break;
                         }
                         else if (distanceToPathpoint < 30 && tileNumber < 200)
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
-                            StartCoroutine(GetSurroundingTiles(pos));
                             tileNumber++;
+                            StartCoroutine(GetSurroundingTiles(pos));
                             break;
                         }
                     }
