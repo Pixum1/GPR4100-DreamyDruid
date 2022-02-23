@@ -130,8 +130,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     return jumpBufferTimer < jumpBufferTime
-                        && coyoteTimeTimer < coyoteTimeTime
-                        && !player.rollingScript.isActiveAndEnabled;
+                        && coyoteTimeTimer < coyoteTimeTime;
                 }
             }
             else return false;
@@ -234,6 +233,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
+            }
+            if (player.rollingScript.isActiveAndEnabled)
+            {
+                jumpsCounted = amountOfJumps;
+                Jump(1, Vector2.up);
             }
             else if (!player.grapplingScript.isActiveAndEnabled && !player.glidingScript.isActiveAndEnabled)
             {
