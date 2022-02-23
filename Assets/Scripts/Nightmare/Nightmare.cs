@@ -51,8 +51,10 @@ public class Nightmare : MonoBehaviour
     [SerializeField]
     private float colorChangeSpeed;
     int tileNumber;
+    public float timer;
     private void Start()
     {
+        timer = 0;
         playerController = FindObjectOfType<PlayerController>();
         cPManager = GameObject.Find("CheckPointManager").GetComponent<CheckpointManager>();
         playerController.pHealth.e_PlayerDied += new Action(ResetNightmare);
@@ -61,8 +63,17 @@ public class Nightmare : MonoBehaviour
         StartCoroutine(GetPathPoints());
     }
 
+    void Timer()
+    {
+        timer += Time.deltaTime;
+    }
+
     private void Update()
     {
+        if (active)
+        {
+            Timer();
+        }
         currentCheckpoint = cPManager.currentCP;
         if (!active)
         {

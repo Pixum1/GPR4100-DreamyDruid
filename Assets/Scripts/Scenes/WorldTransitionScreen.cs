@@ -13,6 +13,9 @@ public class WorldTransitionScreen : MonoBehaviour
     ParticleSystem playerParticles;
     float distanceToPlayer;
     Color color;
+    float bestTime;
+    [SerializeField]
+    Nightmare nightmare;
 
     void Start()
     {
@@ -43,14 +46,19 @@ public class WorldTransitionScreen : MonoBehaviour
             spriteRenderer.color = color;
         }
     }
-
     void LoadScene()
     {
         if (distanceToPlayer < 1)
         {
-            if(PlayerPrefs.GetInt("WorldUnlock") < SceneManager.GetActiveScene().buildIndex + 1)
+            bestTime = nightmare.timer;
+            if (PlayerPrefs.GetInt("WorldUnlock") < SceneManager.GetActiveScene().buildIndex + 1)
             {
                 PlayerPrefs.SetInt("WorldUnlock", SceneManager.GetActiveScene().buildIndex + 1);
+            }
+            int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            if (PlayerPrefs.GetFloat("BestTime" + sceneIndex) < bestTime)
+            {
+                PlayerPrefs.SetFloat("BestTime" + sceneIndex, bestTime);
             }
             PlayerPrefs.SetInt("DeathCount", 0);
             SceneManager.LoadSceneAsync("Main Menu");

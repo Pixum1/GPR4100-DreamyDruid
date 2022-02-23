@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -52,6 +53,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject pausePanel;
 
+    [SerializeField]
+    private TMP_Text timerText;
+    [SerializeField]
+    private TMP_Text lvl1BTText;
+    [SerializeField]
+    private TMP_Text lvl2BTText;
+    [SerializeField]
+    private TMP_Text lvl3BTText;
+    [SerializeField]
+    private TMP_Text lvl4BTText;
+    [SerializeField]
+    Nightmare nm;
+
     private void Start()
     {
         masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
@@ -63,6 +77,18 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if (nm != null && nm.active)
+        {
+            TimeSpan t = TimeSpan.FromSeconds(nm.timer);
+            string time = string.Format(@"{0:mm\:ss\.ff}", t);
+            timerText.text = time;
+        }
+        else if (nm != null)
+        {
+            timerText.text = "";
+        }
+
+
         if (menuTransition)
         {
             for (int i = 0; i < loadScreenTexts.Length; i++)
@@ -109,6 +135,10 @@ public class UIManager : MonoBehaviour
                     worldButtons[i].interactable = false;
                 }
             }
+            lvl1BTText.text = PlayerPrefs.GetFloat("BestTime1").ToString("0.00");
+            lvl2BTText.text = PlayerPrefs.GetFloat("BestTime2").ToString("0.00");
+            lvl3BTText.text = PlayerPrefs.GetFloat("BestTime3").ToString("0.00");
+            lvl4BTText.text = PlayerPrefs.GetFloat("BestTime4").ToString("0.00");
         }
     }
     public void LoadScene(int _sceneIndex)
