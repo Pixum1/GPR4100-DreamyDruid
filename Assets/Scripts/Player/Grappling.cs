@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Grappling : MonoBehaviour
 {
-
     private Rigidbody2D rb;
     [SerializeField]
     private float dragValue;
@@ -33,7 +32,6 @@ public class Grappling : MonoBehaviour
             return this.isActiveAndEnabled && grapplingAnchor != null;
         }
     }
-
     private List<RopeSegment> ropeSegments = new List<RopeSegment>();
     private DistanceJoint2D distJoint;
     private SpringJoint2D springJoint;
@@ -48,44 +46,43 @@ public class Grappling : MonoBehaviour
         drawDelay = initialDrawDelay;
         rb = GetComponent<Rigidbody2D>();
     }
-    private void Update()
-    {
-        if (isAddingMomentum)
-        {
-            AddMomentum();
-        }
-
-        if (Input.GetButtonDown("Ability"))
-        {
-            CaptureMousePosition();
-            StartGrapple();
-        }
-        else if (Input.GetButtonUp("Ability"))
-        {
-            StopGrapple();
-        }
-    }
-    private void FixedUpdate()
-    {
-        if (isGrappling)
-        {
-            SimulateRope();
-        }
-    }
-    private void LateUpdate()
-    {
-        if (isGrappling)
-        {
-            if (drawDelay > 0)
-            {
-                drawDelay -= Time.deltaTime;
-            }
-            else
-            {
-                DrawRope();
-            }
-        }
-    }
+    //private void Update()
+    //{
+    //    if (isAddingMomentum)
+    //    {
+    //        AddMomentum();
+    //    }
+    //    if (Input.GetButtonDown("Ability"))
+    //    {
+    //        CaptureMousePosition();
+    //        StartGrapple();
+    //    }
+    //    else if (Input.GetButtonUp("Ability"))
+    //    {
+    //        StopGrapple();
+    //    }
+    //}
+    //private void FixedUpdate()
+    //{
+    //    if (isGrappling)
+    //    {
+    //        SimulateRope();
+    //    }
+    //}
+    //private void LateUpdate()
+    //{
+    //    if (isGrappling)
+    //    {
+    //        if (drawDelay > 0)
+    //        {
+    //            drawDelay -= Time.deltaTime;
+    //        }
+    //        else
+    //        {
+    //            DrawRope();
+    //        }
+    //    }
+    //}
     private void OnDisable()
     {
         StopGrapple();

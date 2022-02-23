@@ -114,23 +114,26 @@ public class PlayerMovement : MonoBehaviour
     {
         get
         {
-            if (amountOfJumps > 1)
+            if (movementInput)
             {
-                return jumpBufferTimer < jumpBufferTime
-                    && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
-                    && !player.rollingScript.isActiveAndEnabled;
+                if (amountOfJumps > 1)
+                {
+                    return jumpBufferTimer < jumpBufferTime
+                        && (coyoteTimeTimer < coyoteTimeTime || jumpsCounted < amountOfJumps)
+                        && !player.rollingScript.isActiveAndEnabled;
+                }
+                else if (m_CanWallHang)
+                {
+                    return jumpBufferTimer < jumpBufferTime
+                        && !player.rollingScript.isActiveAndEnabled;
+                }
+                else
+                {
+                    return jumpBufferTimer < jumpBufferTime
+                        && coyoteTimeTimer < coyoteTimeTime;
+                }
             }
-            else if (m_CanWallHang)
-            {
-                return jumpBufferTimer < jumpBufferTime
-                    && !player.rollingScript.isActiveAndEnabled;
-            }
-            else
-            {
-                return jumpBufferTimer < jumpBufferTime
-                    && coyoteTimeTimer < coyoteTimeTime
-                    && !player.rollingScript.isActiveAndEnabled;
-            }
+            else return false;
         }
     }
     public bool m_CanWallJump
@@ -230,6 +233,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
+            }
+            if (player.rollingScript.isActiveAndEnabled)
+            {
+                jumpsCounted = amountOfJumps;
+                Jump(1, Vector2.up);
             }
             else if (!player.grapplingScript.isActiveAndEnabled && !player.glidingScript.isActiveAndEnabled)
             {
