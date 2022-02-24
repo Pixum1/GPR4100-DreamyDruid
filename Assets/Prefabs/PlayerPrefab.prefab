@@ -14783,6 +14783,7 @@ MonoBehaviour:
   groundRayLength: 1.1
   groundRayOffset: {x: 0.39, y: 0, z: 0}
   groundRayVerticalOffset: {x: 0, y: 0, z: 0}
+  ciellingRayVerticalOffset: {x: 0, y: 0, z: 0}
   wallRayLength: 0.65
   wallRayOffset: {x: 0, y: 0.44, z: 0}
   CCRayLength: 0.8
@@ -14791,6 +14792,7 @@ MonoBehaviour:
   m_IsGrounded: 0
   m_IsOnLeftWall: 0
   m_IsOnRightWall: 0
+  m_IsBelowCielling: 0
   m_CanCornerCorrect: 0
 --- !u!114 &6393904274851554534
 MonoBehaviour:
@@ -14806,9 +14808,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 9041703462974372383}
   deathFadeImg: {fileID: 0}
-  transitionSpeed: 0
+  transitionSpeed: 3
   canReset: 1
-  playerDeathCount: {fileID: 11400000, guid: 22541b935c2ad0e41aaad4f2a3c658b0, type: 2}
 --- !u!114 &1671751616852207037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14839,7 +14840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be96996c6ebeaf148b79fd18a661b373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 4
+  gravityScale: 6
   jumpForce: 50
 --- !u!114 &9041703462974372356
 MonoBehaviour:
