@@ -135,10 +135,20 @@ public class UIManager : MonoBehaviour
                     worldButtons[i].interactable = false;
                 }
             }
-            lvl1BTText.text = PlayerPrefs.GetFloat("BestTime1").ToString("0.00");
-            lvl2BTText.text = PlayerPrefs.GetFloat("BestTime2").ToString("0.00");
-            lvl3BTText.text = PlayerPrefs.GetFloat("BestTime3").ToString("0.00");
-            lvl4BTText.text = PlayerPrefs.GetFloat("BestTime4").ToString("0.00");
+            TimeSpan t1 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime1"));
+            TimeSpan t2 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime2"));
+            TimeSpan t3 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime3"));
+            TimeSpan t4 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime4"));
+
+            string time1 = string.Format(@"{0:mm\:ss\.ff}", t1);
+            string time2 = string.Format(@"{0:mm\:ss\.ff}", t2);
+            string time3 = string.Format(@"{0:mm\:ss\.ff}", t3);
+            string time4 = string.Format(@"{0:mm\:ss\.ff}", t4);
+
+            lvl1BTText.text = time1;
+            lvl2BTText.text = time2;
+            lvl3BTText.text = time3;
+            lvl4BTText.text = time4;
         }
     }
     public void LoadScene(int _sceneIndex)
