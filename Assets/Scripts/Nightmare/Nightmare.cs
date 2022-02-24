@@ -83,10 +83,10 @@ public class Nightmare : MonoBehaviour
             }
         }
         if (PlayerPrefs.GetInt("DeathCount") > 10 && PlayerPrefs.GetInt("DeathCount") < 30)
-            maxTime = .175f;
+            maxTime = .2f;
 
         else if (PlayerPrefs.GetInt("DeathCount") > 30)
-            maxTime = .2f;
+            maxTime = .25f;
     }
 
     IEnumerator StartNightmare()
