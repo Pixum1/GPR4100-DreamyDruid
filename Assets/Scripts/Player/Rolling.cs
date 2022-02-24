@@ -16,7 +16,7 @@ public class Rolling : MonoBehaviour
     [SerializeField]
     SpriteRenderer playerSpriteRenderer;
     private bool canRoll;
-    PlayerCollision playerCollision;
+    PlayerController player;
     public bool m_IsRolling
     {
         get
@@ -38,7 +38,7 @@ public class Rolling : MonoBehaviour
         nm = FindObjectOfType<Nightmare>();
         rb = GetComponent<Rigidbody2D>();
         boxCol = GetComponent<BoxCollider2D>();
-        playerCollision = GetComponent<PlayerCollision>();
+        player = GetComponent<PlayerController>();
         circleCol = gameObject.AddComponent<CircleCollider2D>();
         circleCol.enabled = false;
         canRoll = true;
@@ -67,7 +67,7 @@ public class Rolling : MonoBehaviour
             }
         }
 
-        if (!playerCollision.m_IsBelowCielling && Input.GetAxisRaw("Ability") == 0 || nm.nmStarting)
+        if (!player.pCollision.m_IsBelowCielling && Input.GetAxisRaw("Ability") == 0 || nm.nmStarting)
         {
             StopCoroutine(RollProperties());
             circleCol.enabled = false;
