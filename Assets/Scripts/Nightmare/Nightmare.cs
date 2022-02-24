@@ -188,7 +188,7 @@ public class Nightmare : MonoBehaviour
                             StartCoroutine(GetSurroundingTiles(pos));
                             break;
                         }
-                        else if (distanceToPathpoint < 30 && tileNumber < 200)
+                        else if (distanceToPathpoint < 20 && tileNumber < 200)
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));
