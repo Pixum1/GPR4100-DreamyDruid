@@ -647,7 +647,11 @@ MonoBehaviour:
   transitionText: {fileID: 0}
   worldButtons: []
   pausePanel: {fileID: 9081617008771749954}
-  timerText: {fileID: 0}
+  timerText: {fileID: 5334453560574235508}
+  lvl1BTText: {fileID: 0}
+  lvl2BTText: {fileID: 0}
+  lvl3BTText: {fileID: 0}
+  lvl4BTText: {fileID: 0}
   nm: {fileID: 0}
 --- !u!1 &1354050892376988746
 GameObject:
@@ -2643,7 +2647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -120.975586, y: -44.39023}
+  m_AnchoredPosition: {x: -108, y: -32}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1490733064357361377
@@ -2737,7 +2741,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -170.87616, y: 0, z: 0, w: -87.30041}
+  m_margin: {x: -170.87616, y: 0, z: 0, w: -54.149857}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
