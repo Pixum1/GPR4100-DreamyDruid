@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: NightmareRule
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -8886501454476717064, guid: 698bc01afc5fe7e4d90a0e2328bbf974, type: 3}
+  m_DefaultSprite: {fileID: -93911553438611668, guid: 698bc01afc5fe7e4d90a0e2328bbf974, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
