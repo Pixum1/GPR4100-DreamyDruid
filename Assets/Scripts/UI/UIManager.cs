@@ -123,7 +123,6 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-
             for (int i = 1; i < worldButtons.Length; i++)
             {
                 if (PlayerPrefs.GetInt("WorldUnlock") > i)

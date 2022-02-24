@@ -13,7 +13,7 @@ public class WorldTransitionScreen : MonoBehaviour
     ParticleSystem playerParticles;
     float distanceToPlayer;
     Color color;
-    float bestTime;
+    float currentTime;
     [SerializeField]
     Nightmare nightmare;
 
@@ -50,15 +50,16 @@ public class WorldTransitionScreen : MonoBehaviour
     {
         if (distanceToPlayer < 1)
         {
-            bestTime = nightmare.timer;
+            currentTime = nightmare.timer;
             if (PlayerPrefs.GetInt("WorldUnlock") < SceneManager.GetActiveScene().buildIndex + 1)
             {
                 PlayerPrefs.SetInt("WorldUnlock", SceneManager.GetActiveScene().buildIndex + 1);
             }
             int sceneIndex = SceneManager.GetActiveScene().buildIndex;
-            if (PlayerPrefs.GetFloat("BestTime" + sceneIndex) > bestTime)
+
+            if (PlayerPrefs.GetFloat("BestTime" + sceneIndex) > currentTime || PlayerPrefs.GetFloat("BestTime" + sceneIndex) < 5)
             {
-                PlayerPrefs.SetFloat("BestTime" + sceneIndex, bestTime);
+                PlayerPrefs.SetFloat("BestTime" + sceneIndex, currentTime);
             }
             PlayerPrefs.SetInt("DeathCount", 0);
             SceneManager.LoadSceneAsync("Main Menu");
