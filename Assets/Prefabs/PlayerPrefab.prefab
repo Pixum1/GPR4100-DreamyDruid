@@ -9913,10 +9913,10 @@ MonoBehaviour:
     m_Bits: 128
   CCLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 128
   wallHangLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 128
   groundRayLength: 1.1
   groundRayOffset: {x: 0.39, y: 0, z: 0}
   groundRayVerticalOffset: {x: 0, y: 0, z: 0}
