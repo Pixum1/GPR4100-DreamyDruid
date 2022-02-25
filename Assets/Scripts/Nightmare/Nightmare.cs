@@ -57,7 +57,7 @@ public class Nightmare : MonoBehaviour
         timer = 0;
         playerController = FindObjectOfType<PlayerController>();
         cPManager = GameObject.Find("CheckPointManager").GetComponent<CheckpointManager>();
-        playerController.pHealth.e_PlayerDied += new Action(ResetNightmare);
+        playerController.pHealth.e_PlayerDied += ResetNightmare;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         active = false;
         StartCoroutine(GetPathPoints());
