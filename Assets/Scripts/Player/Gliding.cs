@@ -26,6 +26,10 @@ public class Gliding : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
     }
+    private void Start()
+    {
+        jumps = 4;
+    }
 
     private void Update()
     {
@@ -63,6 +67,6 @@ public class Gliding : MonoBehaviour
     private void BirdJump()
     {
         jumps -= 1;
-        rb.AddForce(transform.up * jumpForce * Mathf.Pow(jumps, 0.7f), ForceMode2D.Impulse);
+        rb.AddForce(transform.up * jumpForce * Mathf.Pow(jumps, 0.85f), ForceMode2D.Impulse);
     }
 }
