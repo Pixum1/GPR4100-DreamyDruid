@@ -9880,7 +9880,7 @@ MonoBehaviour:
   jumpHeight: 3
   frogJumpHeight: 6
   frogJumpMaxMulti: 15
-  frogJumpTimeToMaxForce: 2
+  frogJumpTimeToMaxForce: 1.5
   frogJumpMaxMoveSpeedMulti: 0.15
   armadilloDrag: 0.5
   armadilloMaxMoveSpeedMulti: 0.5
