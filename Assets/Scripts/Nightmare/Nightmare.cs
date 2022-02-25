@@ -139,8 +139,8 @@ public class Nightmare : MonoBehaviour
     {
         if (active)
         {
-            tileNumber = 0;
             StopAllCoroutines();
+            tileNumber = 0;
             nightmareTilemap.ClearAllTiles();
             currentCheckpoint = cPManager.currentCP;
             Vector3 resetPositonV3 = currentCheckpoint.transform.GetChild(0).transform.position;

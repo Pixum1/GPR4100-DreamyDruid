@@ -109,17 +109,6 @@ public class UIManager : MonoBehaviour
                 if (optionsPanel.active)
                     TriggerPanel(optionsPanel);
             }
-            if (!transition)
-            {
-                if (pausePanel.active)
-                {
-                    Time.timeScale = 0f;
-                }
-                else
-                {
-                    Time.timeScale = 1f;
-                }
-            }
         }
         else
         {
@@ -220,6 +209,16 @@ public class UIManager : MonoBehaviour
         }
         _panel.SetActive(!_panel.active);
 
+        if (_panel == pausePanel)
+        {
+            if (!transition)
+            {
+                if (pausePanel.active)
+                    Time.timeScale = 0f;
+                else if (!pausePanel.active)
+                    Time.timeScale = 1f;
+            }
+        }
     }
 
     #region Sound Management

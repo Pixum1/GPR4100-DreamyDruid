@@ -264,7 +264,9 @@ public class CameraManager : MonoBehaviour
         currentZone = null;
         previousZone = null;
         GetCurrentZone();
-        cam.transform.position = CalculateNewPosition();
+        cam.transform.position = new Vector3(objectToFollow.position.x, objectToFollow.position.y, cam.transform.position.z);
+        AdjustCamEdge(currentZone);
+        //cam.transform.position = CalculateNewPosition();
     }
 
     /// <summary>

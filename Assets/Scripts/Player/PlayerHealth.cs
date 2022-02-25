@@ -90,14 +90,14 @@ public class PlayerHealth : MonoBehaviour
         {
             isFadingIn = false;
             isFadingOut = true;
-            e_PlayerDied?.Invoke();
         }
     }
     private void FadeOut()
     {
-        cameraManager.ResetCameraPos();
+        e_PlayerDied?.Invoke();
         if (newColor.a > 0)
         {
+        cameraManager.ResetCameraPos();
             newColor.a -= Time.unscaledDeltaTime * transitionSpeed;
             deathFadeImg.color = newColor;
         }
