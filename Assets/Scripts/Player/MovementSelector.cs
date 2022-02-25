@@ -23,6 +23,9 @@ public class MovementSelector : MonoBehaviour
 
     private PlayerController player;
 
+    private float cooldown = .25f;
+    private float cooldownTimer;
+
     private void Awake()
     {
         player = GetComponent<PlayerController>();
@@ -47,6 +50,8 @@ public class MovementSelector : MonoBehaviour
         else {
             ActivateSelectionIcon(selectIcons[3]);
         }
+
+        cooldownTimer = cooldown;
     }
 
     private void Update()
@@ -62,7 +67,7 @@ public class MovementSelector : MonoBehaviour
                 accessImg[i].enabled = true;
             }
         }
-        if (!player.pCollision.m_IsBelowCielling)
+        if (!player.pCollision.m_IsBelowCielling && cooldownTimer <= 0)
         {
             if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxisRaw("Evolve Vertical") == 1f) && !accessImg[2].enabled) {
                 SwitchScript(GetComponent<Gliding>());
@@ -81,6 +86,8 @@ public class MovementSelector : MonoBehaviour
                 ActivateSelectionIcon(selectIcons[3]);
             }
         }
+
+        cooldownTimer -= Time.deltaTime;
     }
 
     private void ActivateSelectionIcon(Image _selectIcon) {
@@ -101,7 +108,7 @@ public class MovementSelector : MonoBehaviour
         isBear = false;
         _script.enabled = true;
         currentScript = _script;
-
+        cooldownTimer = cooldown;
     }    
     private void SwitchToHuman() {
         if(currentScript != null)

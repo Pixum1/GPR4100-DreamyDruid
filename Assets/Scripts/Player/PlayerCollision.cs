@@ -86,7 +86,7 @@ public class PlayerCollision : MonoBehaviour
     public IEnumerator DisableWallRay()
     {
         wallRayLength = 0f;
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(.1f);
         wallRayLength = wallRaySave;
     }
 
