@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -52,6 +53,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject pausePanel;
 
+    [SerializeField]
+    private TMP_Text timerText;
+    [SerializeField]
+    private TMP_Text lvl1BTText;
+    [SerializeField]
+    private TMP_Text lvl2BTText;
+    [SerializeField]
+    private TMP_Text lvl3BTText;
+    [SerializeField]
+    private TMP_Text lvl4BTText;
+    [SerializeField]
+    Nightmare nm;
+
     private void Start()
     {
         masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
@@ -63,6 +77,18 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        if (nm != null && nm.active)
+        {
+            TimeSpan t = TimeSpan.FromSeconds(nm.timer);
+            string time = string.Format(@"{0:mm\:ss\.ff}", t);
+            timerText.text = time;
+        }
+        else if (nm != null)
+        {
+            timerText.text = "";
+        }
+
+
         if (menuTransition)
         {
             for (int i = 0; i < loadScreenTexts.Length; i++)
@@ -83,21 +109,9 @@ public class UIManager : MonoBehaviour
                 if (optionsPanel.active)
                     TriggerPanel(optionsPanel);
             }
-            if (!transition)
-            {
-                if (pausePanel.active)
-                {
-                    Time.timeScale = 0f;
-                }
-                else
-                {
-                    Time.timeScale = 1f;
-                }
-            }
         }
         else
         {
-
             for (int i = 1; i < worldButtons.Length; i++)
             {
                 if (PlayerPrefs.GetInt("WorldUnlock") > i)
@@ -109,6 +123,20 @@ public class UIManager : MonoBehaviour
                     worldButtons[i].interactable = false;
                 }
             }
+            TimeSpan t1 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime1"));
+            TimeSpan t2 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime2"));
+            TimeSpan t3 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime3"));
+            TimeSpan t4 = TimeSpan.FromSeconds(PlayerPrefs.GetFloat("BestTime4"));
+
+            string time1 = string.Format(@"{0:mm\:ss\.ff}", t1);
+            string time2 = string.Format(@"{0:mm\:ss\.ff}", t2);
+            string time3 = string.Format(@"{0:mm\:ss\.ff}", t3);
+            string time4 = string.Format(@"{0:mm\:ss\.ff}", t4);
+
+            lvl1BTText.text = time1;
+            lvl2BTText.text = time2;
+            lvl3BTText.text = time3;
+            lvl4BTText.text = time4;
         }
     }
     public void LoadScene(int _sceneIndex)
@@ -181,6 +209,16 @@ public class UIManager : MonoBehaviour
         }
         _panel.SetActive(!_panel.active);
 
+        if (_panel == pausePanel)
+        {
+            if (!transition)
+            {
+                if (pausePanel.active)
+                    Time.timeScale = 0f;
+                else if (!pausePanel.active)
+                    Time.timeScale = 1f;
+            }
+        }
     }
 
     #region Sound Management

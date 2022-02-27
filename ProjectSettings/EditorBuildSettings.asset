@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level/Area2 Swamp.unity
     guid: 5c5a8554a8b12fa4b87d4ca13ab73d00
+  - enabled: 1
+    path: Assets/Scenes/Level/Area3 Desert.unity
+    guid: 3005efd705596a54d92d5fbc8dcfb335
+  - enabled: 1
+    path: Assets/Scenes/Level/Area4 Mountain.unity
+    guid: 769c4723181ab754791b04aa362f437b
   m_configObjects: {}

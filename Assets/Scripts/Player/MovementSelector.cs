@@ -21,6 +21,16 @@ public class MovementSelector : MonoBehaviour
     [SerializeField]
     private Image[] accessImg;
 
+    private PlayerController player;
+
+    private float cooldown = .25f;
+    private float cooldownTimer;
+
+    private void Awake()
+    {
+        player = GetComponent<PlayerController>();
+    }
+
     private void Start() {
         if(currentScript != null) {
             if (GetComponent<Gliding>().isActiveAndEnabled) {
@@ -40,6 +50,8 @@ public class MovementSelector : MonoBehaviour
         else {
             ActivateSelectionIcon(selectIcons[3]);
         }
+
+        cooldownTimer = cooldown;
     }
 
     private void Update()
@@ -55,23 +67,27 @@ public class MovementSelector : MonoBehaviour
                 accessImg[i].enabled = true;
             }
         }
+        if (!player.pCollision.m_IsBelowCielling && cooldownTimer <= 0)
+        {
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxisRaw("Evolve Vertical") == 1f) && !accessImg[2].enabled) {
+                SwitchScript(GetComponent<Gliding>());
+                ActivateSelectionIcon(selectIcons[0]);
+            }
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxisRaw("Evolve Horizontal") == -1f) && !accessImg[0].enabled) {
+                SwitchScript(GetComponent<Grappling>());
+                ActivateSelectionIcon(selectIcons[1]);
+            }
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxisRaw("Evolve Vertical") == -1f) && !accessImg[1].enabled) {
+                SwitchScript(GetComponent<Rolling>());
+                ActivateSelectionIcon(selectIcons[2]);
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxisRaw("Evolve Horizontal") == 1f) {
+                SwitchToHuman();
+                ActivateSelectionIcon(selectIcons[3]);
+            }
+        }
 
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetAxisRaw("Evolve Vertical") == 1f) && !accessImg[2].enabled) {
-            SwitchScript(GetComponent<Gliding>());
-            ActivateSelectionIcon(selectIcons[0]);
-        }
-        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxisRaw("Evolve Horizontal") == -1f) && !accessImg[0].enabled) {
-            SwitchScript(GetComponent<Grappling>());
-            ActivateSelectionIcon(selectIcons[1]);
-        }
-        if ((Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxisRaw("Evolve Vertical") == -1f) && !accessImg[1].enabled) {
-            SwitchScript(GetComponent<Rolling>());
-            ActivateSelectionIcon(selectIcons[2]);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxisRaw("Evolve Horizontal") == 1f) {
-            SwitchToHuman();
-            ActivateSelectionIcon(selectIcons[3]);
-        }
+        cooldownTimer -= Time.deltaTime;
     }
 
     private void ActivateSelectionIcon(Image _selectIcon) {
@@ -92,7 +108,7 @@ public class MovementSelector : MonoBehaviour
         isBear = false;
         _script.enabled = true;
         currentScript = _script;
-
+        cooldownTimer = cooldown;
     }    
     private void SwitchToHuman() {
         if(currentScript != null)

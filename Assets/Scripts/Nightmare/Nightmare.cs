@@ -30,6 +30,7 @@ public class Nightmare : MonoBehaviour
     TileBase nmTile;
     List<Vector3> playerPathPoints = new List<Vector3>();
     public bool active;
+    public bool nmStarting;
     [SerializeField]
     Checkpoint startCheckpoint;
     [SerializeField]
@@ -50,18 +51,29 @@ public class Nightmare : MonoBehaviour
     [SerializeField]
     private float colorChangeSpeed;
     int tileNumber;
+    public float timer;
     private void Start()
     {
+        timer = 0;
         playerController = FindObjectOfType<PlayerController>();
         cPManager = GameObject.Find("CheckPointManager").GetComponent<CheckpointManager>();
-        playerController.pHealth.e_PlayerDied += new Action(ResetNightmare);
+        playerController.pHealth.e_PlayerDied += ResetNightmare;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         active = false;
         StartCoroutine(GetPathPoints());
     }
 
+    void Timer()
+    {
+        timer += Time.deltaTime;
+    }
+
     private void Update()
     {
+        if (active)
+        {
+            Timer();
+        }
         currentCheckpoint = cPManager.currentCP;
         if (!active)
         {
@@ -71,14 +83,15 @@ public class Nightmare : MonoBehaviour
             }
         }
         if (PlayerPrefs.GetInt("DeathCount") > 10 && PlayerPrefs.GetInt("DeathCount") < 30)
-            maxTime = .15f;
+            maxTime = .2f;
 
         else if (PlayerPrefs.GetInt("DeathCount") > 30)
-            maxTime = .175f;
+            maxTime = .25f;
     }
 
     IEnumerator StartNightmare()
     {
+        nmStarting = true;
         crow.active = true;
         active = true;
         playerPathPoints.Clear();
@@ -118,6 +131,7 @@ public class Nightmare : MonoBehaviour
         #endregion
 
         StartCoroutine(GetSurroundingTiles(startPosition));
+        nmStarting = false;
         //StartCoroutine(GetSurroundingTiles(Vector3Int.RoundToInt(playerPathPoints[(int)nightmareStartTime*2])));
     }
 
@@ -125,8 +139,8 @@ public class Nightmare : MonoBehaviour
     {
         if (active)
         {
-            tileNumber = 0;
             StopAllCoroutines();
+            tileNumber = 0;
             nightmareTilemap.ClearAllTiles();
             currentCheckpoint = cPManager.currentCP;
             Vector3 resetPositonV3 = currentCheckpoint.transform.GetChild(0).transform.position;
@@ -174,7 +188,7 @@ public class Nightmare : MonoBehaviour
                             StartCoroutine(GetSurroundingTiles(pos));
                             break;
                         }
-                        else if (distanceToPathpoint < 30 && tileNumber < 200)
+                        else if (distanceToPathpoint < 20 && tileNumber < 200)
                         {
                             nightmareTilemap.SetTile(pos, nmTile);
                             yield return new WaitForSeconds(timeToNext * UnityEngine.Random.Range(1, 1.1f));

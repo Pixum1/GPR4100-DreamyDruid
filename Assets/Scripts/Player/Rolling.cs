@@ -16,6 +16,7 @@ public class Rolling : MonoBehaviour
     [SerializeField]
     SpriteRenderer playerSpriteRenderer;
     private bool canRoll;
+    PlayerController player;
     public bool m_IsRolling
     {
         get
@@ -30,10 +31,14 @@ public class Rolling : MonoBehaviour
     CircleCollider2D circleCol;
     float timer;
     int flipped;
+    private Nightmare nm;
+
     void Awake()
     {
+        nm = FindObjectOfType<Nightmare>();
         rb = GetComponent<Rigidbody2D>();
         boxCol = GetComponent<BoxCollider2D>();
+        player = GetComponent<PlayerController>();
         circleCol = gameObject.AddComponent<CircleCollider2D>();
         circleCol.enabled = false;
         canRoll = true;
@@ -42,11 +47,11 @@ public class Rolling : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetButtonDown("Ability"))
+        if (Input.GetAxisRaw("Ability") == 1)
         {
-
             if (canRoll)
             {
+                canRoll = false;
                 if (cooldownLeft <= 0)
                 {
                     if (playerSpriteRenderer.flipX)
@@ -62,19 +67,16 @@ public class Rolling : MonoBehaviour
             }
         }
 
-        if (!Input.GetButton("Ability"))
+        if (!player.pCollision.m_IsBelowCielling && Input.GetAxisRaw("Ability") == 0 || nm.nmStarting)
         {
-            if (Physics2D.CircleCast(transform.position + Vector3.up, 0.2f, Vector2.up).collider == null)
-            {                
-                StopCoroutine(RollProperties());
-                circleCol.enabled = false;
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                boxCol.enabled = true;
-                rb.freezeRotation = true;
-                canRoll = true;
-                timer = 0;
-                cooldownLeft = cooldown;
-            }
+            StopCoroutine(RollProperties());
+            circleCol.enabled = false;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            boxCol.enabled = true;
+            rb.freezeRotation = true;
+            canRoll = true;
+            timer = 0;
+            cooldownLeft = cooldown;
         }
     }
 

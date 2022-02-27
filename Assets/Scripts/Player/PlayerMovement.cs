@@ -130,8 +130,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     return jumpBufferTimer < jumpBufferTime
-                        && coyoteTimeTimer < coyoteTimeTime
-                        && !player.rollingScript.isActiveAndEnabled;
+                        && coyoteTimeTimer < coyoteTimeTime;
                 }
             }
             else return false;
@@ -220,10 +219,12 @@ public class PlayerMovement : MonoBehaviour
             if (m_CanWallJump)
             {
                 Jump(jumpHeight, new Vector2(m_HorizontalDir * 1.5f, 1f));
+                PlayerJumped = true;
             }
             else if (m_CanWallHang)
             {
                 Jump(jumpHeight / .5f, new Vector2(-m_HorizontalDir / 2f, 1f));
+                PlayerJumped = true;
             }
             if (player.grapplingScript.isActiveAndEnabled)
             {
@@ -234,6 +235,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 jumpsCounted = amountOfJumps;
                 Jump(owlJumpHeight, Vector2.up);
+                PlayerJumped = true;
+            }
+            if (player.rollingScript.isActiveAndEnabled)
+            {
+                jumpsCounted = amountOfJumps;
+                Jump(1, Vector2.up);
+                PlayerJumped = true;
             }
             else if (!player.grapplingScript.isActiveAndEnabled && !player.glidingScript.isActiveAndEnabled)
             {
@@ -316,6 +324,7 @@ public class PlayerMovement : MonoBehaviour
             Jump(jumpHeight * frogJumpHeightMultiplier, Vector2.up);
             transform.localScale = Vector2.one;
             frogJumpHeightMultiplier = 0;
+            PlayerJumped = true;
         }
     }
 
